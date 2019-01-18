@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
+
+import org.json.JSONException;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -36,14 +39,22 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+
+        Sandwich sandwich = null;
+
+        try {
+            sandwich = JsonUtils.parseSandwichJson(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -56,7 +67,33 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+        StringBuilder alsoKnowAs = new StringBuilder();
+        for (String anotherName : sandwich.getAlsoKnownAs()) {
+            alsoKnowAs.append(anotherName).append(", ");
+        }
+
+        if (alsoKnowAs.length() != 0) {
+            alsoKnowAs.deleteCharAt(alsoKnowAs.length() - 2);
+        }
+
+
+        ((TextView) findViewById(R.id.also_known_tv)).setText(alsoKnowAs);
+
+        ((TextView) findViewById(R.id.description_tv)).setText(sandwich.getDescription());
+
+        ((TextView) findViewById(R.id.origin_tv)).setText(sandwich.getPlaceOfOrigin());
+
+        StringBuilder ingredients = new StringBuilder();
+        for (String ingredient : sandwich.getIngredients()) {
+            ingredients.append(ingredient).append(", ");
+        }
+
+        if (ingredients.length() != 0) {
+            ingredients.deleteCharAt(ingredients.length() - 2);
+        }
+
+        ((TextView) findViewById(R.id.ingredients_tv)).setText(ingredients);
 
     }
 }
