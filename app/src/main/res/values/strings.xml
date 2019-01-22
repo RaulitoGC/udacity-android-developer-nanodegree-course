@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Udacity-popular-movie-2</string>
+    <!-- menu -->
+    <string name="action_most_popular">Most Popular</string>
+    <string name="action_highest_rated">Highest Rated</string>
+    <string name="action_favorites">Favorties</string>
+
+    <!-- Titles -->
+    <string name="text_movies_list">Pop Movies</string>
+    <string name="text_movie_detail">MovieDetail</string>
+
+    <!-- Exception message -->
+    <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+
 </resources>

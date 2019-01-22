@@ -1,0 +1,26 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "28.0.3"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+
+    //Libraries
+    androidConstraintLayoutVersion = '1.1.0'
+    androidSupportVersion = '27.1.1'
+    picassoVersion = '2.71828'
+    retrofitVersion = '2.5.0'
+    okHttpVersion = '3.12.1'
+    timberVersion = '4.7.1'
+
+
+    projectDependencies = [
+            androidConstraintLayout:      "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
+            androidDesign:                "com.android.support:design:$androidSupportVersion",
+            picasso:                      "com.squareup.picasso:picasso:$picassoVersion",
+            timber:                       "com.jakewharton.timber:timber:$timberVersion",
+            retrofit:                     "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            gsonConverter:                "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            loggingInterceptor:           "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    ]
+}
