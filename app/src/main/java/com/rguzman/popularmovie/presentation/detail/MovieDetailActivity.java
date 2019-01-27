@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.rguzman.popularmovie.R;
-import com.rguzman.popularmovie.domain.Movie;
+import com.rguzman.popularmovie.domain.model.Movie;
 import com.rguzman.popularmovie.presentation.utils.ActivityUtils;
 
-public class MovieDetailActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class MovieDetailActivity extends DaggerAppCompatActivity {
 
     private static final String EXTRA_MOVIE = "meltwater.signin.password.extra.MOVIE";
 
@@ -28,8 +29,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().hasExtra(EXTRA_MOVIE)) {
             final Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
-            MovieDetailPresenter presenter = new MovieDetailPresenter();
-            final MovieDetailFragment fragment = MovieDetailFragment.newInstance(movie, presenter);
+            final MovieDetailFragment fragment = MovieDetailFragment.newInstance(movie);
 
             ActivityUtils.addFragment(this, android.R.id.content, fragment);
         }

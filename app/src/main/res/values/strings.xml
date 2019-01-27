@@ -11,5 +11,6 @@
 
     <!-- Exception message -->
     <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+    <string name="exception_message_generic">Sorry, something went wrong.</string>
 
 </resources>

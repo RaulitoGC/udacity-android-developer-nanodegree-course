@@ -8,19 +8,41 @@ ext {
     //Libraries
     androidConstraintLayoutVersion = '1.1.0'
     androidSupportVersion = '27.1.1'
-    picassoVersion = '2.71828'
+    glideVersion = '4.8.0'
+    butterKnifeVersion = '8.8.1'
     retrofitVersion = '2.5.0'
+    daggerVersion = '2.17'
     okHttpVersion = '3.12.1'
     timberVersion = '4.7.1'
+    roomVersion = '1.1.1'
+    lifecycleVersion = '1.1.1'
+    debugDbVersion = '1.0.4'
+
 
 
     projectDependencies = [
-            androidConstraintLayout:      "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
-            androidDesign:                "com.android.support:design:$androidSupportVersion",
-            picasso:                      "com.squareup.picasso:picasso:$picassoVersion",
-            timber:                       "com.jakewharton.timber:timber:$timberVersion",
-            retrofit:                     "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            gsonConverter:                "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            loggingInterceptor:           "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+            androidConstraintLayout: "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
+            androidDesign          : "com.android.support:design:$androidSupportVersion",
+            glide                  : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler          : "com.github.bumptech.glide:compiler:$glideVersion",
+            daggerAndroid          : "com.google.dagger:dagger-android:$daggerVersion",
+            daggerAndroidSupport   : "com.google.dagger:dagger-android-support:$daggerVersion",
+            daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:$daggerVersion",
+            daggerCompiler         : "com.google.dagger:dagger-compiler:$daggerVersion",
+            timber                 : "com.jakewharton.timber:timber:$timberVersion",
+            retrofit               : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            gsonConverter          : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            loggingInterceptor     : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            butterKnife            : "com.jakewharton:butterknife:$butterKnifeVersion",
+            butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:$butterKnifeVersion",
+            room                   : "android.arch.persistence.room:runtime:$roomVersion",
+            roomCompiler           : "android.arch.persistence.room:compiler:$roomVersion",
+            lifeCycleExtension     : "android.arch.lifecycle:extensions:$lifecycleVersion",
+            viewModel              : "android.arch.lifecycle:viewmodel:$lifecycleVersion",
+            liveData               : "android.arch.lifecycle:livedata:$lifecycleVersion",
+            lifecycleCompiler      : "android.arch.lifecycle:compiler:$lifecycleVersion",
+            androidDebugDb         : "com.amitshekhar.android:debug-db:$debugDbVersion"
+
+
     ]
 }

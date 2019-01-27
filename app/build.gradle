@@ -19,6 +19,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", 'MOVIE_API_KEY', movieDbProps['movieApikey']
+        resValue("string", "PORT_NUMBER", "8081")
     }
     buildTypes {
         release {
@@ -39,9 +40,32 @@ dependencies {
 
     implementation projectDependencies.androidDesign
     implementation projectDependencies.androidConstraintLayout
-    implementation projectDependencies.picasso
+
+    implementation projectDependencies.lifeCycleExtension
+    implementation projectDependencies.viewModel
+    implementation projectDependencies.liveData
+
+    annotationProcessor projectDependencies.lifecycleCompiler
+
+    implementation projectDependencies.room
+    annotationProcessor projectDependencies.roomCompiler
+
     implementation projectDependencies.timber
+
     implementation projectDependencies.retrofit
-    implementation projectDependencies.loggingInterceptor
     implementation projectDependencies.gsonConverter
+    implementation projectDependencies.loggingInterceptor
+
+    implementation projectDependencies.daggerAndroid
+    implementation projectDependencies.daggerAndroidSupport
+    annotationProcessor projectDependencies.daggerAndroidProcessor
+    annotationProcessor projectDependencies.daggerCompiler
+
+    implementation projectDependencies.butterKnife
+    annotationProcessor projectDependencies.butterKnifeCompiler
+
+    implementation projectDependencies.glide
+    annotationProcessor projectDependencies.glideCompiler
+
+    debugImplementation projectDependencies.androidDebugDb
 }

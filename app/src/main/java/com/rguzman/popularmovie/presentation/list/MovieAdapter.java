@@ -1,6 +1,7 @@
 package com.rguzman.popularmovie.presentation.list;
 
 import android.content.Context;
+import android.media.midi.MidiOutputPort;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,14 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.rguzman.popularmovie.R;
-import com.rguzman.popularmovie.domain.Movie;
-import com.squareup.picasso.Picasso;
+import com.rguzman.popularmovie.domain.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
+import timber.log.Timber;
+
+
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     public interface ListItemClickListener {
         void onListItemClick(Movie movie);
@@ -65,7 +69,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(final Movie movie) {
-            Picasso.get()
+            Timber.d(" url image" + movie.getPosterPath());
+            Glide.with(itemView)
                     .load(movie.getPosterPath())
                     .into(movieImageView);
 
