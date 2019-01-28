@@ -1,7 +1,6 @@
 package com.rguzman.popularmovie.data.repository.datasource.network;
 
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
@@ -11,6 +10,8 @@ import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
 import com.rguzman.popularmovie.data.net.ApiService;
 import com.rguzman.popularmovie.data.net.response.MovieListResponse;
 import com.rguzman.popularmovie.domain.model.Movie;
+import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
+import com.rguzman.popularmovie.domain.usecase.GetTopRatedMovies;
 import com.rguzman.popularmovie.presentation.utils.NetworkUtils;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class MovieNetworkDataSource implements NetworkDataSource {
     }
 
     @Override
-    public void loadPopularMovies(MovieNetworkCallback callback) {
+    public void loadPopularMovies(GetPopularMovies.Callback<List<Movie>> callback) {
         if (!NetworkUtils.isThereNetworkConnection(context)) {
             callback.onError(new NetworkConnectionException());
         } else {
@@ -46,7 +47,6 @@ public class MovieNetworkDataSource implements NetworkDataSource {
                 @Override
                 public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
                     if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
-                        Timber.d(" LIST GET DATA FROM NETWORK");
                         final MutableLiveData<List<Movie>> liveData = new MutableLiveData<>();
                         liveData.setValue(response.body().getResults());
                         callback.onResponse(liveData);
@@ -70,7 +70,7 @@ public class MovieNetworkDataSource implements NetworkDataSource {
     }
 
     @Override
-    public void loadTopRatedMovies(MovieNetworkCallback callback) {
+    public void loadTopRatedMovies(GetTopRatedMovies.Callback<List<Movie>> callback) {
         if (!NetworkUtils.isThereNetworkConnection(context)) {
             callback.onError(new NetworkConnectionException());
         } else {
@@ -80,7 +80,6 @@ public class MovieNetworkDataSource implements NetworkDataSource {
                 @Override
                 public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
                     if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
-                        Timber.d(" LIST GET DATA FROM NETWORK");
                         final MutableLiveData<List<Movie>> liveData = new MutableLiveData<>();
                         liveData.setValue(response.body().getResults());
                         callback.onResponse(liveData);
@@ -102,12 +101,4 @@ public class MovieNetworkDataSource implements NetworkDataSource {
 
         }
     }
-
-
-    public interface MovieNetworkCallback {
-        void onResponse(LiveData<List<Movie>> liveData);
-
-        void onError(Exception exception);
-    }
-
 }

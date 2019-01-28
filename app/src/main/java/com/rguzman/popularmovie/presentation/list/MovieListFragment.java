@@ -3,6 +3,7 @@ package com.rguzman.popularmovie.presentation.list;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.rguzman.popularmovie.R;
-import com.rguzman.popularmovie.data.exception.GenericException;
-import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
 import com.rguzman.popularmovie.domain.model.Movie;
 
 import java.util.List;
@@ -28,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
+import timber.log.Timber;
 
 public class MovieListFragment extends DaggerFragment implements MovieListView, MovieAdapter.ListItemClickListener {
 
@@ -72,17 +72,6 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
         recycler.setAdapter(adapter);
     }
 
-    private void showError(Exception exception) {
-        String message = exception.getMessage();
-        if (exception instanceof NetworkConnectionException) {
-            message = getString(R.string.message_exception_network_connection);
-        } else if (exception instanceof GenericException) {
-            message = getString(R.string.exception_message_generic);
-        }
-
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.movie_menu, menu);
@@ -115,16 +104,24 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
     }
 
     @Override
+    public Context context() {
+        return getContext();
+    }
+
+    @Override
     public void loadMovies(List<Movie> movies) {
         adapter.setList(movies);
     }
 
     @Override
-    public void addObserver(LiveData<List<Movie>> liveData) {
+    public void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void addObserver(LiveData<List<Movie>> liveData) {
         liveData.observe(this, movies -> {
-            if(movies != null && movies.isEmpty()){
-            }
+            Timber.d("size movies" + movies.size());
             adapter.setList(movies);
         });
     }

@@ -18,8 +18,19 @@ public class GetPopularMovies extends UseCase<Void, List<Movie>> {
         this.repository = repository;
     }
 
+
     @Override
-    public LiveData<List<Movie>> execute(Void params) {
-        return repository.loadPopularMovies();
+    public void execute(Void params, Callback<List<Movie>> callback) {
+        this.repository.loadPopularMovies(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(LiveData<List<Movie>> liveData) {
+                callback.onResponse(liveData);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                callback.onError(exception);
+            }
+        });
     }
 }

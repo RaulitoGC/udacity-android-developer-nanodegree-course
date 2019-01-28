@@ -4,6 +4,11 @@ import android.arch.lifecycle.LiveData;
 
 public abstract class UseCase<P, R> {
 
-    public abstract LiveData<R> execute(P params);
+    public abstract void execute(P params, Callback<R> callback);
 
+    public interface Callback<R> {
+        void onResponse(LiveData<R> liveData);
+
+        void onError(Exception exception);
+    }
 }

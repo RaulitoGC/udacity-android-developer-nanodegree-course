@@ -19,7 +19,17 @@ public class GetTopRatedMovies extends UseCase<Void, List<Movie>> {
     }
 
     @Override
-    public LiveData<List<Movie>> execute(Void params) {
-        return repository.loadTopRatedMovies();
+    public void execute(Void params, Callback<List<Movie>> callback) {
+        this.repository.loadTopRatedMovies(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(LiveData<List<Movie>> liveData) {
+                callback.onResponse(liveData);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                callback.onError(exception);
+            }
+        });
     }
 }
