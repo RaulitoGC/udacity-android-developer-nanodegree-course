@@ -1,6 +1,7 @@
 package com.rguzman.popularmovie.domain.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,11 +9,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "Movies")
+@Entity(tableName = "Movies",indices = {@Index(value = "movieId", unique = true)})
 public class Movie implements Parcelable {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    private int movieId;
     @SerializedName("vote_count")
     private int voteCount;
     private boolean video;
@@ -32,13 +34,16 @@ public class Movie implements Parcelable {
     private String overview;
     private String releaseDate;
     private boolean isFavorite;
+    private boolean isPopular;
+    private boolean isTopRated;
 
     public Movie() {
     }
 
     public Movie(int id, int voteCount, boolean video, double voteAverage, String title,
                  double popularity, String posterPath, String originalLanguage, String originalTitle,
-                 String backdropPath, boolean adult, String overview, String releaseDate, boolean isFavorite) {
+                 String backdropPath, boolean adult, String overview, String releaseDate,
+                 boolean isFavorite, boolean isPopular, boolean isTopRated) {
         this.id = id;
         this.voteCount = voteCount;
         this.video = video;
@@ -53,6 +58,8 @@ public class Movie implements Parcelable {
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.isFavorite = isFavorite;
+        this.isPopular = isPopular;
+        this.isTopRated = isTopRated;
     }
 
     protected Movie(Parcel in) {
@@ -70,6 +77,8 @@ public class Movie implements Parcelable {
         overview = in.readString();
         releaseDate = in.readString();
         isFavorite = in.readByte() != 0;
+        isPopular = in.readByte() != 0;
+        isTopRated = in.readByte() != 0;
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -105,6 +114,8 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeString(releaseDate);
         dest.writeByte((byte) (isFavorite ? 1 : 0));
+        dest.writeByte((byte) (isPopular ? 1 : 0));
+        dest.writeByte((byte) (isTopRated ? 1 : 0));
     }
 
     public int getId() {
@@ -217,5 +228,29 @@ public class Movie implements Parcelable {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public boolean isPopular() {
+        return isPopular;
+    }
+
+    public void setPopular(boolean popular) {
+        isPopular = popular;
+    }
+
+    public boolean isTopRated() {
+        return isTopRated;
+    }
+
+    public void setTopRated(boolean topRated) {
+        isTopRated = topRated;
     }
 }

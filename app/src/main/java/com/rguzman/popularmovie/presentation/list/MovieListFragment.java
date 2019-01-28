@@ -1,6 +1,6 @@
 package com.rguzman.popularmovie.presentation.list;
 
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -29,12 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
 
-public class MovieListFragment extends DaggerFragment implements MovieAdapter.ListItemClickListener {
+public class MovieListFragment extends DaggerFragment implements MovieListView, MovieAdapter.ListItemClickListener {
 
     private static final int GRID_NUM_COLUMNS = 2;
-    private static final String PATH_MOST_POPULAR_MOVIES = "popular";
-    private static final String PATH_HIGHEST_RATED_MOVIES = "top_rated";
-    private static final String PATH_FAVORITES = "favorites";
 
     @BindView(R.id.recyclerView)
     RecyclerView recycler;
@@ -45,16 +42,12 @@ public class MovieListFragment extends DaggerFragment implements MovieAdapter.Li
     private MovieAdapter adapter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         this.movieListViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel.class);
-        this.movieListViewModel.init(PATH_MOST_POPULAR_MOVIES);
-        this.movieListViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(@Nullable List<Movie> movies) {
-                adapter.setList(movies);
-            }
-        });
+        this.movieListViewModel.setView(this);
+        this.movieListViewModel.init();
+
     }
 
     @Nullable
@@ -102,15 +95,15 @@ public class MovieListFragment extends DaggerFragment implements MovieAdapter.Li
 
         switch (itemId) {
             case R.id.action_highest_rated:
-                movieListViewModel.init(PATH_HIGHEST_RATED_MOVIES);
+                movieListViewModel.loadTopRatedMovies();
                 return true;
 
             case R.id.action_most_popular:
-                movieListViewModel.init(PATH_MOST_POPULAR_MOVIES);
+                movieListViewModel.loadPopularMovies();
                 return true;
 
             case R.id.action_favorites:
-                movieListViewModel.init(PATH_FAVORITES);
+                movieListViewModel.loadFavoritesMovies();
                 return true;
         }
         return true;
@@ -119,5 +112,27 @@ public class MovieListFragment extends DaggerFragment implements MovieAdapter.Li
     @Override
     public void onListItemClick(Movie movie) {
 
+    }
+
+    @Override
+    public void loadMovies(List<Movie> movies) {
+        adapter.setList(movies);
+    }
+
+    @Override
+    public void addObserver(LiveData<List<Movie>> liveData) {
+
+        liveData.observe(this, movies -> {
+            if(movies != null && movies.isEmpty()){
+            }
+            adapter.setList(movies);
+        });
+    }
+
+    @Override
+    public void removeObserver(LiveData<List<Movie>> liveData) {
+        if (liveData != null && liveData.hasObservers()) {
+            liveData.removeObservers(this);
+        }
     }
 }

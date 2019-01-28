@@ -1,4 +1,4 @@
-package com.rguzman.popularmovie.data.repository.datasource.disk;
+package com.rguzman.popularmovie.data.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -16,17 +16,23 @@ import java.util.List;
 public interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Movie movie);
+    void insert(List<Movie> movie);
 
-    @Update
-    void update(List<Movie> document);
+    @Update()
+    void update(Movie movie);
 
     @Query("SELECT * FROM Movies WHERE id = :id LIMIT 1")
     LiveData<Movie> getById(int id);
 
-    @Query("SELECT * FROM Movies")
-    LiveData<List<Movie>> loadAllMovies();
+    @Query("SELECT * FROM Movies WHERE movieId = :movieId LIMIT 1")
+    Movie getMovieById(int movieId);
+
+    @Query("SELECT * FROM Movies WHERE isPopular = 1")
+    LiveData<List<Movie>> loadPopularMovies();
 
     @Query("SELECT * FROM Movies WHERE isFavorite = 1")
-    LiveData<List<Movie>> listAllFavorites();
+    LiveData<List<Movie>> loadFavoritesMovies();
+
+    @Query("SELECT * FROM Movies WHERE isTopRated = 1")
+    LiveData<List<Movie>> loadTopRatedMovies();
 }

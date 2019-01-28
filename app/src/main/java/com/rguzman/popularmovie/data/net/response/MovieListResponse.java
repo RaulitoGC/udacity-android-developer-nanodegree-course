@@ -1,4 +1,4 @@
-package com.rguzman.popularmovie.data.repository.datasource.network.response;
+package com.rguzman.popularmovie.data.net.response;
 
 import com.google.gson.annotations.SerializedName;
 import com.rguzman.popularmovie.domain.model.Movie;

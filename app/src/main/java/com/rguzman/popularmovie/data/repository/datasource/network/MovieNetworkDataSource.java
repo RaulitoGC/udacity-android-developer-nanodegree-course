@@ -1,18 +1,19 @@
 package com.rguzman.popularmovie.data.repository.datasource.network;
 
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.rguzman.popularmovie.BuildConfig;
+import com.rguzman.popularmovie.data.exception.GenericException;
 import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
-import com.rguzman.popularmovie.data.repository.datasource.network.response.MovieListResponse;
+import com.rguzman.popularmovie.data.net.ApiService;
+import com.rguzman.popularmovie.data.net.response.MovieListResponse;
 import com.rguzman.popularmovie.domain.model.Movie;
-import com.rguzman.popularmovie.domain.usecase.DataWrapper;
 import com.rguzman.popularmovie.presentation.utils.NetworkUtils;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,55 +28,86 @@ public class MovieNetworkDataSource implements NetworkDataSource {
 
     private final ApiService apiService;
     private final Context context;
-    private final Executor networkExecutor;
 
     @Inject
-    public MovieNetworkDataSource(ApiService apiService, Context context, Executor networkExecutor) {
+    public MovieNetworkDataSource(ApiService apiService, Context context) {
         this.apiService = apiService;
         this.context = context;
-        this.networkExecutor = networkExecutor;
     }
 
     @Override
-    public void loadMovies(String path, MovieNetworkCallback callback) {
-        final MutableLiveData<DataWrapper<List<Movie>>> liveData = new MutableLiveData<>();
-        final DataWrapper<List<Movie>> dataWrapper = new DataWrapper<>();
-
+    public void loadPopularMovies(MovieNetworkCallback callback) {
         if (!NetworkUtils.isThereNetworkConnection(context)) {
-            dataWrapper.setException(new NetworkConnectionException());
-            liveData.setValue(dataWrapper);
+            callback.onError(new NetworkConnectionException());
         } else {
 
-
-            Timber.d(" get data from network");
-            Call<MovieListResponse> call = apiService.getMovies(path, BuildConfig.MOVIE_API_KEY);
+            Call<MovieListResponse> call = apiService.loadPopularMovies(BuildConfig.MOVIE_API_KEY);
             call.enqueue(new Callback<MovieListResponse>() {
                 @Override
                 public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
-                    if (response.isSuccessful()) {
-                        dataWrapper.setData(response.body().getResults());
-                        liveData.setValue(dataWrapper);
+                    if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+                        Timber.d(" LIST GET DATA FROM NETWORK");
+                        final MutableLiveData<List<Movie>> liveData = new MutableLiveData<>();
+                        liveData.setValue(response.body().getResults());
                         callback.onResponse(liveData);
                     } else {
-                        dataWrapper.setException(new Exception(response.body().getMessage()));
-                        liveData.setValue(dataWrapper);
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            callback.onError(new Exception(response.body().getMessage()));
+                        } else {
+                            callback.onError(new GenericException());
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MovieListResponse> call, Throwable t) {
                     t.printStackTrace();
-                    dataWrapper.setException(new Exception(t));
-                    liveData.setValue(dataWrapper);
+                    callback.onError(new Exception(t));
                 }
             });
 
         }
-
     }
 
+    @Override
+    public void loadTopRatedMovies(MovieNetworkCallback callback) {
+        if (!NetworkUtils.isThereNetworkConnection(context)) {
+            callback.onError(new NetworkConnectionException());
+        } else {
+
+            Call<MovieListResponse> call = apiService.loadTopRatedMovies(BuildConfig.MOVIE_API_KEY);
+            call.enqueue(new Callback<MovieListResponse>() {
+                @Override
+                public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+                        Timber.d(" LIST GET DATA FROM NETWORK");
+                        final MutableLiveData<List<Movie>> liveData = new MutableLiveData<>();
+                        liveData.setValue(response.body().getResults());
+                        callback.onResponse(liveData);
+                    } else {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            callback.onError(new Exception(response.body().getMessage()));
+                        } else {
+                            callback.onError(new GenericException());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MovieListResponse> call, Throwable t) {
+                    t.printStackTrace();
+                    callback.onError(new Exception(t));
+                }
+            });
+
+        }
+    }
+
+
     public interface MovieNetworkCallback {
-        void onResponse(MutableLiveData<DataWrapper<List<Movie>>> liveData);
+        void onResponse(LiveData<List<Movie>> liveData);
+
+        void onError(Exception exception);
     }
 
 }

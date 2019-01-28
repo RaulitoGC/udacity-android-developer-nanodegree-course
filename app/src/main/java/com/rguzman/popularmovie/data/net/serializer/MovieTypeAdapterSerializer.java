@@ -14,9 +14,7 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-import timber.log.Timber;
-
-public class ImageRouteTypeAdapterSerializer implements TypeAdapterFactory {
+public class MovieTypeAdapterSerializer implements TypeAdapterFactory {
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
@@ -56,6 +54,12 @@ public class ImageRouteTypeAdapterSerializer implements TypeAdapterFactory {
                                         .appendEncodedPath(path)
                                         .build();
                                 movieJsonObject.addProperty("poster_path", builtUri.toString());
+                            }
+
+                            if (movieJsonObject.has("id")) {
+                                int id = movieJsonObject.get("id").getAsInt();
+                                movieJsonObject.addProperty("movieId", id);
+                                movieJsonObject.remove("id");
                             }
                         }
                     }

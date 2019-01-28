@@ -8,20 +8,18 @@ import com.rguzman.popularmovie.domain.model.Movie;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
-public class GetMoviesUseCase extends UseCase<String, List<Movie>> {
+public class GetTopRatedMovies extends UseCase<Void, List<Movie>> {
 
     private final MovieDataSource repository;
 
     @Inject
-    public GetMoviesUseCase(MovieDataSource repository) {
+    public GetTopRatedMovies(MovieDataSource repository) {
         this.repository = repository;
     }
 
-
     @Override
-    public LiveData<List<Movie>> execute(String params) {
-        return repository.getMovies(params);
+    public LiveData<List<Movie>> execute(Void params) {
+        return repository.loadTopRatedMovies();
     }
 }

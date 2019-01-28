@@ -69,7 +69,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(final Movie movie) {
-            Timber.d(" url image" + movie.getPosterPath());
             Glide.with(itemView)
                     .load(movie.getPosterPath())
                     .into(movieImageView);

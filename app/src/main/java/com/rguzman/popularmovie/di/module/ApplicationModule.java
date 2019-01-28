@@ -7,12 +7,12 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rguzman.popularmovie.data.database.AppDatabase;
-import com.rguzman.popularmovie.data.net.serializer.ImageRouteTypeAdapterSerializer;
+import com.rguzman.popularmovie.data.net.serializer.MovieTypeAdapterSerializer;
 import com.rguzman.popularmovie.data.repository.MovieRepository;
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.disk.DiskDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.disk.MovieDiskDataSource;
-import com.rguzman.popularmovie.data.repository.datasource.network.ApiService;
+import com.rguzman.popularmovie.data.net.ApiService;
 import com.rguzman.popularmovie.data.repository.datasource.network.MovieNetworkDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.network.NetworkDataSource;
 
@@ -42,8 +42,8 @@ public class ApplicationModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        return new GsonBuilder().
-                registerTypeAdapterFactory(new ImageRouteTypeAdapterSerializer())
+        return new GsonBuilder()
+                .registerTypeAdapterFactory(new MovieTypeAdapterSerializer())
                 .create();
     }
 

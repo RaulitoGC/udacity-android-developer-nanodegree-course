@@ -3,64 +3,86 @@ package com.rguzman.popularmovie.data.repository;
 
 import android.arch.lifecycle.LiveData;
 
-import com.rguzman.popularmovie.BuildConfig;
-import com.rguzman.popularmovie.data.database.AppDatabase;
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
-import com.rguzman.popularmovie.data.repository.datasource.network.ApiService;
-import com.rguzman.popularmovie.data.repository.datasource.network.response.MovieListResponse;
+import com.rguzman.popularmovie.data.repository.datasource.disk.DiskDataSource;
+import com.rguzman.popularmovie.data.repository.datasource.network.MovieNetworkDataSource;
+import com.rguzman.popularmovie.data.repository.datasource.network.NetworkDataSource;
 import com.rguzman.popularmovie.domain.model.Movie;
-import com.rguzman.popularmovie.domain.usecase.DataWrapper;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import timber.log.Timber;
 
 
 @Singleton
 public class MovieRepository implements MovieDataSource {
 
-    private final Executor executor;
-    private final ApiService apiService;
-    private final AppDatabase appDatabase;
+    private final NetworkDataSource networkDataSource;
+    private final DiskDataSource diskDataSource;
 
 
     @Inject
-    public MovieRepository(Executor executor, ApiService apiService, AppDatabase appDatabase) {
-        this.executor = executor;
-        this.apiService = apiService;
-        this.appDatabase = appDatabase;
+    public MovieRepository(NetworkDataSource networkDataSource, DiskDataSource diskDataSource) {
+        this.networkDataSource = networkDataSource;
+        this.diskDataSource = diskDataSource;
     }
 
 
     @Override
-    public LiveData<List<Movie>> getMovies(String path) {
-        refreshFromNetwork(path);
-        return appDatabase.movieDao().loadAllMovies();
-    }
+    public LiveData<List<Movie>> loadPopularMovies() {
 
-    private void refreshFromNetwork(String path) {
-        apiService.getMovies(path, BuildConfig.MOVIE_API_KEY).enqueue(new Callback<MovieListResponse>() {
+        networkDataSource.loadPopularMovies(new MovieNetworkDataSource.MovieNetworkCallback() {
             @Override
-            public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
-                executor.execute(() -> {
-                    List<Movie> movies = response.body().getResults();
-                    for (Movie movie : movies) {
-                        appDatabase.movieDao().insert(movie);
-                    }
-                });
+            public void onResponse(LiveData<List<Movie>> liveData) {
+                Timber.d(" LIST SAVE DATA FROM NETWORK TO DB");
+                List<Movie> movies = liveData.getValue();
+                diskDataSource.savePopularMovies(movies);
             }
 
             @Override
-            public void onFailure(Call<MovieListResponse> call, Throwable t) {
+            public void onError(Exception exception) {
 
             }
         });
 
+        return diskDataSource.loadPopularMovies();
+    }
+
+    @Override
+    public LiveData<List<Movie>> loadTopRatedMovies() {
+        networkDataSource.loadTopRatedMovies(new MovieNetworkDataSource.MovieNetworkCallback() {
+            @Override
+            public void onResponse(LiveData<List<Movie>> liveData) {
+                Timber.d(" LIST SAVE DATA FROM NETWORK TO DB");
+                List<Movie> movies = liveData.getValue();
+                diskDataSource.saveTopRatedMovies(movies);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
+
+        return diskDataSource.loadTopRatedMovies();
+
+    }
+
+    @Override
+    public LiveData<List<Movie>> loadFavoritesMovies() {
+        return diskDataSource.loadFavoritesMovies();
+    }
+
+    @Override
+    public void saveFavoriteMovie(Movie movie) {
+        diskDataSource.saveFavoriteMovie(movie);
+    }
+
+    @Override
+    public void unSaveFavoriteMovie(Movie movie) {
+        diskDataSource.unSaveFavoriteMovie(movie);
     }
 }
