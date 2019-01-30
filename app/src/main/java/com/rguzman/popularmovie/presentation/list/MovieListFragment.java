@@ -1,9 +1,9 @@
 package com.rguzman.popularmovie.presentation.list;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.rguzman.popularmovie.R;
 import com.rguzman.popularmovie.domain.model.Movie;
+import com.rguzman.popularmovie.presentation.detail.MovieDetailActivity;
 
 import java.util.List;
 
@@ -27,10 +28,15 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
+import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MovieListFragment extends DaggerFragment implements MovieListView, MovieAdapter.ListItemClickListener {
 
     private static final int GRID_NUM_COLUMNS = 2;
+    public static final int UNMARK_AS_FAVORITE_REQUEST = 999;
+    public boolean launchDetailFromFavoriteList = false;
     public boolean topRatedForceUpdate = false;
 
     @BindView(R.id.recyclerView)
@@ -84,15 +90,18 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
 
         switch (itemId) {
             case R.id.action_most_popular:
+                launchDetailFromFavoriteList = false;
                 movieListViewModel.loadPopularMovies(true);
                 return true;
 
             case R.id.action_highest_rated:
+                launchDetailFromFavoriteList = false;
                 movieListViewModel.loadTopRatedMovies(topRatedForceUpdate);
                 topRatedForceUpdate = true;
                 return true;
 
             case R.id.action_favorites:
+                launchDetailFromFavoriteList = true;
                 movieListViewModel.loadFavoritesMovies();
                 return true;
         }
@@ -101,7 +110,11 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
 
     @Override
     public void onListItemClick(Movie movie) {
-        //startActivity(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()));
+        if (launchDetailFromFavoriteList) {
+            startActivityForResult(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()), UNMARK_AS_FAVORITE_REQUEST);
+        } else {
+            startActivity(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()));
+        }
     }
 
     @Override
@@ -120,23 +133,16 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
     }
 
     @Override
-    public void addObserver(LiveData<List<Movie>> liveData) {
-        liveData.observe(this, movies -> {
-            if (movies != null) {
-                adapter.setList(movies);
-            }
-        });
-    }
-
-    @Override
-    public void removeObserver(LiveData<List<Movie>> liveData) {
-        if (liveData != null && liveData.hasObservers()) {
-            liveData.removeObservers(this);
-        }
-    }
-
-    @Override
     public void showEmptyList() {
         adapter.clearList();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == UNMARK_AS_FAVORITE_REQUEST && resultCode == RESULT_OK) {
+            if(launchDetailFromFavoriteList){
+                movieListViewModel.loadFavoritesMovies();
+            }
+        }
     }
 }

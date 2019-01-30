@@ -33,6 +33,6 @@ public interface MovieDao {
     @Query("SELECT * FROM Movies WHERE isFavorite = 1")
     LiveData<List<Movie>> loadFavoritesMovies();
 
-    @Query("SELECT * FROM Movies WHERE isTopRated = 1")
+    @Query("SELECT * FROM Movies WHERE isTopRated = 1 ORDER BY voteAverage DESC")
     LiveData<List<Movie>> loadTopRatedMovies();
 }

@@ -13,13 +13,12 @@ import com.rguzman.popularmovie.domain.usecase.MarkMovieAsFavorite;
 import com.rguzman.popularmovie.domain.usecase.UnmarkMovieAsFavorite;
 import com.rguzman.popularmovie.domain.usecase.UseCase;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 public class MovieDetailViewModel extends ViewModel {
 
-    LiveData<Movie> movie;
+    private LiveData<Movie> movieLiveData;
+    private MovieObserver movieObserver;
 
     private final MarkMovieAsFavorite markMovieAsFavorite;
     private final UnmarkMovieAsFavorite unmarkMovieAsFavorite;
@@ -43,23 +42,23 @@ public class MovieDetailViewModel extends ViewModel {
     }
 
     public void init(int movieId) {
-        if (this.movie != null) {
-            this.view.addObserver(movie);
+        this.movieObserver = new MovieObserver();
+        if (this.movieLiveData != null) {
+            movieLiveData.observeForever(movieObserver);
             return;
         }
         loadMovieById(movieId);
     }
 
     private void loadMovieById(int movieId) {
-        this.view.removeObserver(movie);
-        this.getMovieById.execute(movieId, new GetMovieByIdCallback(){
+        this.getMovieById.execute(movieId, new GetMovieByIdCallback() {
             @Override
             public void onDiskResponse(LiveData<Movie> liveData) {
                 super.onDiskResponse(liveData);
-
+                movieLiveData = liveData;
+                movieLiveData.observeForever(movieObserver);
             }
         });
-        this.view.addObserver(movie);
     }
 
     public void markMovieAsFavorite(int movieId) {
@@ -74,7 +73,8 @@ public class MovieDetailViewModel extends ViewModel {
 
         @Override
         public void onChanged(@Nullable Movie movie) {
-
+            view.showMovie(movie);
+            movieLiveData.removeObserver(this);
         }
     }
 

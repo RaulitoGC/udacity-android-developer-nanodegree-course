@@ -24,8 +24,7 @@ public class MovieDetailActivity extends DaggerAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(R.string.text_movie_detail);
-        if (getIntent() != null && getIntent().hasExtra(EXTRA_MOVIE_ID)) {
+        if ( savedInstanceState == null && getIntent() != null && getIntent().hasExtra(EXTRA_MOVIE_ID)) {
             final int movieId = getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
 
             final MovieDetailFragment fragment = MovieDetailFragment.newInstance(movieId);

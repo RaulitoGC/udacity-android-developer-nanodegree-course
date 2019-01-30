@@ -44,6 +44,19 @@ public class MovieListViewModel extends ViewModel {
         this.view = view;
     }
 
+    public void init() {
+        this.movieListObserver = new MovieListObserver();
+        if (this.movieListLiveData != null) {
+            movieListLiveData.observeForever(movieListObserver);
+            return;
+        }
+        initializeMovies();
+    }
+
+    public LiveData<List<Movie>> getMovieListLiveData() {
+        return movieListLiveData;
+    }
+
     private void showError(Exception exception) {
         String message = exception.getMessage();
         if (exception instanceof NetworkConnectionException) {
@@ -58,15 +71,6 @@ public class MovieListViewModel extends ViewModel {
         view.showError(message);
     }
 
-    public void init() {
-        movieListObserver = new MovieListObserver();
-        if (this.movieListLiveData != null) {
-            movieListLiveData.observeForever(movieListObserver);
-            return;
-        }
-        initializeMovies();
-    }
-
     private void initializeMovies() {
         loadPopularMovies(false);
     }
@@ -76,12 +80,14 @@ public class MovieListViewModel extends ViewModel {
 
             @Override
             public void onNetworkResponse(LiveData<List<Movie>> liveData) {
+                movieListObserver.setRemoveObserver(true);
                 movieListLiveData = liveData;
                 movieListLiveData.observeForever(movieListObserver);
             }
 
             @Override
             public void onDiskResponse(LiveData<List<Movie>> liveData) {
+                movieListObserver.setRemoveObserver(true);
                 movieListLiveData = liveData;
                 movieListLiveData.observeForever(movieListObserver);
             }
@@ -94,17 +100,18 @@ public class MovieListViewModel extends ViewModel {
     }
 
     public void loadTopRatedMovies(boolean forceUpdate) {
-        //this.view.removeObserver(movies);
         this.getTopRatedMovies.execute(forceUpdate, new GetTopRatedMovies.Callback<List<Movie>>() {
 
             @Override
             public void onNetworkResponse(LiveData<List<Movie>> liveData) {
+                movieListObserver.setRemoveObserver(true);
                 movieListLiveData = liveData;
                 movieListLiveData.observeForever(movieListObserver);
             }
 
             @Override
             public void onDiskResponse(LiveData<List<Movie>> liveData) {
+                movieListObserver.setRemoveObserver(true);
                 movieListLiveData = liveData;
                 movieListLiveData.observeForever(movieListObserver);
             }
@@ -114,17 +121,15 @@ public class MovieListViewModel extends ViewModel {
                 showError(exception);
             }
         });
-        //this.view.addObserver(movies);
     }
 
     public void loadFavoritesMovies() {
         this.getFavoriteMovies.execute(new GetFavoriteListCallback() {
             @Override
             public void onDiskResponse(LiveData<List<Movie>> liveData) {
-                super.onDiskResponse(liveData);
+                movieListObserver.setRemoveObserver(false);
                 movieListLiveData = liveData;
                 movieListLiveData.observeForever(movieListObserver);
-                movieListObserver.setRemoveObserver(true);
             }
         });
     }
@@ -135,6 +140,7 @@ public class MovieListViewModel extends ViewModel {
         private boolean removeObserver;
 
         public MovieListObserver() {
+            this.removeObserver = true;
         }
 
         public void setRemoveObserver(boolean removeObserver) {
@@ -143,8 +149,9 @@ public class MovieListViewModel extends ViewModel {
 
         @Override
         public void onChanged(@Nullable List<Movie> movies) {
-            Timber.d(" On change");
+            Timber.d(" On change LIST");
             view.loadList(movies);
+
             movieListLiveData.removeObserver(this);
 
         }

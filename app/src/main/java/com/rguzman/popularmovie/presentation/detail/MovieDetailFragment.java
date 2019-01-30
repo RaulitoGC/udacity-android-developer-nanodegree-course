@@ -1,6 +1,6 @@
 package com.rguzman.popularmovie.presentation.detail;
 
-import android.arch.lifecycle.LiveData;
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -76,6 +76,14 @@ public class MovieDetailFragment extends DaggerFragment implements MovieDetailVi
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getActivity() != null) {
+            getActivity().setTitle(R.string.text_movie_detail);
+        }
+    }
+
     private void populateUi(Movie movie) {
         Glide.with(this)
                 .load(movie.getPosterPath())
@@ -96,7 +104,15 @@ public class MovieDetailFragment extends DaggerFragment implements MovieDetailVi
             this.movieDetailViewModel.markMovieAsFavorite(movieId);
         } else {
             this.movieDetailViewModel.unmarkMovieAsFavorite(movieId);
+            if (getActivity() != null) {
+                getActivity().setResult(Activity.RESULT_OK);
+            }
         }
+    }
+
+    @Override
+    public void showMovie(Movie movie) {
+        populateUi(movie);
     }
 
     @Override
@@ -107,17 +123,5 @@ public class MovieDetailFragment extends DaggerFragment implements MovieDetailVi
     @Override
     public void loadReviewByMovie() {
 
-    }
-
-    @Override
-    public void addObserver(LiveData<Movie> liveData) {
-        liveData.observe(this, this::populateUi);
-    }
-
-    @Override
-    public void removeObserver(LiveData<Movie> liveData) {
-        if (liveData != null && liveData.hasObservers()) {
-            liveData.removeObservers(this);
-        }
     }
 }

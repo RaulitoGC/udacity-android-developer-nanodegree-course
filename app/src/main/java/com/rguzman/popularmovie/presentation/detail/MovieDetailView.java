@@ -6,11 +6,10 @@ import com.rguzman.popularmovie.domain.model.Movie;
 
 public interface MovieDetailView {
 
+    void showMovie(Movie movie);
+
     void loadVideosByMovie();
 
     void loadReviewByMovie();
 
-    void addObserver(LiveData<Movie> liveData);
-
-    void removeObserver(LiveData<Movie> liveData);
 }
