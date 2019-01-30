@@ -3,7 +3,6 @@ package com.rguzman.popularmovie.data.repository;
 
 import android.arch.lifecycle.LiveData;
 
-import com.rguzman.popularmovie.data.exception.EmptyMovieListException;
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.disk.DiskDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.network.NetworkDataSource;
@@ -67,26 +66,22 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void loadFavoritesMovies(GetFavoriteMovies.Callback<List<Movie>> callback) {
-        LiveData<List<Movie>> liveData = diskDataSource.loadFavoritesMovies();
-        if (liveData != null && liveData.getValue() != null) {
-            if (liveData.getValue().isEmpty()) {
-                callback.onError(new EmptyMovieListException("Favorites"));
-            } else {
-                callback.onResponse(liveData);
-            }
-        } else {
-            callback.onError(new EmptyMovieListException("Favorites"));
-        }
+    public LiveData<List<Movie>> loadFavoritesMovies() {
+        return diskDataSource.loadFavoritesMovies();
     }
 
     @Override
-    public void saveFavoriteMovie(Movie movie) {
-        diskDataSource.saveFavoriteMovie(movie);
+    public LiveData<Movie> loadMovieById(int movieId) {
+        return this.diskDataSource.loadMovieById(movieId);
     }
 
     @Override
-    public void unSaveFavoriteMovie(Movie movie) {
-        diskDataSource.unSaveFavoriteMovie(movie);
+    public void markMovieAsFavorite(int movieId) {
+        this.diskDataSource.markMovieAsFavorite(movieId);
+    }
+
+    @Override
+    public void unmarkMovieAsFavorite(int movieId) {
+        this.diskDataSource.unmarkMovieAsFavorite(movieId);
     }
 }

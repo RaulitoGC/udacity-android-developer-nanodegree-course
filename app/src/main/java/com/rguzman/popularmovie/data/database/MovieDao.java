@@ -21,8 +21,8 @@ public interface MovieDao {
     @Update()
     void update(Movie movie);
 
-    @Query("SELECT * FROM Movies WHERE id = :id LIMIT 1")
-    LiveData<Movie> getById(int id);
+    @Query("SELECT * FROM Movies WHERE movieId = :movieId LIMIT 1")
+    LiveData<Movie> loadMovieById(int movieId);
 
     @Query("SELECT * FROM Movies WHERE movieId = :movieId LIMIT 1")
     Movie getMovieById(int movieId);

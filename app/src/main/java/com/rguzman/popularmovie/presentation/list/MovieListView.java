@@ -15,7 +15,7 @@ public interface MovieListView {
 
     void showError(String message);
 
-    void addObserver(LiveData<List<Movie>> liveData);
+    void addObserver(LiveData<List<Movie>> liveData, String message);
 
     void removeObserver(LiveData<List<Movie>> liveData);
 }

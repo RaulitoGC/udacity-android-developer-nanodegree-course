@@ -1,11 +1,9 @@
 package com.rguzman.popularmovie.presentation.list;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
 import com.rguzman.popularmovie.R;
-import com.rguzman.popularmovie.data.exception.EmptyMovieListException;
 import com.rguzman.popularmovie.data.exception.GenericException;
 import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
 import com.rguzman.popularmovie.domain.model.Movie;
@@ -17,10 +15,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 
 public class MovieListViewModel extends ViewModel {
+
+    private static final String POPULAR = "popular";
+    private static final String MOST_RATED = "Highest rated";
+    private static final String FAVORITES = "Favorites";
+
 
     private LiveData<List<Movie>> movies;
 
@@ -47,8 +48,6 @@ public class MovieListViewModel extends ViewModel {
             message = view.context().getString(R.string.message_exception_network_connection);
         } else if (exception instanceof GenericException) {
             message = view.context().getString(R.string.message_exception_generic);
-        } else if (exception instanceof EmptyMovieListException) {
-            message = view.context().getString(R.string.message_exception_empty_list, exception.getMessage());
         }
 
         view.showError(message);
@@ -56,7 +55,7 @@ public class MovieListViewModel extends ViewModel {
 
     public void init() {
         if (this.movies != null) {
-            this.view.addObserver(movies);
+            this.view.addObserver(movies, view.context().getString(R.string.message_exception_empty_list, POPULAR));
             return;
         }
         loadPopularMovies();
@@ -76,7 +75,7 @@ public class MovieListViewModel extends ViewModel {
             }
         });
 
-        this.view.addObserver(movies);
+        this.view.addObserver(movies, view.context().getString(R.string.message_exception_empty_list, POPULAR));
     }
 
     public void loadTopRatedMovies() {
@@ -92,7 +91,7 @@ public class MovieListViewModel extends ViewModel {
                 showError(exception);
             }
         });
-        this.view.addObserver(movies);
+        this.view.addObserver(movies, view.context().getString(R.string.message_exception_empty_list, MOST_RATED));
     }
 
     public void loadFavoritesMovies() {
@@ -105,10 +104,10 @@ public class MovieListViewModel extends ViewModel {
 
             @Override
             public void onError(Exception exception) {
-                showError(exception);
+
             }
         });
-        this.view.addObserver(movies);
+        this.view.addObserver(movies, view.context().getString(R.string.message_exception_empty_list, FAVORITES));
     }
 
     public LiveData<List<Movie>> getMovies() {

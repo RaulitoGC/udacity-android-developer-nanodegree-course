@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.rguzman.popularmovie.domain.model.Movie;
 import com.rguzman.popularmovie.domain.usecase.GetFavoriteMovies;
+import com.rguzman.popularmovie.domain.usecase.GetMovieById;
 import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
 import com.rguzman.popularmovie.domain.usecase.GetTopRatedMovies;
 
@@ -16,10 +17,12 @@ public interface MovieDataSource {
 
     void loadTopRatedMovies(GetTopRatedMovies.Callback<List<Movie>> callback);
 
-    void loadFavoritesMovies(GetFavoriteMovies.Callback<List<Movie>> callback);
+    LiveData<List<Movie>> loadFavoritesMovies();
 
-    void saveFavoriteMovie(Movie movie);
+    LiveData<Movie> loadMovieById(int movieId);
 
-    void unSaveFavoriteMovie(Movie movie);
+    void markMovieAsFavorite(int movieId);
+
+    void unmarkMovieAsFavorite(int movieId);
 
 }

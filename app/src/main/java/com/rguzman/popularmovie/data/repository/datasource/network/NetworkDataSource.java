@@ -12,4 +12,5 @@ public interface NetworkDataSource {
     void loadPopularMovies(GetPopularMovies.Callback<List<Movie>> callback);
 
     void loadTopRatedMovies(GetPopularMovies.Callback<List<Movie>> callback);
+
 }

@@ -4,7 +4,6 @@ package com.rguzman.popularmovie.data.repository.datasource.disk;
 import android.arch.lifecycle.LiveData;
 
 import com.rguzman.popularmovie.data.database.AppDatabase;
-import com.rguzman.popularmovie.data.database.MovieDao;
 import com.rguzman.popularmovie.domain.model.Movie;
 
 import java.util.List;
@@ -78,25 +77,30 @@ public class MovieDiskDataSource implements DiskDataSource {
     }
 
     @Override
-    public void saveFavoriteMovie(Movie movie) {
-        if (movie != null) {
-            diskExecutor.execute(() -> {
-                MovieDao movieDao = appDatabase.movieDao();
+    public void markMovieAsFavorite(int movieId) {
+        diskExecutor.execute(() -> {
+            Movie movie = appDatabase.movieDao().getMovieById(movieId);
+            if (movie != null) {
                 movie.setFavorite(true);
-                movieDao.update(movie);
-            });
-        }
+                appDatabase.movieDao().update(movie);
+            }
+        });
     }
 
     @Override
-    public void unSaveFavoriteMovie(Movie movie) {
-        if (movie != null) {
-            diskExecutor.execute(() -> {
-                MovieDao movieDao = appDatabase.movieDao();
+    public void unmarkMovieAsFavorite(int movieId) {
+        diskExecutor.execute(() -> {
+            Movie movie = appDatabase.movieDao().getMovieById(movieId);
+            if (movie != null) {
                 movie.setFavorite(false);
-                movieDao.update(movie);
-            });
-        }
+                appDatabase.movieDao().update(movie);
+            }
+        });
+    }
+
+    @Override
+    public LiveData<Movie> loadMovieById(int movieId) {
+        return appDatabase.movieDao().loadMovieById(movieId);
     }
 
     private void insertOrUpdate(List<Movie> movies) {

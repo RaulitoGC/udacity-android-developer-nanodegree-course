@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.rguzman.popularmovie.R;
 import com.rguzman.popularmovie.domain.model.Movie;
+import com.rguzman.popularmovie.presentation.detail.MovieDetailActivity;
 
 import java.util.List;
 
@@ -27,7 +28,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
-import timber.log.Timber;
 
 public class MovieListFragment extends DaggerFragment implements MovieListView, MovieAdapter.ListItemClickListener {
 
@@ -100,7 +100,7 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
 
     @Override
     public void onListItemClick(Movie movie) {
-
+        startActivity(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()));
     }
 
     @Override
@@ -119,10 +119,16 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
     }
 
     @Override
-    public void addObserver(LiveData<List<Movie>> liveData) {
+    public void addObserver(LiveData<List<Movie>> liveData, String message) {
         liveData.observe(this, movies -> {
-            Timber.d("size movies" + movies.size());
-            adapter.setList(movies);
+            if (movies != null) {
+                if (!movies.isEmpty()) {
+                    adapter.setList(movies);
+                } else {
+                    showError(message);
+                }
+            }
+
         });
     }
 

@@ -3,14 +3,11 @@ package com.rguzman.popularmovie.domain.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "Movies",indices = {@Index(value = "movieId", unique = true)})
-public class Movie implements Parcelable {
+@Entity(tableName = "Movies", indices = {@Index(value = "movieId", unique = true)})
+public class Movie {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -32,6 +29,7 @@ public class Movie implements Parcelable {
     private String backdropPath;
     private boolean adult;
     private String overview;
+    @SerializedName("release_date")
     private String releaseDate;
     private boolean isFavorite;
     private boolean isPopular;
@@ -60,62 +58,6 @@ public class Movie implements Parcelable {
         this.isFavorite = isFavorite;
         this.isPopular = isPopular;
         this.isTopRated = isTopRated;
-    }
-
-    protected Movie(Parcel in) {
-        id = in.readInt();
-        voteCount = in.readInt();
-        video = in.readByte() != 0;
-        voteAverage = in.readDouble();
-        title = in.readString();
-        popularity = in.readDouble();
-        posterPath = in.readString();
-        originalLanguage = in.readString();
-        originalTitle = in.readString();
-        backdropPath = in.readString();
-        adult = in.readByte() != 0;
-        overview = in.readString();
-        releaseDate = in.readString();
-        isFavorite = in.readByte() != 0;
-        isPopular = in.readByte() != 0;
-        isTopRated = in.readByte() != 0;
-    }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeInt(voteCount);
-        dest.writeByte((byte) (video ? 1 : 0));
-        dest.writeDouble(voteAverage);
-        dest.writeString(title);
-        dest.writeDouble(popularity);
-        dest.writeString(posterPath);
-        dest.writeString(originalLanguage);
-        dest.writeString(originalTitle);
-        dest.writeString(backdropPath);
-        dest.writeByte((byte) (adult ? 1 : 0));
-        dest.writeString(overview);
-        dest.writeString(releaseDate);
-        dest.writeByte((byte) (isFavorite ? 1 : 0));
-        dest.writeByte((byte) (isPopular ? 1 : 0));
-        dest.writeByte((byte) (isTopRated ? 1 : 0));
     }
 
     public int getId() {

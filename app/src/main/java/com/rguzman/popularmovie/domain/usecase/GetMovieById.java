@@ -3,21 +3,19 @@ package com.rguzman.popularmovie.domain.usecase;
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
 import com.rguzman.popularmovie.domain.model.Movie;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-public class GetFavoriteMovies extends UseCase<Void, List<Movie>> {
+public class GetMovieById extends UseCase<Integer, Movie> {
 
     private final MovieDataSource repository;
 
     @Inject
-    public GetFavoriteMovies(MovieDataSource repository) {
+    public GetMovieById(MovieDataSource repository) {
         this.repository = repository;
     }
 
     @Override
-    public void execute(Void params, Callback<List<Movie>> callback) {
-        callback.onResponse(this.repository.loadFavoritesMovies());
+    public void execute(Integer params, Callback<Movie> callback) {
+        callback.onResponse(repository.loadMovieById(params));
     }
 }

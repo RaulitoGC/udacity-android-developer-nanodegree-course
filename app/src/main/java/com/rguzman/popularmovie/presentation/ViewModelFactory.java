@@ -1,4 +1,4 @@
-package com.rguzman.popularmovie.presentation.list;
+package com.rguzman.popularmovie.presentation;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
