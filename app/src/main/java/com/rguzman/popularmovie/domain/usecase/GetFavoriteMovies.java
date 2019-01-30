@@ -17,7 +17,7 @@ public class GetFavoriteMovies extends UseCase<Void, List<Movie>> {
     }
 
     @Override
-    public void execute(Void params, Callback<List<Movie>> callback) {
-        callback.onResponse(this.repository.loadFavoritesMovies());
+    public void execute(boolean forceUpdate, Void params, Callback<List<Movie>> callback) {
+        callback.onDiskResponse(this.repository.loadFavoritesMovies());
     }
 }

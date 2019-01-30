@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface MovieListView {
 
-    Context context();
+    void loadList(List<Movie> movies);
 
-    void loadMovies(List<Movie> movies);
+    Context context();
 
     void showError(String message);
 
-    void addObserver(LiveData<List<Movie>> liveData, String message);
+    void addObserver(LiveData<List<Movie>> liveData);
 
     void removeObserver(LiveData<List<Movie>> liveData);
+
+    void showEmptyList();
 }

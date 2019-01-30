@@ -14,7 +14,7 @@ public class MarkMovieAsFavorite extends UseCase<Integer, Void> {
     }
 
     @Override
-    public void execute(Integer params, Callback<Void> callback) {
-        this.repository.markMovieAsFavorite(params);
+    public void execute(boolean forceUpdate, Integer movieId, Callback<Void> callback) {
+        this.repository.markMovieAsFavorite(movieId);
     }
 }

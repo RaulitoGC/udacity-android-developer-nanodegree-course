@@ -19,11 +19,17 @@ public class GetTopRatedMovies extends UseCase<Void, List<Movie>> {
     }
 
     @Override
-    public void execute(Void params, Callback<List<Movie>> callback) {
-        this.repository.loadTopRatedMovies(new Callback<List<Movie>>() {
+    public void execute(boolean forceUpdate, Void params, Callback<List<Movie>> callback) {
+        this.setForceUpdate(forceUpdate);
+        this.repository.loadTopRatedMovies(isForceUpdate(), new Callback<List<Movie>>() {
             @Override
-            public void onResponse(LiveData<List<Movie>> liveData) {
-                callback.onResponse(liveData);
+            public void onNetworkResponse(LiveData<List<Movie>> liveData) {
+                callback.onNetworkResponse(liveData);
+            }
+
+            @Override
+            public void onDiskResponse(LiveData<List<Movie>> liveData) {
+                callback.onDiskResponse(liveData);
             }
 
             @Override

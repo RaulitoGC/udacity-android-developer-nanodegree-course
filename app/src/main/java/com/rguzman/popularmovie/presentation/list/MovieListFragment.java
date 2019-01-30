@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.rguzman.popularmovie.R;
 import com.rguzman.popularmovie.domain.model.Movie;
-import com.rguzman.popularmovie.presentation.detail.MovieDetailActivity;
 
 import java.util.List;
 
@@ -32,6 +31,7 @@ import dagger.android.support.DaggerFragment;
 public class MovieListFragment extends DaggerFragment implements MovieListView, MovieAdapter.ListItemClickListener {
 
     private static final int GRID_NUM_COLUMNS = 2;
+    public boolean topRatedForceUpdate = false;
 
     @BindView(R.id.recyclerView)
     RecyclerView recycler;
@@ -83,12 +83,13 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
         int itemId = item.getItemId();
 
         switch (itemId) {
-            case R.id.action_highest_rated:
-                movieListViewModel.loadTopRatedMovies();
+            case R.id.action_most_popular:
+                movieListViewModel.loadPopularMovies(true);
                 return true;
 
-            case R.id.action_most_popular:
-                movieListViewModel.loadPopularMovies();
+            case R.id.action_highest_rated:
+                movieListViewModel.loadTopRatedMovies(topRatedForceUpdate);
+                topRatedForceUpdate = true;
                 return true;
 
             case R.id.action_favorites:
@@ -100,7 +101,12 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
 
     @Override
     public void onListItemClick(Movie movie) {
-        startActivity(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()));
+        //startActivity(MovieDetailActivity.getCallingIntent(context(), movie.getMovieId()));
+    }
+
+    @Override
+    public void loadList(List<Movie> movies) {
+        adapter.setList(movies);
     }
 
     @Override
@@ -109,26 +115,16 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
     }
 
     @Override
-    public void loadMovies(List<Movie> movies) {
-        adapter.setList(movies);
-    }
-
-    @Override
     public void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void addObserver(LiveData<List<Movie>> liveData, String message) {
+    public void addObserver(LiveData<List<Movie>> liveData) {
         liveData.observe(this, movies -> {
             if (movies != null) {
-                if (!movies.isEmpty()) {
-                    adapter.setList(movies);
-                } else {
-                    showError(message);
-                }
+                adapter.setList(movies);
             }
-
         });
     }
 
@@ -137,5 +133,10 @@ public class MovieListFragment extends DaggerFragment implements MovieListView, 
         if (liveData != null && liveData.hasObservers()) {
             liveData.removeObservers(this);
         }
+    }
+
+    @Override
+    public void showEmptyList() {
+        adapter.clearList();
     }
 }

@@ -17,7 +17,6 @@ public class MovieListActivity extends DaggerAppCompatActivity {
 
         setTitle(R.string.text_movies_list);
         if (savedInstanceState == null) {
-            Timber.d(" ADD FRAGMENT");
             final MovieListFragment fragment = new MovieListFragment();
             ActivityUtils.addFragment(this, android.R.id.content, fragment);
         }

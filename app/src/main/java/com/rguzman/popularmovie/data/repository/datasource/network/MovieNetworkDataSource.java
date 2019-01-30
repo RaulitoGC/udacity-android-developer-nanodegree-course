@@ -8,6 +8,7 @@ import com.rguzman.popularmovie.BuildConfig;
 import com.rguzman.popularmovie.data.exception.GenericException;
 import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
 import com.rguzman.popularmovie.data.net.ApiService;
+import com.rguzman.popularmovie.data.net.NetworkCallback;
 import com.rguzman.popularmovie.data.net.response.MovieListResponse;
 import com.rguzman.popularmovie.domain.model.Movie;
 import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
@@ -37,7 +38,7 @@ public class MovieNetworkDataSource implements NetworkDataSource {
     }
 
     @Override
-    public void loadPopularMovies(GetPopularMovies.Callback<List<Movie>> callback) {
+    public void loadPopularMovies(NetworkCallback<List<Movie>> callback) {
         if (!NetworkUtils.isThereNetworkConnection(context)) {
             callback.onError(new NetworkConnectionException());
         } else {
@@ -70,7 +71,7 @@ public class MovieNetworkDataSource implements NetworkDataSource {
     }
 
     @Override
-    public void loadTopRatedMovies(GetTopRatedMovies.Callback<List<Movie>> callback) {
+    public void loadTopRatedMovies(NetworkCallback<List<Movie>> callback) {
         if (!NetworkUtils.isThereNetworkConnection(context)) {
             callback.onError(new NetworkConnectionException());
         } else {

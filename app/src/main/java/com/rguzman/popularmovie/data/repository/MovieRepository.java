@@ -3,11 +3,11 @@ package com.rguzman.popularmovie.data.repository;
 
 import android.arch.lifecycle.LiveData;
 
+import com.rguzman.popularmovie.data.net.NetworkCallback;
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.disk.DiskDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.network.NetworkDataSource;
 import com.rguzman.popularmovie.domain.model.Movie;
-import com.rguzman.popularmovie.domain.usecase.GetFavoriteMovies;
 import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
 import com.rguzman.popularmovie.domain.usecase.GetTopRatedMovies;
 
@@ -16,13 +16,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import timber.log.Timber;
+
 
 @Singleton
 public class MovieRepository implements MovieDataSource {
 
     private final NetworkDataSource networkDataSource;
     private final DiskDataSource diskDataSource;
-
 
     @Inject
     public MovieRepository(NetworkDataSource networkDataSource, DiskDataSource diskDataSource) {
@@ -31,10 +32,17 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void loadPopularMovies(GetPopularMovies.Callback<List<Movie>> callback) {
-        networkDataSource.loadPopularMovies(new GetPopularMovies.Callback<List<Movie>>() {
+    public void loadPopularMovies(boolean forceUpdate, GetPopularMovies.Callback<List<Movie>> callback) {
+        Timber.d(" force update" + forceUpdate);
+        if (forceUpdate) {
+            callback.onDiskResponse(diskDataSource.loadPopularMovies());
+        }
+
+        networkDataSource.loadPopularMovies(new NetworkCallback<List<Movie>>() {
+
             @Override
             public void onResponse(LiveData<List<Movie>> liveData) {
+                callback.onNetworkResponse(liveData);
                 List<Movie> movies = liveData.getValue();
                 diskDataSource.savePopularMovies(movies);
             }
@@ -44,15 +52,19 @@ public class MovieRepository implements MovieDataSource {
                 callback.onError(exception);
             }
         });
-
-        callback.onResponse(diskDataSource.loadPopularMovies());
     }
 
     @Override
-    public void loadTopRatedMovies(GetTopRatedMovies.Callback<List<Movie>> callback) {
-        networkDataSource.loadTopRatedMovies(new GetTopRatedMovies.Callback<List<Movie>>() {
+    public void loadTopRatedMovies(boolean forceUpdate, GetTopRatedMovies.Callback<List<Movie>> callback) {
+
+        if (forceUpdate) {
+            callback.onDiskResponse(diskDataSource.loadTopRatedMovies());
+        }
+
+        networkDataSource.loadTopRatedMovies(new NetworkCallback<List<Movie>>() {
             @Override
             public void onResponse(LiveData<List<Movie>> liveData) {
+                callback.onNetworkResponse(liveData);
                 List<Movie> movies = liveData.getValue();
                 diskDataSource.saveTopRatedMovies(movies);
             }
@@ -62,7 +74,6 @@ public class MovieRepository implements MovieDataSource {
                 callback.onError(exception);
             }
         });
-        callback.onResponse(diskDataSource.loadTopRatedMovies());
     }
 
     @Override

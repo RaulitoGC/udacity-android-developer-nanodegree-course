@@ -1,7 +1,9 @@
 package com.rguzman.popularmovie.presentation.detail;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.Nullable;
 
 import com.rguzman.popularmovie.domain.model.Movie;
 import com.rguzman.popularmovie.domain.usecase.GetMovieById;
@@ -10,6 +12,8 @@ import com.rguzman.popularmovie.domain.usecase.GetVideosByMovie;
 import com.rguzman.popularmovie.domain.usecase.MarkMovieAsFavorite;
 import com.rguzman.popularmovie.domain.usecase.UnmarkMovieAsFavorite;
 import com.rguzman.popularmovie.domain.usecase.UseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -48,14 +52,10 @@ public class MovieDetailViewModel extends ViewModel {
 
     private void loadMovieById(int movieId) {
         this.view.removeObserver(movie);
-        this.getMovieById.execute(movieId, new UseCase.Callback<Movie>() {
+        this.getMovieById.execute(movieId, new GetMovieByIdCallback(){
             @Override
-            public void onResponse(LiveData<Movie> liveData) {
-                movie = liveData;
-            }
-
-            @Override
-            public void onError(Exception exception) {
+            public void onDiskResponse(LiveData<Movie> liveData) {
+                super.onDiskResponse(liveData);
 
             }
         });
@@ -63,10 +63,36 @@ public class MovieDetailViewModel extends ViewModel {
     }
 
     public void markMovieAsFavorite(int movieId) {
-        this.markMovieAsFavorite.execute(movieId, null);
+        this.markMovieAsFavorite.execute(false, movieId, null);
     }
 
     public void unmarkMovieAsFavorite(int movieId) {
-        this.unmarkMovieAsFavorite.execute(movieId, null);
+        this.unmarkMovieAsFavorite.execute(false, movieId, null);
+    }
+
+    private final class MovieObserver implements Observer<Movie> {
+
+        @Override
+        public void onChanged(@Nullable Movie movie) {
+
+        }
+    }
+
+    private class GetMovieByIdCallback implements UseCase.Callback<Movie> {
+
+        @Override
+        public void onNetworkResponse(LiveData<Movie> liveData) {
+
+        }
+
+        @Override
+        public void onDiskResponse(LiveData<Movie> liveData) {
+
+        }
+
+        @Override
+        public void onError(Exception exception) {
+
+        }
     }
 }

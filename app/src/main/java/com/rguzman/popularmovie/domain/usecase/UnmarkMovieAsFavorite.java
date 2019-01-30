@@ -1,6 +1,9 @@
 package com.rguzman.popularmovie.domain.usecase;
 
+import android.os.Handler;
+
 import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
+
 
 import javax.inject.Inject;
 
@@ -14,7 +17,7 @@ public class UnmarkMovieAsFavorite extends UseCase<Integer, Void> {
     }
 
     @Override
-    public void execute(Integer params, Callback<Void> callback) {
-        this.repository.unmarkMovieAsFavorite(params);
+    public void execute(boolean forceUpdate, Integer movieId, Callback<Void> callback) {
+        this.repository.unmarkMovieAsFavorite(movieId);
     }
 }
