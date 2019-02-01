@@ -14,6 +14,8 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
+import timber.log.Timber;
+
 public class MovieTypeAdapterSerializer implements TypeAdapterFactory {
 
     @Override
@@ -40,7 +42,10 @@ public class MovieTypeAdapterSerializer implements TypeAdapterFactory {
                 JsonElement jsonElement = elementAdapter.read(in);
                 if (jsonElement.isJsonObject()) {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    if (jsonObject.has("results") && jsonObject.get("results").isJsonArray()) {
+
+                    if (jsonObject.has("results") && jsonObject.get("results").isJsonArray() &&
+                            !jsonObject.has("id")) {
+
                         JsonArray moviesJsonArrays = jsonObject.getAsJsonArray("results");
                         int size = moviesJsonArrays.size();
                         for (int i = 0; i < size; i++) {

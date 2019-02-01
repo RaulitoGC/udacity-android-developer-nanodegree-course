@@ -9,10 +9,12 @@ import com.rguzman.popularmovie.data.exception.GenericException;
 import com.rguzman.popularmovie.data.exception.NetworkConnectionException;
 import com.rguzman.popularmovie.data.net.ApiService;
 import com.rguzman.popularmovie.data.net.NetworkCallback;
+import com.rguzman.popularmovie.data.net.response.GetReviewsByMovieResponse;
+import com.rguzman.popularmovie.data.net.response.GetVideosByMovieResponse;
 import com.rguzman.popularmovie.data.net.response.MovieListResponse;
 import com.rguzman.popularmovie.domain.model.Movie;
-import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
-import com.rguzman.popularmovie.domain.usecase.GetTopRatedMovies;
+import com.rguzman.popularmovie.domain.model.Review;
+import com.rguzman.popularmovie.domain.model.Video;
 import com.rguzman.popularmovie.presentation.utils.NetworkUtils;
 
 import java.util.List;
@@ -23,7 +25,6 @@ import javax.inject.Singleton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 @Singleton
 public class MovieNetworkDataSource implements NetworkDataSource {
@@ -102,4 +103,69 @@ public class MovieNetworkDataSource implements NetworkDataSource {
 
         }
     }
+
+    @Override
+    public void loadVideosByMovie(int id, NetworkCallback<List<Video>> callback) {
+        if (!NetworkUtils.isThereNetworkConnection(context)) {
+            callback.onError(new NetworkConnectionException());
+        } else {
+            Call<GetVideosByMovieResponse> call = apiService.loadVideosByMovie(id, BuildConfig.MOVIE_API_KEY);
+            call.enqueue(new Callback<GetVideosByMovieResponse>() {
+                @Override
+                public void onResponse(Call<GetVideosByMovieResponse> call, Response<GetVideosByMovieResponse> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+                        final MutableLiveData<List<Video>> liveData = new MutableLiveData<>();
+                        liveData.setValue(response.body().getResults());
+                        callback.onResponse(liveData);
+                    } else {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            callback.onError(new Exception(response.body().getMessage()));
+                        } else {
+                            callback.onError(new GenericException());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GetVideosByMovieResponse> call, Throwable t) {
+                    t.printStackTrace();
+                    callback.onError(new Exception(t));
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void loadReviewsByMovie(int id, NetworkCallback<List<Review>> callback) {
+        if (!NetworkUtils.isThereNetworkConnection(context)) {
+            callback.onError(new NetworkConnectionException());
+        } else {
+            Call<GetReviewsByMovieResponse> call = apiService.loadReviewsByMovie(id, BuildConfig.MOVIE_API_KEY);
+            call.enqueue(new Callback<GetReviewsByMovieResponse>() {
+                @Override
+                public void onResponse(Call<GetReviewsByMovieResponse> call, Response<GetReviewsByMovieResponse> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+                        final MutableLiveData<List<Review>> liveData = new MutableLiveData<>();
+                        liveData.setValue(response.body().getResults());
+                        callback.onResponse(liveData);
+                    } else {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            callback.onError(new Exception(response.body().getMessage()));
+                        } else {
+                            callback.onError(new GenericException());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GetReviewsByMovieResponse> call, Throwable t) {
+                    t.printStackTrace();
+                    callback.onError(new Exception(t));
+                }
+            });
+
+        }
+    }
+
 }

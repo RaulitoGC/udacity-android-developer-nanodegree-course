@@ -1,5 +1,7 @@
 package com.rguzman.popularmovie.data.net;
 
+import com.rguzman.popularmovie.data.net.response.GetReviewsByMovieResponse;
+import com.rguzman.popularmovie.data.net.response.GetVideosByMovieResponse;
 import com.rguzman.popularmovie.data.net.response.MovieListResponse;
 
 import retrofit2.Call;
@@ -17,10 +19,10 @@ public interface ApiService {
     @GET("movie/top_rated")
     Call<MovieListResponse> loadTopRatedMovies(@Query("api_key") String apiKey);
 
-    @GET("/movie/{id}/videos")
-    Call<MovieListResponse> loadVideosByMovie(@Path("id") String id, @Query("api_key") String apiKey);
+    @GET("movie/{id}/videos")
+    Call<GetVideosByMovieResponse> loadVideosByMovie(@Path("id") int id, @Query("api_key") String apiKey);
 
-    @GET("/movie/{id}/reviews")
-    Call<MovieListResponse> loadReviewsByMovie(@Path("id") String id, @Query("api_key") String apiKey);
+    @GET("movie/{id}/reviews")
+    Call<GetReviewsByMovieResponse> loadReviewsByMovie(@Path("id") int id, @Query("api_key") String apiKey);
 
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatImageView
+      android:id="@+id/appCompatImageView2"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:layout_marginStart="16dp"
+      android:src="@drawable/ic_rate_review"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/txt_review_author"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="garethmb" />
+
+  </LinearLayout>
+
+
+  <TextView
+    android:id="@+id/txt_review_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    tools:text="It is hard to believe it has been 19 years since “Unbreakable” arrived in cinemas as the film seemed to setup a sequel but it did not look like it would come to fruition. That all changed in 2016 when “Split” arrived and shocked audiences with a late reveal that showed a connection to the film. Writer/Director M. Night Shyamalan has wasted no time in bringing the new film to fans with the arrival of “GLASS”.  The film picks up soon after the events of “Split” as The Horde embodied by 23 personalities in the form of Kevin Wendell Crumb (James McAvoy) continues to kidnap young girls to serve to his highly dangerous 24th personality The Beast.\r\n\r\nSecurity expert David Dunn (Bruce Willis) along with the help of his son attempts to locate the Horde as a new group of girls has gone missing.  In time David locates The Beast and the two clash; but end up captured by authorities and sent to a facility for evaluation.\r\n\r\nTheir captive Dr. Ellie Staple (Sarah Paulson) believes their special abilities are in their minds and that they really do not have the special abilities they believe they do. Each of them have a special cell designed to restrain them as David is under threat of being doused with water while Kevin has a series of strobes which will halt him and trigger a new personality.\r\n\r\nAdded to the mix is Elijah Price (Samuel L. Jackson), who has been at the facility under heavy sedation after the events of “Unbreakable”.\r\n\r\nAs the therapy unfolds it becomes clear that an elaborate game of cat and mouse is underway between Price and her charges as each seems to have their own agenda.  This all builds to a very unusual final act which left me pondering if I enjoyed the final result or was disappointed with it.\r\n\r\nThe film seems to slowly be building to a big finale but yet it is far more restrained than one would expect. The film has a constant theme of Super Heroes and their traditional stories and roles as well as that of their Super Villains. \r\n\r\nOne expects a massive Battle Royale complete with elaborate FX but the film takes a more restrained approach and in doing so may disappoint some fans while pleasing others. The film naturally has its twist moments and while I will not spoil it, I can say I predicted it before I even saw the film. When I saw “Split” I actually told my wife my theory and low and behold it was true. I also predicted the twists for many of Shyamalan’s previous films so I had hoped for a bit more in this regard. The film does offer up some interesting options for another sequel or Spin-Off and the cast was very good especially McAvoy who adds to his menagerie of characters by showing audiences a few more of the ones previously undisclosed.\r\n\r\nThe film is at times very enjoyable and at times a bit frustrating as it seems to deviate from themes and elements that were setup earlier. That being said it does very muc" />
+
+
+</LinearLayout>

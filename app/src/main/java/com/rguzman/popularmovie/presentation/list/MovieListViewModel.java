@@ -149,9 +149,7 @@ public class MovieListViewModel extends ViewModel {
 
         @Override
         public void onChanged(@Nullable List<Movie> movies) {
-            Timber.d(" On change LIST");
             view.loadList(movies);
-
             movieListLiveData.removeObserver(this);
 
         }

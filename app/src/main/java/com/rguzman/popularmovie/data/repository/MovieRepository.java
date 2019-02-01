@@ -8,8 +8,13 @@ import com.rguzman.popularmovie.data.repository.datasource.MovieDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.disk.DiskDataSource;
 import com.rguzman.popularmovie.data.repository.datasource.network.NetworkDataSource;
 import com.rguzman.popularmovie.domain.model.Movie;
+import com.rguzman.popularmovie.domain.model.Review;
+import com.rguzman.popularmovie.domain.model.Video;
 import com.rguzman.popularmovie.domain.usecase.GetPopularMovies;
+import com.rguzman.popularmovie.domain.usecase.GetReviewsByMovie;
 import com.rguzman.popularmovie.domain.usecase.GetTopRatedMovies;
+import com.rguzman.popularmovie.domain.usecase.GetVideosByMovie;
+import com.rguzman.popularmovie.domain.usecase.UseCase;
 
 import java.util.List;
 
@@ -94,5 +99,35 @@ public class MovieRepository implements MovieDataSource {
     @Override
     public void unmarkMovieAsFavorite(int movieId) {
         this.diskDataSource.unmarkMovieAsFavorite(movieId);
+    }
+
+    @Override
+    public void loadVideosByMovie(int id, GetVideosByMovie.Callback<List<Video>> callback) {
+        this.networkDataSource.loadVideosByMovie(id, new NetworkCallback<List<Video>>() {
+            @Override
+            public void onResponse(LiveData<List<Video>> liveData) {
+                callback.onNetworkResponse(liveData);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                callback.onError(exception);
+            }
+        });
+    }
+
+    @Override
+    public void loadReviewsByMovie(int id, GetReviewsByMovie.Callback<List<Review>> callback) {
+        this.networkDataSource.loadReviewsByMovie(id, new NetworkCallback<List<Review>>() {
+            @Override
+            public void onResponse(LiveData<List<Review>> liveData) {
+                callback.onNetworkResponse(liveData);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                callback.onError(exception);
+            }
+        });
     }
 }

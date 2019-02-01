@@ -6,4 +6,6 @@
     <dimen name="title_height">120dp</dimen>
     <dimen name="text_padding_start">12dp</dimen>
     <dimen name="text_padding_end">12dp</dimen>
+
+    <dimen name="space_between_items">8dp</dimen>
 </resources>

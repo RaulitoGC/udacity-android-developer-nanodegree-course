@@ -87,6 +87,66 @@
       android:paddingEnd="@dimen/text_padding_end"
       tools:text="On the run in the year 1987, Bumblebee finds refuge in a junkyard in a small Californian beach town. Charlie, on the cusp of turning 18 and trying to find her place in the world, discovers Bumblebee, battle-scarred and broken.  When Charlie revives him, she quickly learns this is no ordinary yellow VW bug." />
 
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/colorAccent"
+      android:layout_marginTop="4dp"
+      android:layout_marginBottom="4dp"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"/>
+
+    <android.support.v7.widget.AppCompatTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"
+      android:text="@string/text_trailer"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      tools:text="Trailers"/>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/space_between_items" />
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/videosRecycler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"/>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/colorAccent"
+      android:layout_marginTop="4dp"
+      android:layout_marginBottom="4dp"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"/>
+
+    <android.support.v7.widget.AppCompatTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"
+      android:text="@string/text_reviews"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      tools:text="Reviews"/>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/space_between_items" />
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/reviewsRecycler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/activity_vertical_margin"/>
+
   </LinearLayout>
 
 </ScrollView>
