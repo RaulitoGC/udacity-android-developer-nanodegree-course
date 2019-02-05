@@ -1,22 +1,23 @@
 <resources>
-  <string name="app_name">baking-app</string>
+    <string name="app_name">baking-app</string>
 
-  <!-- Title -->
-  <string name="text_recipe_title">Baking Time</string>
+    <!-- Title -->
+    <string name="text_recipe_title">Baking Time</string>
 
-  <!-- Exception message -->
-  <string name="message_exception_network_connection">There isn\'t  internet connection</string>
-  <string name="message_exception_generic">Sorry, something went wrong.</string>
+    <!-- Exception message -->
+    <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+    <string name="message_exception_generic">Sorry, something went wrong.</string>
 
 
+    <!-- Step -->
+    <string name="text_step_title_label">Steps</string>
+    <string name="text_step_name_label">Step %1$s: %2$s</string>
 
-  <!-- Step -->
-  <string name="text_step_title_label">Steps</string>
-  <string name="text_step_name_label">Step %1$s: %2$s</string>
-
-  <!-- Step -->
-  <string name="text_ingredient_title_label">Ingredientes</string>
-  <string name="text_ingredient_quantity_label"> Quantity : %1$s</string>
-  <string name="text_ingredient_measure_label"> Measure : %1$s</string>
-  <string name="text_ingredient_name_label"> Ingredien : %1$s</string>
+    <!-- Step -->
+    <string name="text_ingredient_title_label">Ingredientes</string>
+    <string name="text_ingredient_quantity_label"> Quantity : %1$s</string>
+    <string name="text_ingredient_measure_label"> Measure : %1$s</string>
+    <string name="text_ingredient_name_label"> Ingredien : %1$s</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
