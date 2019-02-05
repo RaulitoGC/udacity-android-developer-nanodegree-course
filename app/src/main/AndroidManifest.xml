@@ -1,38 +1,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  package="com.rguzman.baking">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.rguzman.baking">
 
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-  <application
-    android:name=".BakingApplication"
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:supportsRtl="true"
+    <application
+        android:name=".BakingApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
-    android:theme="@style/AppTheme"
-    tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".presentation.recipe.RecipeActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <activity android:name=".presentation.recipe.RecipeActivity"
-      android:launchMode="singleTop">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+        <activity
+            android:name=".presentation.detail.RecipeDetailActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.recipe.RecipeActivity" />
 
-    <activity
-      android:parentActivityName=".presentation.recipe.RecipeActivity"
-      android:launchMode="singleTop"
-      android:name=".presentation.detail.RecipeDetailActivity" />
+        <activity
+            android:name=".presentation.detail.step.RecipeStepDetailActivity"
+            android:parentActivityName=".presentation.detail.RecipeDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"/>
 
-    <activity
-      android:name=".presentation.detail.step.RecipeStepDetailActivity"
-      android:parentActivityName=".presentation.detail.RecipeDetailActivity" />
-
-  </application>
+    </application>
 </manifest>

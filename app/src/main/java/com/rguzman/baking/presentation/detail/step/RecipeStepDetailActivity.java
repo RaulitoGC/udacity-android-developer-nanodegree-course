@@ -7,16 +7,14 @@ import android.support.annotation.Nullable;
 
 import com.rguzman.baking.R;
 import com.rguzman.baking.domain.model.Step;
+import com.rguzman.baking.presentation.utils.ActivityUtils;
 
+import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class RecipeStepDetailActivity extends DaggerAppCompatActivity {
 
     private static final String EXTRA_STEP = "com.rguzman.baking.extra.STEP";
-
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-
 
     public static Intent getCallingIntent(Context context, Step step) {
         Intent intent = new Intent(context, RecipeStepDetailActivity.class);
@@ -29,19 +27,13 @@ public class RecipeStepDetailActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail_step);
 
+        ButterKnife.bind(this);
+
         if (getIntent() != null && getIntent().hasExtra(EXTRA_STEP)) {
             Step step = getIntent().getParcelableExtra(EXTRA_STEP);
-            //setTitle(step.getShortDescription());
-//            toolbar.setTitle(step.getShortDescription());
-//            toolbar.setNavigationIcon(R.drawable.ic_arrow);
-//            toolbar.setNavigationOnClickListener(v -> finish());
+            setTitle(step.getShortDescription());
 
-            //ActivityUtils.replaceFragment(this, R.id.recipe_step_detail_fragment, RecipeStepDetailFragment.newInstance(step));
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.detail_step_fragment, RecipeStepDetailFragment.newInstance(step).newInstance(step))
-                        .commit();
-
+            ActivityUtils.addFragment(this, R.id.contentContainer, RecipeStepDetailFragment.newInstance(step));
         }
     }
 }

@@ -1,18 +1,18 @@
 <resources>
 
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-  </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
-  <style name="IngredientText">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:textSize">@dimen/text_item_size</item>
-    <item name="android:drawableStart">@drawable/circle</item>
-    <item name="android:drawablePadding">@dimen/text_item_margin</item>
-    <item name="android:layout_marginStart">@dimen/text_item_margin</item>
-  </style>
+    <style name="IngredientText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_item_size</item>
+        <item name="android:drawableStart">@drawable/circle</item>
+        <item name="android:drawablePadding">@dimen/text_item_margin</item>
+        <item name="android:layout_marginStart">@dimen/text_item_margin</item>
+    </style>
 
 </resources>

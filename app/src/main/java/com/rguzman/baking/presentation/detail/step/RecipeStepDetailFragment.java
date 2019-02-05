@@ -1,5 +1,6 @@
 package com.rguzman.baking.presentation.detail.step;
 
+import android.app.Dialog;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -33,8 +36,10 @@ public class RecipeStepDetailFragment extends DaggerFragment {
 
     @BindView(R.id.video_view)
     SimpleExoPlayerView playerView;
-//    @BindView(R.id.text_step_description)
-//    TextView txtStepDescription;
+    @BindView(R.id.text_step_description)
+    TextView txtStepDescription;
+    @BindView(R.id.video_container)
+    FrameLayout videoContainer;
 
     private Unbinder unbinder;
     private Step step;
@@ -42,6 +47,8 @@ public class RecipeStepDetailFragment extends DaggerFragment {
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady = true;
+    private Dialog fullScreenDialog;
+    private boolean isMovieinFullScreen = false;
 
     public static RecipeStepDetailFragment newInstance(Step step) {
         Bundle args = new Bundle();
@@ -59,6 +66,14 @@ public class RecipeStepDetailFragment extends DaggerFragment {
         }
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
+        this.unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -70,24 +85,16 @@ public class RecipeStepDetailFragment extends DaggerFragment {
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer();
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
-        this.unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //txtStepDescription.setText(step.getDescription());
+        txtStepDescription.setText(step.getDescription());
+        initFullscreenDialog();
     }
 
     @Override
@@ -139,15 +146,6 @@ public class RecipeStepDetailFragment extends DaggerFragment {
                 createMediaSource(uri);
     }
 
-    private void hideSystemUi() {
-        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
-
     private void releasePlayer() {
         if (player != null) {
             playbackPosition = player.getCurrentPosition();
@@ -158,25 +156,40 @@ public class RecipeStepDetailFragment extends DaggerFragment {
         }
     }
 
-    private void hideSystemUiFullScreen() {
-        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideSystemUiFullScreen();
-        } else {
-            hideSystemUi();
+            openFullscreenDialog();
+        }else{
+            closeFullscreenDialog();
         }
+    }
+
+    private void initFullscreenDialog() {
+
+        fullScreenDialog = new Dialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
+            public void onBackPressed() {
+                if (isMovieinFullScreen)
+                    closeFullscreenDialog();
+                super.onBackPressed();
+            }
+        };
+    }
+
+    private void openFullscreenDialog() {
+        videoContainer.removeView(playerView);
+        fullScreenDialog.addContentView(playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        isMovieinFullScreen = true;
+        fullScreenDialog.show();
+    }
+
+    private void closeFullscreenDialog() {
+        ((ViewGroup) playerView.getParent()).removeView(playerView);
+        videoContainer.addView(playerView);
+        isMovieinFullScreen = false;
+        fullScreenDialog.dismiss();
     }
 
     @Override
