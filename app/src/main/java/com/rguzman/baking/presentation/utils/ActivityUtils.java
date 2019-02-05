@@ -13,4 +13,11 @@ public class ActivityUtils {
         fragmentTransaction.add(layoutId, fragment);
         fragmentTransaction.commit();
     }
+
+    public static void replaceFragment(AppCompatActivity activity, int layoutId, Fragment fragment) {
+        final FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(layoutId, fragment);
+        fragmentTransaction.commit();
+    }
 }

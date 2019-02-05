@@ -10,6 +10,7 @@ import com.rguzman.baking.domain.model.Recipe;
 import com.rguzman.baking.presentation.utils.ActivityUtils;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import timber.log.Timber;
 
 public class RecipeDetailActivity extends DaggerAppCompatActivity {
 
@@ -30,6 +31,7 @@ public class RecipeDetailActivity extends DaggerAppCompatActivity {
             Recipe recipe = getIntent().getParcelableExtra(EXTRA_RECIPE);
 
             setTitle(recipe.getName());
+
 
             ActivityUtils.addFragment(this, R.id.recipe_step_fragment, RecipeStepFragment.newInstance(recipe));
         }

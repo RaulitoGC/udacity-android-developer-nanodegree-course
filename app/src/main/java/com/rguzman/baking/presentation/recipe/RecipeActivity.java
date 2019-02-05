@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.rguzman.baking.R;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import timber.log.Timber;
 
 public class RecipeActivity extends DaggerAppCompatActivity {
 

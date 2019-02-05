@@ -1,6 +1,6 @@
 package com.rguzman.baking.di.module;
 
-import com.rguzman.baking.presentation.detail.RecipeStepDetailFragment;
+import com.rguzman.baking.presentation.detail.step.RecipeStepDetailFragment;
 import com.rguzman.baking.presentation.detail.RecipeStepFragment;
 
 import dagger.Module;

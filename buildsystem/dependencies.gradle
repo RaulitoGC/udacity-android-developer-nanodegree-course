@@ -17,6 +17,7 @@ ext {
     roomVersion = '1.1.1'
     lifecycleVersion = '1.1.1'
     debugDbVersion = '1.0.4'
+    exoPlayerVersion = '2.6.1'
 
     projectDependencies = [
             androidConstraintLayout: "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
@@ -39,8 +40,8 @@ ext {
             viewModel              : "android.arch.lifecycle:viewmodel:$lifecycleVersion",
             liveData               : "android.arch.lifecycle:livedata:$lifecycleVersion",
             lifecycleCompiler      : "android.arch.lifecycle:compiler:$lifecycleVersion",
-            androidDebugDb         : "com.amitshekhar.android:debug-db:$debugDbVersion"
-
+            androidDebugDb         : "com.amitshekhar.android:debug-db:$debugDbVersion",
+            exoPlayer              : "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 
     ]
 }

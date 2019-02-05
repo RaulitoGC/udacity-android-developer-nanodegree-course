@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import com.rguzman.baking.R;
 import com.rguzman.baking.domain.model.Recipe;
 import com.rguzman.baking.domain.model.Step;
-
-import java.util.Objects;
+import com.rguzman.baking.presentation.detail.step.RecipeStepDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +69,7 @@ public class RecipeStepFragment extends DaggerFragment implements StepAdapter.Li
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(ingredientRecycler.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(
-              ContextCompat.getDrawable(ingredientRecycler.getContext(), R.drawable.recycler_divider));
+                ContextCompat.getDrawable(ingredientRecycler.getContext(), R.drawable.recycler_divider));
 
         this.ingredientAdapter = new IngredientAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -97,6 +96,6 @@ public class RecipeStepFragment extends DaggerFragment implements StepAdapter.Li
 
     @Override
     public void onListItemClick(Step step) {
-
+        startActivity(RecipeStepDetailActivity.getCallingIntent(getContext(), step));
     }
 }

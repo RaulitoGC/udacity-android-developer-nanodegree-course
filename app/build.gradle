@@ -64,5 +64,7 @@ dependencies {
     implementation projectDependencies.glide
     annotationProcessor projectDependencies.glideCompiler
 
+    implementation projectDependencies.exoPlayer
+
     debugImplementation projectDependencies.androidDebugDb
 }

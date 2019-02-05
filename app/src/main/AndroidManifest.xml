@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   package="com.rguzman.baking">
 
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,10 +12,11 @@
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
-    android:theme="@style/AppTheme">
 
-    <activity
-      android:name=".presentation.recipe.RecipeActivity"
+    android:theme="@style/AppTheme"
+    tools:ignore="GoogleAppIndexingWarning">
+
+    <activity android:name=".presentation.recipe.RecipeActivity"
       android:launchMode="singleTop">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,14 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".presentation.detail.RecipeDetailActivity" />
+    <activity
+      android:parentActivityName=".presentation.recipe.RecipeActivity"
+      android:launchMode="singleTop"
+      android:name=".presentation.detail.RecipeDetailActivity" />
+
+    <activity
+      android:name=".presentation.detail.step.RecipeStepDetailActivity"
+      android:parentActivityName=".presentation.detail.RecipeDetailActivity" />
 
   </application>
 </manifest>

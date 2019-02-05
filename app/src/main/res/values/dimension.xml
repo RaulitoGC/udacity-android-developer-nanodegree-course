@@ -16,4 +16,7 @@
   <dimen name="text_item_margin">8dp</dimen>
   <dimen name="list_divider_padding">16dp</dimen>
 
+
+  <dimen name="video_height">300dp</dimen>
+
 </resources>
