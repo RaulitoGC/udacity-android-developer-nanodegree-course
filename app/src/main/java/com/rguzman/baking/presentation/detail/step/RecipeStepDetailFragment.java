@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.support.DaggerFragment;
+
+import static android.view.View.GONE;
 
 public class RecipeStepDetailFragment extends DaggerFragment {
 
@@ -128,16 +131,21 @@ public class RecipeStepDetailFragment extends DaggerFragment {
 
         Uri uri = null;
 
-        if (step.getVideoUrl() != null) {
+        if (!TextUtils.isEmpty(step.getVideoUrl())) {
             uri = Uri.parse(step.getVideoUrl());
         }
 
-        if (uri == null && step.getThumbnailUrl() != null) {
+        if (uri == null && !TextUtils.isEmpty(step.getThumbnailUrl())) {
             uri = Uri.parse(step.getThumbnailUrl());
         }
 
-        MediaSource mediaSource = buildMediaSource(uri);
-        player.prepare(mediaSource, true, false);
+        if (uri != null) {
+            MediaSource mediaSource = buildMediaSource(uri);
+            player.prepare(mediaSource, true, false);
+        } else {
+            playerView.setVisibility(GONE);
+            videoContainer.setVisibility(GONE);
+        }
     }
 
     private MediaSource buildMediaSource(Uri uri) {
@@ -159,11 +167,13 @@ public class RecipeStepDetailFragment extends DaggerFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        int currentOrientation = getResources().getConfiguration().orientation;
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            openFullscreenDialog();
-        }else{
-            closeFullscreenDialog();
+        if (videoContainer.getVisibility() == View.VISIBLE) {
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                openFullscreenDialog();
+            } else {
+                closeFullscreenDialog();
+            }
         }
     }
 

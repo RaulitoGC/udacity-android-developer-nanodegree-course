@@ -23,6 +23,10 @@ import dagger.android.support.DaggerFragment;
 
 public class RecipeStepFragment extends DaggerFragment implements StepAdapter.ListItemClickListener {
 
+    public interface SelectStepListener {
+        void onSelectStep(Step step);
+    }
+
     public static final String ARG_RECIPE = "com.rguzmanc.baking.arg.RECIPE";
 
     @BindView(R.id.ingredient_recycler)
@@ -35,14 +39,16 @@ public class RecipeStepFragment extends DaggerFragment implements StepAdapter.Li
     private Recipe recipe;
     private StepAdapter stepAdapter;
     private IngredientAdapter ingredientAdapter;
+    private SelectStepListener listener;
 
-    public static RecipeStepFragment newInstance(Recipe recipe) {
+    public static RecipeStepFragment newInstance(Recipe recipe, SelectStepListener listener) {
 
         Bundle args = new Bundle();
         args.putParcelable(ARG_RECIPE, recipe);
 
         RecipeStepFragment fragment = new RecipeStepFragment();
         fragment.setArguments(args);
+        fragment.setListener(listener);
         return fragment;
     }
 
@@ -52,6 +58,10 @@ public class RecipeStepFragment extends DaggerFragment implements StepAdapter.Li
         if (getArguments() != null && getArguments().containsKey(ARG_RECIPE)) {
             this.recipe = getArguments().getParcelable(ARG_RECIPE);
         }
+    }
+
+    public void setListener(SelectStepListener listener) {
+        this.listener = listener;
     }
 
     @Nullable
@@ -96,6 +106,11 @@ public class RecipeStepFragment extends DaggerFragment implements StepAdapter.Li
 
     @Override
     public void onListItemClick(Step step) {
-        startActivity(RecipeStepDetailActivity.getCallingIntent(getContext(), step));
+        boolean isTablet = getResources().getBoolean(R.bool.isTable);
+        if (isTablet) {
+            listener.onSelectStep(step);
+        } else {
+            startActivity(RecipeStepDetailActivity.getCallingIntent(getContext(), step));
+        }
     }
 }

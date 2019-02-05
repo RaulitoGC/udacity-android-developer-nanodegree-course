@@ -7,12 +7,13 @@ import android.support.annotation.Nullable;
 
 import com.rguzman.baking.R;
 import com.rguzman.baking.domain.model.Recipe;
+import com.rguzman.baking.domain.model.Step;
+import com.rguzman.baking.presentation.detail.step.RecipeStepDetailFragment;
 import com.rguzman.baking.presentation.utils.ActivityUtils;
 
 import dagger.android.support.DaggerAppCompatActivity;
-import timber.log.Timber;
 
-public class RecipeDetailActivity extends DaggerAppCompatActivity {
+public class RecipeDetailActivity extends DaggerAppCompatActivity implements RecipeStepFragment.SelectStepListener {
 
     private static final String EXTRA_RECIPE = "com.rguzman.baking.extra.RECIPE";
 
@@ -32,8 +33,12 @@ public class RecipeDetailActivity extends DaggerAppCompatActivity {
 
             setTitle(recipe.getName());
 
-
-            ActivityUtils.addFragment(this, R.id.recipe_step_fragment, RecipeStepFragment.newInstance(recipe));
+            ActivityUtils.addFragment(this, R.id.recipe_step_fragment, RecipeStepFragment.newInstance(recipe, this));
         }
+    }
+
+    @Override
+    public void onSelectStep(Step step) {
+        ActivityUtils.replaceFragment(this, R.id.recipe_step_detail_fragment, RecipeStepDetailFragment.newInstance(step));
     }
 }
