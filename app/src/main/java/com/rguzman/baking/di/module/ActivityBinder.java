@@ -1,8 +1,8 @@
 package com.rguzman.baking.di.module;
 
 import com.rguzman.baking.di.ActivityScope;
-import com.rguzman.baking.presentation.recipe.RecipeListActivity;
-import com.rguzman.baking.presentation.step.RecipeStepActivity;
+import com.rguzman.baking.presentation.detail.RecipeDetailActivity;
+import com.rguzman.baking.presentation.recipe.RecipeActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -12,10 +12,10 @@ public abstract class ActivityBinder {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = RecipeListModule.class)
-    abstract RecipeListActivity movieListActivity();
+    abstract RecipeActivity recipeActivity();
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = RecipeStepModule.class)
-    abstract RecipeStepActivity movieDetailActivity();
+    @ContributesAndroidInjector(modules = RecipeDetailModule.class)
+    abstract RecipeDetailActivity recipeDetailActivity();
 
 }

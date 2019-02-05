@@ -50,6 +50,7 @@ public class RecipeNetworkDataSource implements NetworkDataSource {
 
                 @Override
                 public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                    t.printStackTrace();
                     callback.onError(new GenericException());
                 }
             });
