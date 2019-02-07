@@ -1,10 +1,11 @@
-package com.rguzman.baking;
+package com.rguzman.baking.presentation.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
 
+import com.rguzman.baking.R;
 import com.rguzman.baking.domain.model.Recipe;
 
 /**

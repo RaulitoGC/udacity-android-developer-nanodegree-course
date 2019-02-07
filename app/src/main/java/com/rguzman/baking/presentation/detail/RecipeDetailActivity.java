@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.rguzman.baking.R;
-import com.rguzman.baking.RecipeWidgetProvider;
+import com.rguzman.baking.presentation.widget.RecipeWidgetProvider;
 import com.rguzman.baking.domain.model.Recipe;
 import com.rguzman.baking.domain.model.Step;
 import com.rguzman.baking.presentation.detail.step.RecipeStepDetailFragment;
