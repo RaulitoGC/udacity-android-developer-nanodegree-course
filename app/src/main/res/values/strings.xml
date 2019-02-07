@@ -18,6 +18,7 @@
     <string name="text_ingredient_quantity_label"> Quantity : %1$s</string>
     <string name="text_ingredient_measure_label"> Measure : %1$s</string>
     <string name="text_ingredient_name_label"> Ingredien : %1$s</string>
-    <string name="appwidget_text">EXAMPLE</string>
+
     <string name="add_widget">Add widget</string>
+
 </resources>
