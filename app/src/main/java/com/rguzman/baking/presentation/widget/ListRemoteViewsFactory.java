@@ -10,6 +10,8 @@ import com.rguzman.baking.domain.model.Ingredient;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public static final String EXTRA_LIST_INGREDIENTS = "com.rguzman.baking.extra.LIST_INGREDIENTS";
@@ -21,6 +23,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         this.context = context;
         if (intent != null && intent.hasExtra(EXTRA_LIST_INGREDIENTS)) {
             ingredients = intent.getParcelableArrayListExtra(EXTRA_LIST_INGREDIENTS);
+            Timber.d(" ingredietns size" + ingredients.size());
         }
     }
 
@@ -51,6 +54,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         views.setTextViewText(R.id.txt_ingredient_measure, context.getString(R.string.text_ingredient_measure_label, ingredients.get(position).getMeasure()));
         views.setTextViewText(R.id.txt_ingredient_quantity, context.getString(R.string.text_ingredient_quantity_label, String.valueOf(ingredients.get(position).getQuantity())));
         views.setTextViewText(R.id.txt_ingredient_name, context.getString(R.string.text_ingredient_name_label, ingredients.get(position).getIngredient()));
+        Timber.d(" text"+ ingredients.get(position).getIngredient());
         return views;
     }
 

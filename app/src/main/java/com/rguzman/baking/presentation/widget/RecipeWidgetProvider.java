@@ -12,6 +12,8 @@ import com.rguzman.baking.domain.model.Recipe;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -21,9 +23,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
                                        int[] appWidgetId) {
 
         ArrayList<Ingredient> list = (ArrayList<Ingredient>) recipe.getIngredients();
-
         RemoteViews remoteViews = getListIngredientsRemoteView(context, list);
-
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 
