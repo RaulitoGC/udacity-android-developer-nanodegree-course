@@ -1,16 +1,27 @@
 package com.rguzman.baking.presentation.widget;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.rguzman.baking.domain.model.Recipe;
+import com.rguzman.baking.R;
+import com.rguzman.baking.domain.model.Ingredient;
+
+import java.util.List;
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private Recipe recipe;
+    public static final String EXTRA_LIST_INGREDIENTS = "com.rguzman.baking.extra.LIST_INGREDIENTS";
 
-    public ListRemoteViewsFactory(Recipe recipe) {
-        this.recipe = recipe;
+    private Context context;
+    private List<Ingredient> ingredients;
+
+    public ListRemoteViewsFactory(Context context, Intent intent) {
+        this.context = context;
+        if (intent != null && intent.hasExtra(EXTRA_LIST_INGREDIENTS)) {
+            ingredients = intent.getParcelableArrayListExtra(EXTRA_LIST_INGREDIENTS);
+        }
     }
 
     @Override
@@ -25,17 +36,22 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDestroy() {
-
+        this.ingredients.clear();
+        this.ingredients = null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return ingredients.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        return null;
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.list_item_ingredient);
+        views.setTextViewText(R.id.txt_ingredient_measure, context.getString(R.string.text_ingredient_measure_label, ingredients.get(position).getMeasure()));
+        views.setTextViewText(R.id.txt_ingredient_quantity, context.getString(R.string.text_ingredient_quantity_label, String.valueOf(ingredients.get(position).getQuantity())));
+        views.setTextViewText(R.id.txt_ingredient_name, context.getString(R.string.text_ingredient_name_label, ingredients.get(position).getIngredient()));
+        return views;
     }
 
     @Override

@@ -3,10 +3,14 @@ package com.rguzman.baking.presentation.widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.rguzman.baking.R;
+import com.rguzman.baking.domain.model.Ingredient;
 import com.rguzman.baking.domain.model.Recipe;
+
+import java.util.ArrayList;
 
 /**
  * Implementation of App Widget functionality.
@@ -16,11 +20,18 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     public static void updateAppWidget(Context context, Recipe recipe, AppWidgetManager appWidgetManager,
                                        int[] appWidgetId) {
 
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
-        views.setTextViewText(R.id.appwidget_text, recipe.getName());
+        ArrayList<Ingredient> list = (ArrayList<Ingredient>) recipe.getIngredients();
 
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        RemoteViews remoteViews = getListIngredientsRemoteView(context, list);
+
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+    }
+
+    private static RemoteViews getListIngredientsRemoteView(Context context, ArrayList<Ingredient> ingredients) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
+        Intent intent = ListWidgetService.getIntent(context, ingredients);
+        views.setRemoteAdapter(R.id.widget_list, intent);
+        return views;
     }
 
     @Override
