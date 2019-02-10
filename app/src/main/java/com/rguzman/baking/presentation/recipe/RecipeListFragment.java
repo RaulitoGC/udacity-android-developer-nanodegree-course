@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.rguzman.baking.R;
 import com.rguzman.baking.domain.model.Recipe;
+import com.rguzman.baking.presentation.IdlingResource.SimpleIdlingResource;
 import com.rguzman.baking.presentation.detail.RecipeDetailActivity;
 
 import java.util.List;
@@ -31,22 +34,30 @@ public class RecipeListFragment extends DaggerFragment implements RecipeListView
 
     private static final int GRID_NUM_COLUMNS = 3;
 
-    @BindView(R.id.recycler)
+    @BindView(R.id.recyclerRecipe)
     RecyclerView recycler;
 
     private Unbinder unbinder;
     private RecipeListViewModel recipeListViewModel;
     private RecipeAdapter adapter;
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getIdlingResource();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.recipeListViewModel = ViewModelProviders.of(this, viewModelFactory).get(RecipeListViewModel.class);
         this.recipeListViewModel.setView(this);
-        this.recipeListViewModel.init();
+        this.recipeListViewModel.init(mIdlingResource);
     }
 
 
@@ -75,8 +86,15 @@ public class RecipeListFragment extends DaggerFragment implements RecipeListView
 
         adapter = new RecipeAdapter(this);
         recycler.setAdapter(adapter);
+    }
 
-
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 
     @Override

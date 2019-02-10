@@ -27,7 +27,7 @@
         </receiver>
 
         <activity
-            android:name=".presentation.recipe.RecipeActivity"
+            android:name=".presentation.recipe.RecipeListActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
         <activity
             android:name=".presentation.detail.RecipeDetailActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.recipe.RecipeActivity" />
+            android:parentActivityName=".presentation.recipe.RecipeListActivity" />
         <activity
             android:name=".presentation.detail.step.RecipeStepDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"

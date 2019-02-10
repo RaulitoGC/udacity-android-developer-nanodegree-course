@@ -1,7 +1,6 @@
 package com.rguzman.baking.di.module;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.google.gson.Gson;

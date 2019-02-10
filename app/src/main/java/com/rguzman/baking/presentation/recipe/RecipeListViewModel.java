@@ -10,6 +10,7 @@ import com.rguzman.baking.data.exception.GenericException;
 import com.rguzman.baking.data.exception.NetworkConnectionException;
 import com.rguzman.baking.domain.model.Recipe;
 import com.rguzman.baking.domain.usecase.GetRecipes;
+import com.rguzman.baking.presentation.IdlingResource.SimpleIdlingResource;
 
 import java.util.List;
 
@@ -31,8 +32,13 @@ public class RecipeListViewModel extends ViewModel {
         this.view = view;
     }
 
-    public void init() {
-        this.recipeListObserver = new RecipeListObserver();
+    public void init(@Nullable final SimpleIdlingResource idlingResource) {
+
+        if (idlingResource != null) {
+            idlingResource.setIdleState(false);
+        }
+
+        this.recipeListObserver = new RecipeListObserver(idlingResource);
         if (this.recipeListLiveData != null) {
             recipeListLiveData.observeForever(recipeListObserver);
             return;
@@ -69,10 +75,20 @@ public class RecipeListViewModel extends ViewModel {
 
     private final class RecipeListObserver implements Observer<List<Recipe>> {
 
+        @Nullable
+        private final SimpleIdlingResource idlingResource;
+
+        public RecipeListObserver(@Nullable SimpleIdlingResource idlingResource) {
+            this.idlingResource = idlingResource;
+        }
+
         @Override
         public void onChanged(@Nullable List<Recipe> recipes) {
             view.loadRecipes(recipes);
             recipeListLiveData.removeObserver(this);
+            if (idlingResource != null) {
+                idlingResource.setIdleState(true);
+            }
         }
     }
 }

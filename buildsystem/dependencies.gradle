@@ -19,6 +19,11 @@ ext {
     debugDbVersion = '1.0.4'
     exoPlayerVersion = '2.6.1'
 
+    // Test
+    espressoVersion = '3.0.2'
+    testRunnerVersion = '1.0.2'
+    testRulesVersion = '1.0.2'
+
     projectDependencies = [
             androidConstraintLayout: "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
             androidDesign          : "com.android.support:design:$androidSupportVersion",
@@ -43,5 +48,14 @@ ext {
             androidDebugDb         : "com.amitshekhar.android:debug-db:$debugDbVersion",
             exoPlayer              : "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 
+    ]
+
+    projectTestDependencies = [
+            androidSupportAnnotation    : "com.android.support:support-annotations:$androidSupportVersion",
+            espresso                    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            runner                      : "com.android.support.test:rules:$testRulesVersion",
+            ruler                       : "com.android.support.test:runner:$testRunnerVersion",
+            espressoContrib             : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            espressoIdlingResource      : "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
     ]
 }

@@ -3,7 +3,7 @@ package com.rguzman.baking.di.module;
 import com.rguzman.baking.di.ActivityScope;
 import com.rguzman.baking.presentation.detail.RecipeDetailActivity;
 import com.rguzman.baking.presentation.detail.step.RecipeStepDetailActivity;
-import com.rguzman.baking.presentation.recipe.RecipeActivity;
+import com.rguzman.baking.presentation.recipe.RecipeListActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -13,7 +13,7 @@ public abstract class ActivityBinder {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = RecipeListModule.class)
-    abstract RecipeActivity recipeActivity();
+    abstract RecipeListActivity recipeListActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = RecipeDetailModule.class)

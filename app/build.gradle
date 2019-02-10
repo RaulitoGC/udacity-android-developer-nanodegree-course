@@ -29,11 +29,7 @@ android {
 dependencies {
 
     def projectDependencies = rootProject.ext.projectDependencies
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    def projectTestDependencies = rootProject.ext.projectTestDependencies
 
     implementation projectDependencies.androidDesign
     implementation projectDependencies.androidConstraintLayout
@@ -43,9 +39,6 @@ dependencies {
     implementation projectDependencies.liveData
 
     annotationProcessor projectDependencies.lifecycleCompiler
-
-    implementation projectDependencies.room
-    annotationProcessor projectDependencies.roomCompiler
 
     implementation projectDependencies.timber
 
@@ -66,5 +59,11 @@ dependencies {
 
     implementation projectDependencies.exoPlayer
 
-    debugImplementation projectDependencies.androidDebugDb
+    implementation projectTestDependencies.espressoIdlingResource
+
+    androidTestImplementation projectTestDependencies.androidSupportAnnotation
+    androidTestImplementation projectTestDependencies.espresso
+    androidTestImplementation projectTestDependencies.runner
+    androidTestImplementation projectTestDependencies.ruler
+    androidTestImplementation projectTestDependencies.espressoContrib
 }
