@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/widget"
-        android:title="@string/add_widget"
+        android:title="@string/text_add_widget"
         app:showAsAction="never"
-        android:orderInCategory="4"
-        android:checkable="true" />
+        android:orderInCategory="4" />
 </menu>

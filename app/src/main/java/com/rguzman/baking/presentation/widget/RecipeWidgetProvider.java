@@ -7,12 +7,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.rguzman.baking.R;
-import com.rguzman.baking.domain.model.Ingredient;
 import com.rguzman.baking.domain.model.Recipe;
-
-import java.util.ArrayList;
-
-import timber.log.Timber;
 
 /**
  * Implementation of App Widget functionality.
@@ -20,23 +15,30 @@ import timber.log.Timber;
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
     public static void updateAppWidget(Context context, Recipe recipe, AppWidgetManager appWidgetManager,
-                                       int[] appWidgetId) {
+                                       int appWidgetId) {
 
-        ArrayList<Ingredient> list = (ArrayList<Ingredient>) recipe.getIngredients();
-        RemoteViews remoteViews = getListIngredientsRemoteView(context, list);
+        RemoteViews remoteViews = getListIngredientsRemoteView(context, recipe);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 
-    private static RemoteViews getListIngredientsRemoteView(Context context, ArrayList<Ingredient> ingredients) {
+    public static void updateRecipeWidgets(Context context, Recipe recipe, AppWidgetManager appWidgetManager,
+                                           int[] appWidgetIds) {
+
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, recipe, appWidgetManager, appWidgetId);
+        }
+    }
+
+    private static RemoteViews getListIngredientsRemoteView(Context context, Recipe recipe) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
-        Intent intent = ListWidgetService.getIntent(context, ingredients);
+        Intent intent = ListWidgetService.getIntent(context, recipe);
         views.setRemoteAdapter(R.id.widget_list, intent);
+        views.setTextViewText(R.id.text_title_widget, recipe.getName());
         return views;
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
     }
 
     @Override

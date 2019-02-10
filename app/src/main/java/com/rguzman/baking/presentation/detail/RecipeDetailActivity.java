@@ -11,11 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.rguzman.baking.R;
-import com.rguzman.baking.presentation.widget.RecipeWidgetProvider;
 import com.rguzman.baking.domain.model.Recipe;
 import com.rguzman.baking.domain.model.Step;
 import com.rguzman.baking.presentation.detail.step.RecipeStepDetailFragment;
 import com.rguzman.baking.presentation.utils.ActivityUtils;
+import com.rguzman.baking.presentation.widget.RecipeWidgetProvider;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -61,13 +61,10 @@ public class RecipeDetailActivity extends DaggerAppCompatActivity implements Rec
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.widget:
-                if (item.isChecked()) {
-                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, RecipeWidgetProvider.class));
-                    RecipeWidgetProvider.updateAppWidget(this, recipe, appWidgetManager, appWidgetIds);
-                }
-                item.setChecked(!item.isChecked());
-
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, RecipeWidgetProvider.class));
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+                RecipeWidgetProvider.updateRecipeWidgets(this, recipe, appWidgetManager, appWidgetIds);
         }
         return true;
     }

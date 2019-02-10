@@ -1,26 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/colorPrimary"
+  android:padding="@dimen/widget_margin">
+
+  <TextView
+    android:id="@+id/text_title_widget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="8dp"
+    android:layout_marginBottom="12dp"
+    android:text="@string/text_title_recipe"
+    android:textColor="@android:color/white"
+    android:textSize="24sp"
+    android:textStyle="bold|italic" />
+
+  <TextView
+    android:id="@+id/text_ingredients_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/text_title_widget"
+    android:layout_marginStart="16dp"
+    android:layout_marginBottom="8dp"
+    android:text="@string/text_ingredient_title_label"
+    android:textColor="@android:color/white"
+    android:textSize="18sp"
+    android:textStyle="bold|italic" />
+
+  <ListView
+    android:id="@+id/widget_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:padding="@dimen/widget_margin">
-
-    <TextView
-        android:id="@+id/text_title_widget"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:layout_marginBottom="12dp"
-        android:text="@string/text_ingredient_title_label"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
-
-    <ListView
-        android:id="@+id/widget_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_title_widget"
-        android:layout_margin="16dp" />
+    android:layout_height="wrap_content"
+    android:layout_below="@id/text_ingredients_label"
+    android:background="@android:color/white"
+    android:divider="@color/colorDivider"
+    android:dividerHeight="1dp"
+    android:padding="16dp" />
 
 </RelativeLayout>

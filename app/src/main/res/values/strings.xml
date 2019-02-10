@@ -19,6 +19,7 @@
     <string name="text_ingredient_measure_label"> Measure : %1$s</string>
     <string name="text_ingredient_name_label"> Ingredien : %1$s</string>
 
-    <string name="add_widget">Add widget</string>
+    <string name="text_add_widget" translatable="false">Add widget</string>
+    <string name="text_title_recipe">Recipe</string>
 
 </resources>
