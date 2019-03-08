@@ -19,7 +19,7 @@ public class EndPointAsyncTask extends AsyncTask<String, Void, String> {
         void onResponse(String response);
     }
 
-    public EndPointAsyncTask(EndPointCallback callback) {
+    public void setCallback(EndPointCallback callback) {
         this.callback = callback;
     }
 
