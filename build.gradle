@@ -1,8 +1,8 @@
 apply from: 'dependencies/dependencies.gradle'
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
@@ -11,7 +11,11 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

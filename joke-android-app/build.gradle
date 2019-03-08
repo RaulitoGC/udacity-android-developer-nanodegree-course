@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+    }
+}
+
+android {
+    compileSdkVersion rootProject.androidCompileSdkVersion
+    buildToolsVersion rootProject.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.androidMinSdkVersion
+        targetSdkVersion rootProject.androidTargetSdkVersion
+        applicationId "com.udacity.gradle.builditbigger"
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def projectDependencies = rootProject.ext.projectDependencies
+    def projectTestDependencies = rootProject.ext.projectTestDependencies
+
+    endpointsServer project(configuration: 'endpoints', path: ':google-cloud-endpoints')
+
+    implementation projectDependencies.androidDesign
+    implementation projectDependencies.playServicesAds
+    implementation projectDependencies.googleApiClient
+    implementation projectDependencies.googleHttpClienAndroid
+    implementation projectDependencies.findBugs
+    api projectDependencies.guava
+
+    implementation projectTestDependencies.espressoIdlingResource
+
+    androidTestImplementation projectTestDependencies.androidSupportAnnotation
+    androidTestImplementation projectTestDependencies.espresso
+    androidTestImplementation projectTestDependencies.runner
+    androidTestImplementation projectTestDependencies.ruler
+    androidTestImplementation projectTestDependencies.espressoContrib
+}
