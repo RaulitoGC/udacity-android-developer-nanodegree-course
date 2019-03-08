@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EndPointAsyncTask.EndPointCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        new EndPointAsyncTask(this).execute("Raul");
     }
 
 
+    @Override
+    public void onResponse(String response) {
+        Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
+    }
 }
