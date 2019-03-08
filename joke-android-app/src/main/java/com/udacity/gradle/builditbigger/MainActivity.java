@@ -9,14 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
+import com.rguzman.displayjoke.ShowJokeActivity;
 
 
 public class MainActivity extends AppCompatActivity implements EndPointAsyncTask.EndPointCallback {
 
-    public static final String NAME = "Raul";
     public TestActivityCallback callback;
 
     interface TestActivityCallback {
@@ -30,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        MobileAds.initialize(this, getString(R.string.banner_ad_unit_id));
     }
 
     public void setCallback(TestActivityCallback callback) {
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
         }
 
         EndPointAsyncTask asyncTask = new EndPointAsyncTask(this);
-        asyncTask.execute(NAME);
+        asyncTask.execute();
     }
 
     @Override
@@ -84,9 +80,11 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
         if (mIdlingResource != null) {
             mIdlingResource.setIdleState(true);
         }
-        Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+
         if (callback != null) {
             callback.onResponse(response);
         }
+
+        startActivity(ShowJokeActivity.getCallingIntent(this, response));
     }
 }

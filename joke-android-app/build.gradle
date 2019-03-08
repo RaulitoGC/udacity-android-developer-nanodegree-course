@@ -48,6 +48,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    flavorDimensions "version"
+
+    productFlavors {
+
+        free {
+            dimension "version"
+            applicationIdSuffix ".free"
+        }
+
+        paid {
+            dimension "version"
+        }
+    }
 }
 
 dependencies {
@@ -55,9 +69,12 @@ dependencies {
     def projectTestDependencies = rootProject.ext.projectTestDependencies
 
     endpointsServer project(configuration: 'endpoints', path: ':google-cloud-endpoints')
+    implementation project(":joke-display")
 
     implementation projectDependencies.androidDesign
-    implementation projectDependencies.playServicesAds
+
+    freeImplementation projectDependencies.playServicesAds
+
     implementation projectDependencies.googleApiClient
     implementation projectDependencies.googleHttpClienAndroid
     implementation projectDependencies.findBugs

@@ -8,8 +8,8 @@
    }
   }
  },
- "basePath": "/_ah/api/myApi/v1/sayHi/",
- "baseUrl": "https://myApplicationId.appspot.com/_ah/api/myApi/v1/sayHi/",
+ "basePath": "/_ah/api/myApi/v1/",
+ "baseUrl": "https://myApplicationId.appspot.com/_ah/api/myApi/v1/",
  "batchPath": "batch",
  "description": "This is an API",
  "discoveryVersion": "v1",
@@ -20,22 +20,12 @@
  "id": "myApi:v1",
  "kind": "discovery#restDescription",
  "methods": {
-  "sayHi": {
-   "httpMethod": "POST",
-   "id": "myApi.sayHi",
-   "parameterOrder": [
-    "name"
-   ],
-   "parameters": {
-    "name": {
-     "location": "path",
-     "required": true,
-     "type": "string"
-    }
-   },
-   "path": "{name}",
+  "getJoke": {
+   "httpMethod": "GET",
+   "id": "myApi.getJoke",
+   "path": "object",
    "response": {
-    "$ref": "MyBean"
+    "$ref": "_any"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
@@ -93,16 +83,11 @@
  "protocol": "rest",
  "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
  "schemas": {
-  "MyBean": {
-   "id": "MyBean",
-   "properties": {
-    "data": {
-     "type": "string"
-    }
-   },
-   "type": "object"
+  "_any": {
+   "id": "_any",
+   "type": "any"
   }
  },
- "servicePath": "myApi/v1/sayHi/",
+ "servicePath": "myApi/v1/",
  "version": "v1"
 }

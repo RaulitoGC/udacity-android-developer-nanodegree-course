@@ -90,14 +90,15 @@
     function enableClick() {
       document.getElementById('helloButton').onclick = function() {
         var name = document.getElementById('nameInput').value;
-        gapi.client.myApi.sayHi({'name': name}).execute(
+        gapi.client.myApi.getJoke().execute(
           function(response) {
+            console.log(response);
             var outputAlertDiv = document.getElementById('outputAlert');
             outputAlertDiv.style.visibility = 'visible';
 
             if (!response.error) {
               outputAlertDiv.className = 'alert alert-success';
-              outputAlertDiv.innerHTML = '<h2>' + response.result.data + '</h2>';
+              outputAlertDiv.innerHTML = '<h2>' + response + '</h2>';
             }
             else if (response.error) {
               outputAlertDiv.className = 'alert alert-danger';

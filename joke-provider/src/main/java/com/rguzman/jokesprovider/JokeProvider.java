@@ -11,7 +11,7 @@ public class JokeProvider {
             "Why are eggs not very much into jokes? Because they could crack up.",
             "I never hold my farts in. Only assholes do that."};
 
-    public static final String getJoke() {
+    public String getJoke() {
         return JOKES[new Random().nextInt(JOKES.length)];
     }
 }

@@ -29,6 +29,8 @@ dependencies {
     implementation projectDependencies.servletApi
     implementation projectDependencies.googleApiClient
     implementation projectDependencies.googleHttpClienAndroid
+
+    implementation project(':joke-provider')
 }
 
 appengine {
