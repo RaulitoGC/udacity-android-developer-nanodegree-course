@@ -22,7 +22,7 @@ public class RemoteEndpointUtil {
     public static JSONArray fetchJsonArray() {
         String itemsJson = null;
         try {
-            itemsJson = fetchPlainText(Config.BASE_URL);
+            itemsJson = fetchPlainText();
         } catch (IOException e) {
             Log.e(TAG, "Error fetching items JSON", e);
             return null;
@@ -43,11 +43,11 @@ public class RemoteEndpointUtil {
         return null;
     }
 
-    static String fetchPlainText(URL url) throws IOException {
+    static String fetchPlainText() throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(url)
+                .url(Config.BASE_URL)
                 .build();
 
         Response response = client.newCall(request).execute();

@@ -51,6 +51,9 @@ public class UpdaterService extends IntentService {
 
         Uri dirUri = ItemsContract.Items.buildDirUri();
 
+        //TODO: Remove this log before send the project
+        Log.d(" URI ->", dirUri.toString());
+
         // Delete all items
         cpo.add(ContentProviderOperation.newDelete(dirUri).build());
 
