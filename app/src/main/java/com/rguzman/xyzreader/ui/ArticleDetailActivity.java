@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.ui;
+package com.rguzman.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,15 +11,14 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 
-import com.rguzman.materialdesign.R;
-import com.rguzman.materialdesign.data.ArticleLoader;
-import com.rguzman.materialdesign.data.ItemsContract;
+import com.rguzman.xyzreader.R;
+import com.rguzman.xyzreader.data.ArticleLoader;
+import com.rguzman.xyzreader.data.ItemsContract;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.

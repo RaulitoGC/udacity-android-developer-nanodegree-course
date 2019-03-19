@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.ui;
+package com.rguzman.xyzreader.ui;
 
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
@@ -22,10 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rguzman.materialdesign.R;
-import com.rguzman.materialdesign.data.ArticleLoader;
-import com.rguzman.materialdesign.data.ItemsContract;
-import com.rguzman.materialdesign.data.UpdaterService;
+import com.rguzman.xyzreader.R;
+import com.rguzman.xyzreader.data.ArticleLoader;
+import com.rguzman.xyzreader.data.ItemsContract;
+import com.rguzman.xyzreader.data.UpdaterService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,7 +50,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
+    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
     private Adapter adapter;
 
     @Override
@@ -58,14 +58,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
 
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
-        final View toolbarContainerView = findViewById(R.id.toolbar_container);
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
 
         adapter = new Adapter(null);
         adapter.setHasStableIds(true);
@@ -240,7 +237,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         @Override
         public int getNewListSize() {
-            return newCursor == null? 0 : newCursor.getCount();
+            return newCursor == null ? 0 : newCursor.getCount();
         }
 
         @Override
@@ -260,6 +257,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             moveCursorsToPosition(oldItemPosition, newItemPosition);
             return getChangePayload(newCursor, oldCursor);
         }
+
         @Nullable
         public Object getChangePayload(C newCursor, C oldCursor) {
             return null;
@@ -270,8 +268,10 @@ public class ArticleListActivity extends AppCompatActivity implements
             boolean oldMoved = oldCursor.moveToPosition(oldItemPosition);
             return newMoved && oldMoved;
         }
-        /** Cursors are already moved to positions where you should obtain data by row.
-         *  Checks if contents at row are same
+
+        /**
+         * Cursors are already moved to positions where you should obtain data by row.
+         * Checks if contents at row are same
          *
          * @param oldCursor Old cursor object
          * @param newCursor New cursor object
@@ -279,8 +279,10 @@ public class ArticleListActivity extends AppCompatActivity implements
          */
         public abstract boolean areRowContentsTheSame(Cursor oldCursor, Cursor newCursor);
 
-        /** Cursors are already moved to positions where you should obtain data from row
-         *  Checks if rows are the same, ideally, check by unique id
+        /**
+         * Cursors are already moved to positions where you should obtain data from row
+         * Checks if rows are the same, ideally, check by unique id
+         *
          * @param oldCursor Old cursor object
          * @param newCursor New cursor object
          * @return See DiffUtil

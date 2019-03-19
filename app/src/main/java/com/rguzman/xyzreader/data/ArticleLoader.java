@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.data;
+package com.rguzman.xyzreader.data;
 
 import android.content.Context;
 import android.content.CursorLoader;

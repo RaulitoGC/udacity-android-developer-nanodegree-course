@@ -20,7 +20,7 @@
  * -Changed package name
  */
 
-package com.rguzman.materialdesign.data;
+package com.rguzman.xyzreader.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;

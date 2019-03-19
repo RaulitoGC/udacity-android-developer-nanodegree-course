@@ -1,5 +1,5 @@
 
-package com.rguzman.materialdesign.data;
+package com.rguzman.xyzreader.data;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;

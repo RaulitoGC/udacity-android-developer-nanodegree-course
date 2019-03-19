@@ -1,10 +1,10 @@
-package com.rguzman.materialdesign.data;
+package com.rguzman.xyzreader.data;
 
 import android.net.Uri;
 
 public class ItemsContract {
-    public static final String CONTENT_AUTHORITY = "com.rguzman.materialdesign";
-    public static final Uri BASE_URI = Uri.parse("content://com.rguzman.materialdesign");
+    public static final String CONTENT_AUTHORITY = "com.rguzman.xyzreader";
+    public static final Uri BASE_URI = Uri.parse("content://com.rguzman.xyzreader");
 
     interface ItemsColumns {
         /**
@@ -46,8 +46,8 @@ public class ItemsContract {
     }
 
     public static class Items implements ItemsColumns {
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.rguzman.materialdesign.items";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.rguzman.materialdesign.items";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.rguzman.xyzreader.items";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.rguzman.xyzreader.items";
 
         public static final String DEFAULT_SORT = PUBLISHED_DATE + " DESC";
 

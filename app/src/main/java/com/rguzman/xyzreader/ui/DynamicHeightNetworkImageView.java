@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.ui;
+package com.rguzman.xyzreader.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

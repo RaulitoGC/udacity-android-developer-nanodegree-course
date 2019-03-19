@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.ui;
+package com.rguzman.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -31,8 +31,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.rguzman.materialdesign.R;
-import com.rguzman.materialdesign.data.ArticleLoader;
+import com.rguzman.xyzreader.R;
+import com.rguzman.xyzreader.data.ArticleLoader;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is

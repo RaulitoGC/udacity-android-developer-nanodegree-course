@@ -1,10 +1,10 @@
-package com.rguzman.materialdesign.data;
+package com.rguzman.xyzreader.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.rguzman.materialdesign.data.ItemsProvider.Tables;
+import static com.rguzman.xyzreader.data.ItemsProvider.Tables;
 
 public class ItemsDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "xyzreader.db";

@@ -1,4 +1,4 @@
-package com.rguzman.materialdesign.remote;
+package com.rguzman.xyzreader.remote;
 
 import android.util.Log;
 
