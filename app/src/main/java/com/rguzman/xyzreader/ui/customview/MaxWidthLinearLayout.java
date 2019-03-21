@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rguzman.xyzreader.ui;
+package com.rguzman.xyzreader.ui.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

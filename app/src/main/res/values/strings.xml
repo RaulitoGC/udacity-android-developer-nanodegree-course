@@ -9,4 +9,10 @@
 
     <string name="up">Up</string>
 
+    <!-- Android Shared elements -->
+    <string name="thumbnail_shared_element">thumbnailSharedElement</string>
+    <string name="article_title_shared_element">articleTitleSharedElement</string>
+    <string name="article_subtitle_shared_element">articleSubtitleSharedElement</string>
+
+
 </resources>

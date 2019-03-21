@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rguzman.xyzreader.ui;
+package com.rguzman.xyzreader.ui.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
