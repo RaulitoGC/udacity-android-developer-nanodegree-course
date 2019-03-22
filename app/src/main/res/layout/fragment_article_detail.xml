@@ -54,7 +54,7 @@
         android:id="@+id/meta_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#333"
+        android:background="@color/gray_600"
         android:orientation="vertical">
 
         <TextView
@@ -62,18 +62,22 @@
           style="?android:attr/textAppearanceLarge"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="sans-serif-condensed"
-          android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-          android:textColor="#fff"
+          android:textColor="@color/white"
           android:textSize="@dimen/detail_title_text_size"
+          android:paddingStart="@dimen/card_title_padding_start"
+          android:paddingEnd="@dimen/card_title_padding_end"
+          android:paddingTop="@dimen/card_title_padding_top"
           android:textStyle="bold" />
 
         <TextView
           android:id="@+id/article_byline"
           style="?android:attr/textAppearanceSmall"
+          android:paddingStart="@dimen/card_title_padding_start"
+          android:paddingBottom="@dimen/card_title_padding_bottom"
+          android:paddingEnd="@dimen/card_title_padding_end"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="#8fff" />
+          android:textColor="@color/gray_400" />
       </LinearLayout>
 
       <TextView
@@ -83,6 +87,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/gray_400"
         android:textColorLink="@color/teal_500"
+        android:paddingStart="@dimen/card_title_padding_start"
+        android:paddingBottom="@dimen/card_title_padding_bottom"
+        android:paddingEnd="@dimen/card_title_padding_end"
+        android:paddingTop="@dimen/card_title_padding_top"
         android:textSize="@dimen/detail_body_text_size" />
 
     </LinearLayout>
@@ -93,5 +101,6 @@
     android:id="@+id/share_fab"
     style="@style/FabStyle"
     android:layout_gravity="bottom|end" />
+
 
 </android.support.design.widget.CoordinatorLayout>

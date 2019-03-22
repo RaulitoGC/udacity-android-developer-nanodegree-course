@@ -8,13 +8,10 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -113,19 +110,15 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onItemClick(ImageView thumbnail, TextView title, TextView subtitle, long itemId) {
+    public void onItemClick(ImageView thumbnail, TextView title, TextView subtitle, int position) {
 
-
-        Pair<View, String> p1 = new Pair<View, String>(thumbnail, getString(R.string.thumbnail_shared_element));
-        Pair<View, String> p2 = new Pair<View, String>(title, getString(R.string.article_title_shared_element));
-        Pair<View, String> p3 = new Pair<View, String>(subtitle, getString(R.string.article_subtitle_shared_element));
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(this, p1, p2, p3);
-
-
-        startActivity(new Intent(Intent.ACTION_VIEW,
-                ItemsContract.Items.buildItemUri(itemId)), options.toBundle());
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                ItemsContract.Items.buildItemUri(adapter.getItemId(position)));
+        intent.putExtra(ArticleDetailActivity.POSITION_EXTRA, position);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
+
+
 }
 

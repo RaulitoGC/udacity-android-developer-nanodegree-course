@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(ImageView thumbnail, TextView title, TextView subtitle, long itemId);
+        void onItemClick(ImageView thumbnail, TextView title, TextView subtitle, int position);
     }
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
@@ -94,7 +94,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
 
         holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(holder.thumbnailView,
-                holder.titleView, holder.subtitleView, getItemId(holder.getAdapterPosition())));
+                holder.titleView, holder.subtitleView, holder.getAdapterPosition()));
     }
 
     void updateList(Cursor newCursor) {
