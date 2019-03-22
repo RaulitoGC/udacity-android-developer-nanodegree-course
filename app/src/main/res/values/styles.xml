@@ -17,9 +17,10 @@
 
 <resources>
 
-  <style name="AppTheme" parent="BaseTheme"/>
+  <style name="AppThemeDarkActionBar" parent="BaseThemeDarkActionBar"/>
+  <style name="AppThemeNoActionBar" parent="BaseThemeNoActionBar"/>
 
-  <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="BaseThemeDarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="colorPrimary">@color/indigo_500</item>
     <item name="colorPrimaryDark">@color/indigo_700</item>
     <item name="colorAccent">@color/teal_500</item>
@@ -28,12 +29,28 @@
     <item name="android:selectableItemBackground">@drawable/accent_selectable_item_background</item>
   </style>
 
-  <style name="AppTheme.NoActionBar">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
+  <style name="BaseThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/indigo_500</item>
+    <item name="colorPrimaryDark">@color/indigo_700</item>
+    <item name="colorAccent">@color/teal_500</item>
+    <item name="colorControlHighlight">@color/teal_200</item>
+    <item name="selectableItemBackground">@drawable/accent_selectable_item_background</item>
+    <item name="android:selectableItemBackground">@drawable/accent_selectable_item_background</item>
+  </style>
+
+
+  <style name="FabStyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:src">@drawable/ic_share</item>
+    <item name="borderWidth">0dp</item>
+    <item name="elevation">6dp</item>
+    <item name="pressedTranslationZ">12dp</item>
+    <item name="rippleColor">@android:color/white</item>
   </style>
 
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
