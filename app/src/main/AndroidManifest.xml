@@ -27,7 +27,8 @@
 
     <activity
       android:name="com.rguzman.xyzreader.ui.detail.ArticleDetailActivity"
-      android:parentActivityName="com.rguzman.xyzreader.ui.list.ArticleListActivity">
+      android:parentActivityName="com.rguzman.xyzreader.ui.list.ArticleListActivity"
+      android:theme="@style/AppTheme.NoActionBar">
       <intent-filter tools:ignore="AppLinkUrlError">
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
