@@ -9,10 +9,9 @@
   </style>
 
   <style name="AppThemeNoActionBar" parent="BaseThemeNoActionBar">
+    <item name="android:windowTranslucentStatus">true</item>
     <item name="android:colorControlHighlight">@color/teal_200</item>
     <item name="android:windowSharedElementsUseOverlay">false</item>
-    <item name="android:windowContentTransitions">true</item>
-    <item name="android:windowTranslucentStatus">true</item>
   </style>
 
 </resources>

@@ -62,6 +62,7 @@ public class DrawInsetsFrameLayout extends FrameLayout {
         mInsetBackground = a.getDrawable(R.styleable.DrawInsetsFrameLayout_insetBackground);
 
         a.recycle();
+        setInsetBackground(mInsetBackground);
     }
 
     public void setInsetBackground(Drawable insetBackground) {
