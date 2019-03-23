@@ -9,6 +9,8 @@
     <dimen name="fab_margin">24dp</dimen>
 
     <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="appbarlayout_elevation">4dp</dimen>
 
     <dimen name="card_title_padding_start">16dp</dimen>
     <dimen name="card_title_padding_end">16dp</dimen>
