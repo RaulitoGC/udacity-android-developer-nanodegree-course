@@ -30,23 +30,40 @@ android {
 
 dependencies {
 
-    implementation android.material
-    implementation android.constraintLayout
+    implementation projectDependencies.android.material
+    implementation projectDependencies.android.constraintLayout
 
-    implementation glide.runtime
-    annotationProcessor glide.compiler
+    implementation projectDependencies.lifecycle.runtime
+    implementation projectDependencies.lifecycle.extensions
+    implementation projectDependencies.lifecycle.java8
 
-    implementation butterknife.runtime
-    annotationProcessor butterknife.compiler
+    annotationProcessor projectDependencies.lifecycle.compiler
 
-    implementation retrofit.runtime
-    implementation retrofit.gson
-    implementation okhttp
+    implementation projectDependencies.debug.timber
+    implementation projectDependencies.debug.db
 
-    implementation dagger.runtime
-    implementation dagger.android
-    implementation dagger.androidSupport
-    annotationProcessor dagger.compiler
-    annotationProcessor dagger.androidSupportCompiler
+    implementation projectDependencies.glide.runtime
+    annotationProcessor projectDependencies.glide.compiler
+
+    implementation projectDependencies.butterknife.runtime
+    annotationProcessor projectDependencies.butterknife.compiler
+
+    implementation projectDependencies.retrofit.runtime
+    implementation projectDependencies.retrofit.gson
+    implementation projectDependencies.okhttp.runtime
+
+    implementation projectDependencies.dagger.runtime
+    implementation projectDependencies.dagger.android
+    implementation projectDependencies.dagger.androidSupport
+    annotationProcessor projectDependencies.dagger.compiler
+    annotationProcessor projectDependencies.dagger.androidSupportCompiler
+
+    implementation projectTestDependencies.espresso.idlingResource
+
+    androidTestImplementation projectTestDependencies.espresso.core
+    androidTestImplementation projectTestDependencies.atsl.annotationSupport
+    androidTestImplementation projectTestDependencies.atsl.runner
+    androidTestImplementation projectTestDependencies.atsl.rules
+    androidTestImplementation projectTestDependencies.espresso.contrib
 
 }

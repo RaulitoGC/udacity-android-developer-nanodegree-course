@@ -5,77 +5,75 @@ ext {
     androidTargetSdk = 28
     androidCompileSdk = 28
 
-
-    androidMaterial = "1.0.0"
-    constraintLayout = "1.1.2"
-    glide = "4.9.0"
-    butterknife = "10.1.0"
-    retrofit = "2.5.0"
-    okhttp = "3.14.0"
-    dagger = "2.21"
-    room = "1.1.0"
-    lifecycle = "2.0.0"
-    timber = "4.7.1"
-    debugDb = "1.0.6"
-    espresso = "3.1.0"
-    atsl = "1.1.0"
-
-
-    android = [
-            material = "com.google.android.material:material:$androidMaterial",
-            constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayout"
+    versions = [
+            androidMaterial : "1.0.0",
+            constraintLayout: "1.1.2",
+            glide           : "4.9.0",
+            butterknife     : "10.1.0",
+            retrofit        : "2.5.0",
+            okhttp          : "3.14.0",
+            dagger          : "2.21",
+            room            : "1.1.0",
+            lifecycle       : "2.0.0",
+            timber          : "4.7.1",
+            debugDb         : "1.0.6",
+            espresso        : "3.1.0",
+            atsl            : "1.1.0"
     ]
 
-    glide = [
-            runtime = "com.github.bumptech.glide:glide:$glide",
-            compiler = "com.github.bumptech.glide:compiler:$glide"
+    projectDependencies = [
+            android    : [
+                    material        : "com.google.android.material:material:$versions.androidMaterial",
+                    constraintLayout: "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+            ],
+            glide      : [
+                    runtime : "com.github.bumptech.glide:glide:$versions.glide",
+                    compiler: "com.github.bumptech.glide:compiler:$versions.glide"
+            ],
+            butterknife: [
+                    runtime : "com.jakewharton:butterknife:$versions.butterknife",
+                    compiler: "com.jakewharton:butterknife-compiler:$versions.butterknife"
+            ],
+            retrofit   : [
+                    runtime: "com.squareup.retrofit2:retrofit:$versions.retrofit",
+                    gson   : "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+            ],
+            okhttp     : [
+                    runtime: "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+            ],
+            dagger     : [
+                    runtime               : "com.google.dagger:dagger:$versions.dagger",
+                    android               : "com.google.dagger:dagger-android:$versions.dagger",
+                    androidSupport        : "com.google.dagger:dagger-android-support:$versions.dagger",
+                    compiler              : "com.google.dagger:dagger-compiler:$versions.dagger",
+                    androidSupportCompiler: "com.google.dagger:dagger-android-processor:$versions.dagger"
+            ],
+            room       : [
+                    runtime : "androidx.room:room-runtime:$versions.room",
+                    compiler: "androidx.room:room-compiler:$versions.room"
+            ],
+            lifecycle  : [
+                    runtime   : "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle",
+                    extensions: "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+                    java8     : "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
+                    compiler  : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+            ],
+            debug      : [
+                    timber: "com.jakewharton.timber:timber:$versions.timber",
+                    db    : "com.amitshekhar.android:debug-db:$versions.debugDb"
+            ]
     ]
 
-    butterknife = [
-            runtime = "com.jakewharton:butterknife:$butterknife",
-            compiler = "com.jakewharton:butterknife-compiler:$butterknife"
-    ]
-
-    retrofit = [
-            runtime = "com.squareup.retrofit2:retrofit:$retrofit",
-            gson = "com.squareup.retrofit2:converter-gson:$retrofit"
-    ]
-
-    okhttp = [
-            okhttp = "com.squareup.okhttp3:logging-interceptor:$okhttp"
-    ]
-
-    dagger = [
-            runtime = "com.google.dagger:dagger:$dagger",
-            android = "com.google.dagger:dagger-android:$dagger",
-            androidSupport = "com.google.dagger:dagger-android-support:$dagger",
-            compiler = "com.google.dagger:dagger-compiler:$dagger",
-            androidSupportCompiler = "com.google.dagger:dagger-android-processor:$dagger"
-    ]
-
-    room = [
-            runtime = "androidx.room:room-runtime:$room",
-            compiler = "androidx.room:room-compiler:$room"
-    ]
-
-    lifecycle = [
-            runtime = "androidx.lifecycle:lifecycle-runtime:$lifecycle",
-            extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle",
-            java8 = "androidx.lifecycle:lifecycle-common-java8:$lifecycle"
-    ]
-
-    debug = [
-            timber = "com.jakewharton.timber:timber:$timber",
-            db = "com.amitshekhar.android:debug-db:$debugDb"
-    ]
-
-    espresso = [
-            core = "androidx.test.espresso:espresso-core:$espresso",
-            contrib = "androidx.test.espresso:espresso-contrib:$espresso"
-    ]
-
-    atsl = [
-            runner = "androidx.test:runner:$atsl",
-            rules = "androidx.test:rules:$atsl"
+    projectTestDependencies = [
+            espresso: [
+                    core          : "androidx.test.espresso:espresso-core:$versions.espresso",
+                    contrib       : "androidx.test.espresso:espresso-contrib:$versions.espresso",
+                    idlingResource: "androidx.test.espresso:espresso-idling-resource:$versions.espresso"
+            ],
+            atsl    : [
+                    annotationSupport: "androidx.annotation:annotation:$versions.atls",
+                    runner           : "androidx.test:runner:$versions.atsl",
+                    rules            : "androidx.test:rules:$versions.atsl"
+            ]
     ]
 }
