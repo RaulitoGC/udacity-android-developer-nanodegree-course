@@ -1,4 +1,6 @@
 package com.rguzman.techstore.presentation.product;
 
-public class ProductListFragment {
+import dagger.android.support.DaggerFragment;
+
+public class ProductListFragment extends DaggerFragment {
 }

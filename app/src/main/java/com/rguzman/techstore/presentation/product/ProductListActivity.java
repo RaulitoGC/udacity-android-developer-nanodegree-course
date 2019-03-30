@@ -1,4 +1,6 @@
 package com.rguzman.techstore.presentation.product;
 
-public class ProductListActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class ProductListActivity extends DaggerAppCompatActivity {
 }
