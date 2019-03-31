@@ -4,4 +4,11 @@
     <string name="login_hint_email">Email</string>
     <string name="login_hint_password">Password</string>
     <string name="login_button_login_label">Log In</string>
+
+    <!-- Exception message -->
+    <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+    <string name="message_exception_generic">Sorry, something went wrong.</string>
+    <string name="message_exception_valid_email">Enter a valid email address</string>
+    <string name="message_exception_valid_password">Between 4 and 10 alphanumeric characters</string>
+
 </resources>
