@@ -40,7 +40,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String email, String password) {
-
+        this.view.showLoading();
         if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             this.view.showMessageEmailInvalid();
             return;
@@ -62,12 +62,14 @@ public class LoginViewModel extends ViewModel {
 
             @Override
             public void onError(Exception exception) {
+
                 showError(exception);
             }
         });
     }
 
     private void showError(Exception exception) {
+        this.view.hideLoading();
         String message = exception.getMessage();
         if (exception instanceof NetworkConnectionException) {
             message = view.context().getString(R.string.message_exception_network_connection);
@@ -92,6 +94,7 @@ public class LoginViewModel extends ViewModel {
 
         @Override
         public void onChanged(User user) {
+            view.hideLoading();
             view.loginSuccess(user);
             userLiveData.removeObserver(this);
         }

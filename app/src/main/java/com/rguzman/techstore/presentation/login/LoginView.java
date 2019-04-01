@@ -18,4 +18,8 @@ public interface LoginView {
 
     void setValidInputs();
 
+    void showLoading();
+
+    void hideLoading();
+
 }

@@ -1,10 +1,12 @@
 package com.rguzman.techstore.presentation.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.User;
+import com.rguzman.techstore.presentation.category.CategoryListActivity;
 
 import java.util.Objects;
 
@@ -36,6 +39,9 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     @BindView(R.id.btn_login)
     AppCompatButton loginButton;
+
+    @BindView(R.id.progressContainer)
+    View progressBarContainer;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -60,9 +66,10 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     @OnClick(R.id.btn_login)
     public void onLoginButtonClick() {
+        hideKeyboardFrom(context(), loginButton);
+        loginButton.setEnabled(false);
         String email = Objects.requireNonNull(emailInput.getText()).toString();
         String password = Objects.requireNonNull(passwordInput.getText()).toString();
-        loginButton.setEnabled(false);
         loginViewModel.login(email, password);
     }
 
@@ -79,7 +86,7 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     @Override
     public void loginSuccess(User user) {
-        Toast.makeText(context(), "LOGIN SUCCESS", Toast.LENGTH_LONG).show();
+        startActivity(CategoryListActivity.getCallingIntent(context()));
     }
 
     @Override
@@ -98,5 +105,20 @@ public class LoginFragment extends DaggerFragment implements LoginView {
     public void setValidInputs() {
         emailInput.setError(null);
         passwordInput.setError(null);
+    }
+
+    @Override
+    public void showLoading() {
+        progressBarContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBarContainer.setVisibility(View.GONE);
+    }
+
+    private void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

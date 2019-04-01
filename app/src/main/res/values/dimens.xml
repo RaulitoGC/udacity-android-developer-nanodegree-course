@@ -1,11 +1,24 @@
 <resources>
-  <!-- Default screen margins, per the Android Design guidelines. -->
-  <dimen name="activity_horizontal_margin">16dp</dimen>
-  <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
-  <dimen name="login_input_text_margin">8dp</dimen>
-  <dimen name="login_button_margin_top">24dp</dimen>
-  <dimen name="login_logo_text_size">64sp</dimen>
-  <dimen name="login_logo_margin_top">48dp</dimen>
-  <dimen name="login_logo_margin_bottom">48dp</dimen>
+    <dimen name="login_input_text_margin">8dp</dimen>
+    <dimen name="login_button_margin_top">24dp</dimen>
+    <dimen name="login_logo_text_size">64sp</dimen>
+    <dimen name="login_logo_margin_top">48dp</dimen>
+    <dimen name="login_logo_margin_bottom">48dp</dimen>
+
+    <dimen name="list_side_padding">4dp</dimen>
+    <dimen name="progress_bar_size">48dp</dimen>
+
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_title_padding_start">16dp</dimen>
+    <dimen name="card_title_padding_end">16dp</dimen>
+    <dimen name="card_title_padding_bottom">16dp</dimen>
+    <dimen name="card_title_padding_top">16dp</dimen>
+    <dimen name="card_title_text_size">16sp</dimen>
+    <dimen name="card_subtitle_text_size">14sp</dimen>
+
 </resources>
