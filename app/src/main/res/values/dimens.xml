@@ -13,11 +13,12 @@
     <dimen name="progress_bar_size">48dp</dimen>
 
     <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_padding">8dp</dimen>
     <dimen name="card_elevation">1dp</dimen>
-    <dimen name="card_title_padding_start">16dp</dimen>
-    <dimen name="card_title_padding_end">16dp</dimen>
-    <dimen name="card_title_padding_bottom">16dp</dimen>
-    <dimen name="card_title_padding_top">16dp</dimen>
+    <dimen name="card_title_margin_start">16dp</dimen>
+    <dimen name="card_title_margin_end">16dp</dimen>
+    <dimen name="card_title_margin_bottom">8dp</dimen>
+    <dimen name="card_title_margin_top">8dp</dimen>
     <dimen name="card_title_text_size">16sp</dimen>
     <dimen name="card_subtitle_text_size">14sp</dimen>
 

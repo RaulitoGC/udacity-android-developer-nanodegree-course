@@ -19,12 +19,4 @@ public abstract class ActivityBinder {
     @ActivityScope
     @ContributesAndroidInjector(modules = CategoryModule.class)
     abstract CategoryListActivity categoryListActivity();
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = ProductListModule.class)
-    abstract ProductListActivity productListActivity();
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = ProductDetailModule.class)
-    abstract ProductDetailActivity productDetailActivity();
 }
