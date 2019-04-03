@@ -8,5 +8,5 @@ import com.rguzman.techstore.domain.model.Category;
 @Database(entities = {Category.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-    abstract CategoryDao categoryDao();
+   public abstract CategoryDao categoryDao();
 }

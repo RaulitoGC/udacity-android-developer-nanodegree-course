@@ -7,6 +7,7 @@ import com.rguzman.techstore.domain.model.Category;
 import java.util.List;
 
 public interface CategoryListView {
+
     void loadList(List<Category> movies);
 
     Context context();
@@ -14,4 +15,8 @@ public interface CategoryListView {
     void showError(String message);
 
     void showEmptyList();
+
+    void showLoading();
+
+    void hideLoading();
 }

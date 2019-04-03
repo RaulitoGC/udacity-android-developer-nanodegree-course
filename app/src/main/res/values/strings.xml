@@ -10,5 +10,6 @@
     <string name="message_exception_generic">Sorry, something went wrong.</string>
     <string name="message_exception_valid_email">Enter a valid email address</string>
     <string name="message_exception_valid_password">Between 4 and 10 alphanumeric characters</string>
+    <string name="message_exception_empty_list">There aren\'t categories </string>
 
 </resources>

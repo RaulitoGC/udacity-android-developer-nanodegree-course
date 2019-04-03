@@ -1,7 +1,6 @@
 package com.rguzman.techstore.presentation.category;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,6 +19,8 @@ import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Category;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +35,18 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
     private CategoryAdapter categoryAdapter;
+    private CategoryListViewModel categoryListViewModel;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.categoryListViewModel = ViewModelProviders.of(this, viewModelFactory).get(CategoryListViewModel.class);
+        this.categoryListViewModel.setView(this);
+        this.categoryListViewModel.init();
+    }
 
     @Nullable
     @Override
@@ -78,5 +91,15 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     @Override
     public void showEmptyList() {
         this.categoryAdapter.clearList();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

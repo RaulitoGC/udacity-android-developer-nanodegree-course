@@ -13,6 +13,8 @@ import com.rguzman.techstore.data.database.AppDatabase;
 import com.rguzman.techstore.data.net.ApiService;
 import com.rguzman.techstore.data.preferences.UserPrefs;
 import com.rguzman.techstore.data.preferences.UserPrefsImpl;
+import com.rguzman.techstore.data.repository.category.CategoryRepositoryImpl;
+import com.rguzman.techstore.data.repository.category.datasource.CategoryRepository;
 import com.rguzman.techstore.data.repository.category.datasource.disk.CategoryDiskDataSource;
 import com.rguzman.techstore.data.repository.category.datasource.disk.CategoryDiskDataSourceImpl;
 import com.rguzman.techstore.data.repository.category.datasource.network.CategoryNetworkDataSource;
@@ -130,10 +132,17 @@ public class ApplicationModule {
         return userDiskDataSource;
     }
 
+
     @Provides
     @Singleton
     UserNetworkDataSource provideUserNetworkDataSource(UserNetworkDataSourceImpl userNetworkDataSource) {
         return userNetworkDataSource;
+    }
+
+    @Provides
+    @Singleton
+    CategoryRepository provideCategoryRepository(CategoryRepositoryImpl categoryRepository) {
+        return categoryRepository;
     }
 
     @Provides

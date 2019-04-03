@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Category", indices = {@Index(value = "categoryId", unique = true)})
+@Entity(tableName = "Categories", indices = {@Index(value = "categoryId", unique = true)})
 public class Category {
     @PrimaryKey(autoGenerate = true)
     private int id;

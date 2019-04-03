@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CategoryNetworkDataSource {
 
-    void loadCategories(NetworkCallback<List<Category>> callback);
+    void loadCategories(String token, NetworkCallback<List<Category>> callback);
 }
