@@ -13,7 +13,9 @@ import dagger.android.support.DaggerAppCompatActivity;
 public class CategoryListActivity extends DaggerAppCompatActivity {
 
     public static Intent getCallingIntent(Context context) {
-        return new Intent(context, CategoryListActivity.class);
+        Intent intent = new Intent(context, CategoryListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
     }
 
     @Override

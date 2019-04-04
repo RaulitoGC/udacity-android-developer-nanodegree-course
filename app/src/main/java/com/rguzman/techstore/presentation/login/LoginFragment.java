@@ -87,6 +87,7 @@ public class LoginFragment extends DaggerFragment implements LoginView {
     @Override
     public void loginSuccess(User user) {
         startActivity(CategoryListActivity.getCallingIntent(context()));
+        getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     @Override
