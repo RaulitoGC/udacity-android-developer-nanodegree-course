@@ -5,16 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Category;
 
@@ -30,10 +35,14 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
 
     private static final int GRID_NUM_COLUMNS = 2;
 
+    @BindView(R.id.root_layout)
+    View rootLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -60,12 +69,20 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), GRID_NUM_COLUMNS);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setHasFixedSize(true);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), GRID_NUM_COLUMNS);
+        this.recyclerView.setLayoutManager(gridLayoutManager);
+        this.recyclerView.setHasFixedSize(true);
 
-        categoryAdapter = new CategoryAdapter(this);
-        recyclerView.setAdapter(categoryAdapter);
+        this.categoryAdapter = new CategoryAdapter(this);
+        this.recyclerView.setAdapter(categoryAdapter);
+
+        this.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context(), R.color.colorAccent));
+        this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                categoryListViewModel.loadCategories(true);
+            }
+        });
     }
 
     @Override
@@ -74,8 +91,26 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     }
 
     @Override
-    public void loadList(List<Category> list) {
-        this.categoryAdapter.setList(list);
+    public void loadList(List<Category> categories) {
+        this.categoryAdapter.setList(categories);
+        this.swipeRefreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public void loadListWithAnimation(List<Category> categories) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        this.recyclerView.setLayoutAnimation(controller);
+        this.categoryAdapter.setList(categories);
+        this.recyclerView.scheduleLayoutAnimation();
+        this.swipeRefreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public boolean isEmptyList() {
+        return this.categoryAdapter.getItemCount() == 0;
     }
 
     @Override
@@ -89,17 +124,34 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     }
 
     @Override
-    public void showEmptyList() {
+    public void showEmptyList(String message) {
+        this.swipeRefreshLayout.setEnabled(false);
         this.categoryAdapter.clearList();
+        Snackbar snackbar = Snackbar
+                .make(rootLayout, message, Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.text_retry), v -> {
+                    categoryListViewModel.loadCategories(true);
+                });
+        snackbar.show();
+    }
+
+    @Override
+    public void showRefreshLoading() {
+        this.swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideRefreshLoading() {
+        this.swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showLoading() {
-
+        progress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        progress.setVisibility(View.GONE);
     }
 }

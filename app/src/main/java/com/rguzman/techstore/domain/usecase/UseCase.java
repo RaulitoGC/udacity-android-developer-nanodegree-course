@@ -3,7 +3,7 @@ package com.rguzman.techstore.domain.usecase;
 import androidx.lifecycle.LiveData;
 
 public abstract class UseCase<P, R> {
-    private boolean forceUpdate;
+    private boolean forceCache;
 
     public abstract void execute(boolean forceUpdate, P params, Callback<R> callback);
 
@@ -23,12 +23,12 @@ public abstract class UseCase<P, R> {
         this.execute(forceUpdate, null, callback);
     }
 
-    public boolean isForceUpdate() {
-        return forceUpdate;
+    public boolean isForceCache() {
+        return forceCache;
     }
 
-    public void setForceUpdate(boolean forceUpdate) {
-        this.forceUpdate = forceUpdate;
+    public void setForceCache(boolean forceCache) {
+        this.forceCache = forceCache;
     }
 
     public interface Callback<R> {

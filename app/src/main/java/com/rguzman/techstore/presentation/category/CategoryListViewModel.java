@@ -42,25 +42,33 @@ public class CategoryListViewModel extends ViewModel {
     }
 
     private void initializeMovies() {
-        loadPopularMovies(false);
+        view.showLoading();
+        loadCategories(true);
     }
 
     private void showError(Exception exception) {
         String message = exception.getMessage();
+
+        if (exception instanceof EmptyListException) {
+            message = view.context().getString(R.string.message_exception_empty_category_list);
+            view.showEmptyList(message);
+            return;
+        }
+
         if (exception instanceof NetworkConnectionException) {
             message = view.context().getString(R.string.message_exception_network_connection);
         } else if (exception instanceof GenericException) {
             message = view.context().getString(R.string.message_exception_generic);
-        } else if (exception instanceof EmptyListException) {
-            message = view.context().getString(R.string.message_exception_empty_list);
-            view.showEmptyList();
         }
 
         view.showError(message);
     }
 
-    public void loadPopularMovies(boolean forceUpdate) {
-        this.getCategories.execute(forceUpdate, new GetCategories.Callback<List<Category>>() {
+    public void loadCategories(boolean forceCache) {
+        if (!forceCache) {
+            this.view.showRefreshLoading();
+        }
+        this.getCategories.execute(forceCache, new GetCategories.Callback<List<Category>>() {
 
             @Override
             public void onNetworkResponse(LiveData<List<Category>> liveData) {
@@ -98,7 +106,12 @@ public class CategoryListViewModel extends ViewModel {
         @Override
         public void onChanged(List<Category> categories) {
             view.hideLoading();
-            view.loadList(categories);
+            view.hideRefreshLoading();
+            if (view.isEmptyList()) {
+                view.loadListWithAnimation(categories);
+            } else {
+                view.loadList(categories);
+            }
             categoryListLiveData.removeObserver(this);
         }
     }

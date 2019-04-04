@@ -17,9 +17,10 @@
     <dimen name="card_elevation">1dp</dimen>
     <dimen name="card_title_margin_start">16dp</dimen>
     <dimen name="card_title_margin_end">16dp</dimen>
-    <dimen name="card_title_margin_bottom">8dp</dimen>
+    <dimen name="card_title_margin_bottom">16dp</dimen>
     <dimen name="card_title_margin_top">8dp</dimen>
     <dimen name="card_title_text_size">16sp</dimen>
     <dimen name="card_subtitle_text_size">14sp</dimen>
+    <dimen name="text_empty_category_list_size">24sp</dimen>
 
 </resources>

@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="240dp"
     android:layout_margin="@dimen/card_margin"
     android:foreground="?selectableItemBackground"
     app:cardElevation="@dimen/card_elevation">
@@ -24,8 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:paddingStart="@dimen/card_title_margin_start"
-            android:paddingEnd="@dimen/card_title_margin_end"
+            android:layout_marginTop="@dimen/card_title_margin_top"
+            android:layout_marginStart="@dimen/card_title_margin_start"
+            android:layout_marginEnd="@dimen/card_title_margin_end"
             android:layout_marginBottom="@dimen/card_title_margin_bottom"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/card_title_text_size"/>

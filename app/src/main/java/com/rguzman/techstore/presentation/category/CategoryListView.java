@@ -8,13 +8,21 @@ import java.util.List;
 
 public interface CategoryListView {
 
-    void loadList(List<Category> movies);
+    void loadList(List<Category> categories);
+
+    void loadListWithAnimation(List<Category> categories);
+
+    boolean isEmptyList();
 
     Context context();
 
     void showError(String message);
 
-    void showEmptyList();
+    void showEmptyList(String message);
+
+    void showRefreshLoading();
+
+    void hideRefreshLoading();
 
     void showLoading();
 

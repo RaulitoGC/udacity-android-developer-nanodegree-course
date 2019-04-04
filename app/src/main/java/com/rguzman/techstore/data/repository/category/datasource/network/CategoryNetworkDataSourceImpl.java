@@ -4,13 +4,13 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.rguzman.techstore.data.exception.GenericException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.net.ApiService;
 import com.rguzman.techstore.data.net.NetworkCallback;
 import com.rguzman.techstore.domain.model.Category;
 import com.rguzman.techstore.presentation.utils.NetworkUtils;
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,14 +47,14 @@ public class CategoryNetworkDataSourceImpl implements CategoryNetworkDataSource 
                         liveData.setValue(response.body());
                         callback.onResponse(liveData);
                     } else {
-                        callback.onError(new GenericException());
+                        callback.onError(new EmptyStackException());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Category>> call, Throwable t) {
                     t.printStackTrace();
-                    callback.onError(new GenericException());
+                    callback.onError(new EmptyStackException());
                 }
             });
 
