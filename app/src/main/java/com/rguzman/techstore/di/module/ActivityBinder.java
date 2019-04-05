@@ -4,7 +4,6 @@ import com.rguzman.techstore.di.ActivityScope;
 import com.rguzman.techstore.presentation.category.CategoryListActivity;
 import com.rguzman.techstore.presentation.login.LoginActivity;
 import com.rguzman.techstore.presentation.product.ProductListActivity;
-import com.rguzman.techstore.presentation.product.detail.ProductDetailActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -19,4 +18,12 @@ public abstract class ActivityBinder {
     @ActivityScope
     @ContributesAndroidInjector(modules = CategoryModule.class)
     abstract CategoryListActivity categoryListActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = ProductListModule.class)
+    abstract ProductListActivity productListActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = ProductDetailModule.class)
+    abstract ProductDetailModule productDetailModule();
 }

@@ -12,9 +12,6 @@ public class Category {
     private String name;
     private String image;
 
-    public Category() {
-    }
-
     public Category(int id, String categoryId, String name, String image) {
         this.id = id;
         this.categoryId = categoryId;

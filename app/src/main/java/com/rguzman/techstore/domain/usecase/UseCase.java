@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 public abstract class UseCase<P, R> {
     private boolean forceCache;
 
-    public abstract void execute(boolean forceUpdate, P params, Callback<R> callback);
+    public abstract void execute(boolean forceCache, P params, Callback<R> callback);
 
     public void execute(P params, Callback<R> callback) {
         this.execute(false, params, callback);
@@ -19,8 +19,8 @@ public abstract class UseCase<P, R> {
         this.execute(false, params, null);
     }
 
-    public void execute(boolean forceUpdate, Callback<R> callback) {
-        this.execute(forceUpdate, null, callback);
+    public void execute(boolean forceCache, Callback<R> callback) {
+        this.execute(forceCache, null, callback);
     }
 
     public boolean isForceCache() {

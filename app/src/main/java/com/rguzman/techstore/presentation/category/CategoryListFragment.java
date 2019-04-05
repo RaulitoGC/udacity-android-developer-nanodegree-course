@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Category;
+import com.rguzman.techstore.presentation.product.ProductListActivity;
 
 import java.util.List;
 
@@ -77,17 +78,12 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
         this.recyclerView.setAdapter(categoryAdapter);
 
         this.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context(), R.color.colorAccent));
-        this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                categoryListViewModel.loadCategories(true);
-            }
-        });
+        this.swipeRefreshLayout.setOnRefreshListener(() -> categoryListViewModel.loadCategories(false));
     }
 
     @Override
-    public void onListItemClick(Category movie) {
-
+    public void onListItemClick(Category category) {
+        startActivity(ProductListActivity.getCallingIntent(context(), category.getCategoryId()));
     }
 
     @Override

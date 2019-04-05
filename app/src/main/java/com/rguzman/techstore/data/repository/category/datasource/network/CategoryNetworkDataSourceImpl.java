@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.rguzman.techstore.data.exception.EmptyListException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.net.ApiService;
 import com.rguzman.techstore.data.net.NetworkCallback;
@@ -47,17 +48,16 @@ public class CategoryNetworkDataSourceImpl implements CategoryNetworkDataSource 
                         liveData.setValue(response.body());
                         callback.onResponse(liveData);
                     } else {
-                        callback.onError(new EmptyStackException());
+                        callback.onError(new EmptyListException());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Category>> call, Throwable t) {
                     t.printStackTrace();
-                    callback.onError(new EmptyStackException());
+                    callback.onError(new EmptyListException());
                 }
             });
-
         }
     }
 }

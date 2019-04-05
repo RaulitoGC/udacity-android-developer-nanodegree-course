@@ -9,6 +9,4 @@ public interface CategoryRepository {
 
     void loadCategories(boolean forceUpdate, String token, GetCategories.Callback<List<Category>> callback);
 
-    void loadProducts(boolean forceUpdate, String token, String categoryId, GetCategories.Callback<List<Category>> callback);
-
 }

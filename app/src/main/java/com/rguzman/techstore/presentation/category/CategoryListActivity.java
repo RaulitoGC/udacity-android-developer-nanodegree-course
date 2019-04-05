@@ -25,4 +25,10 @@ public class CategoryListActivity extends DaggerAppCompatActivity {
 
         setTitle(getString(R.string.app_name));
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 }

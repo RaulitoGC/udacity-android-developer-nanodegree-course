@@ -35,7 +35,6 @@ public class LoginViewModel extends ViewModel {
         this.userObserver = new UserObserver();
         if (this.userLiveData != null) {
             userLiveData.observeForever(userObserver);
-            return;
         }
     }
 
@@ -55,7 +54,6 @@ public class LoginViewModel extends ViewModel {
         this.login.execute(Login.Parameters.loginParameters(email, password), new LoginCallback() {
             @Override
             public void onNetworkResponse(LiveData<User> liveData) {
-                userObserver.setRemoveObserver(true);
                 userLiveData = liveData;
                 userLiveData.observeForever(userObserver);
             }
@@ -81,16 +79,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     private final class UserObserver implements Observer<User> {
-
-        private boolean removeObserver;
-
-        public UserObserver() {
-            this.removeObserver = true;
-        }
-
-        public void setRemoveObserver(boolean removeObserver) {
-            this.removeObserver = removeObserver;
-        }
 
         @Override
         public void onChanged(User user) {

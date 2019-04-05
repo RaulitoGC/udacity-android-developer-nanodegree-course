@@ -72,14 +72,12 @@ public class CategoryListViewModel extends ViewModel {
 
             @Override
             public void onNetworkResponse(LiveData<List<Category>> liveData) {
-                categoryListObserver.setRemoveObserver(true);
                 categoryListLiveData = liveData;
                 categoryListLiveData.observeForever(categoryListObserver);
             }
 
             @Override
             public void onDiskResponse(LiveData<List<Category>> liveData) {
-                categoryListObserver.setRemoveObserver(true);
                 categoryListLiveData = liveData;
                 categoryListLiveData.observeForever(categoryListObserver);
             }
@@ -92,16 +90,6 @@ public class CategoryListViewModel extends ViewModel {
     }
 
     private final class CategoryListObserver implements Observer<List<Category>> {
-
-        private boolean removeObserver;
-
-        public CategoryListObserver() {
-            this.removeObserver = true;
-        }
-
-        public void setRemoveObserver(boolean removeObserver) {
-            this.removeObserver = removeObserver;
-        }
 
         @Override
         public void onChanged(List<Category> categories) {
