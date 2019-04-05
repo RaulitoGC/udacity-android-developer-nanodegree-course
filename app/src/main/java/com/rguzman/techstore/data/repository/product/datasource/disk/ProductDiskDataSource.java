@@ -1,19 +1,21 @@
 package com.rguzman.techstore.data.repository.product.datasource.disk;
 
-import androidx.lifecycle.LiveData;
-
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+
 public interface ProductDiskDataSource {
 
-    void saveProducts(List<Product> products);
+  LiveData<Product> loadProduct(String productId);
 
-    void saveFeatures(List<Feature> features);
+  void saveProducts(List<Product> products);
 
-    LiveData<List<Product>> loadProducts(String categoryId);
+  void saveFeatures(List<Feature> features);
 
-    LiveData<List<Feature>> loadFeatures(String productId);
+  LiveData<List<Product>> loadProducts(String categoryId);
+
+  LiveData<List<Feature>> loadFeatures(String productId);
 }

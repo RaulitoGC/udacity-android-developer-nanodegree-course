@@ -28,7 +28,7 @@ public class ProductListFragment extends DaggerFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_card_list, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
