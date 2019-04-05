@@ -26,12 +26,24 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
 
     @Override
     public void saveProducts(List<Product> products) {
-
+        if (products != null) {
+            diskExecutor.execute(() -> {
+                for (Product product : products) {
+                    Product localProduct = appDatabase.productDao().getProductById(product.getProductId());
+                    if (localProduct != null) {
+                        product.setId(localProduct.getId());
+                    }
+                }
+                this.appDatabase.productDao().insert(products);
+            });
+        }
     }
 
     @Override
     public void saveFeatures(List<Feature> features) {
-
+        if (features != null) {
+            diskExecutor.execute(() -> appDatabase.featureDao().insert(features));
+        }
     }
 
     @Override

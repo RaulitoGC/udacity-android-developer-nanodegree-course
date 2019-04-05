@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ProductRepository {
 
-    void loadProducts(boolean forceUpdate, String token, String categoryId, GetProducts.Callback<List<Product>> callback);
+    void loadProducts(boolean forceCache, String token, String categoryId, GetProducts.Callback<List<Product>> callback);
 }

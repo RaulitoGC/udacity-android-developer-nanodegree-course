@@ -1,14 +1,17 @@
 package com.rguzman.techstore.data.net.response;
 
+import com.rguzman.techstore.domain.model.Feature;
+
 import java.util.List;
 
 public class ProductResponse {
     private int id;
+    private String categoryId;
     private String productId;
     private String image;
     private String price;
     private String description;
-    private List<FeatureResponse> features;
+    private List<Feature> features;
 
     public int getId() {
         return id;
@@ -50,11 +53,19 @@ public class ProductResponse {
         this.description = description;
     }
 
-    public List<FeatureResponse> getFeatures() {
+    public List<Feature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(List<FeatureResponse> features) {
+    public void setFeatures(List<Feature> features) {
         this.features = features;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

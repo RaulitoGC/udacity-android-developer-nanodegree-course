@@ -47,8 +47,4 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         });
     }
 
-    @Override
-    public void loadProducts(boolean forceUpdate, String token, String categoryId, UseCase.Callback<List<Category>> callback) {
-
-    }
 }
