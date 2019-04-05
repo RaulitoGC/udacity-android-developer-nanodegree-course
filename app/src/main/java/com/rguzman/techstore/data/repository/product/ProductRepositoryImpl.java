@@ -51,6 +51,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             ProductResponse productResponse = productResponseList.get(i);
             Product product = new Product();
 
+            product.setName(productResponse.getName());
             product.setProductId(productResponse.getProductId());
             product.setCategoryId(productResponse.getCategoryId());
             product.setDescription(productResponse.getDescription());
@@ -59,6 +60,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
             productList.add(product);
 
+            productDiskDataSource.saveProducts(productList);
             productDiskDataSource.saveFeatures(productResponse.getFeatures());
           }
           productLiveData.setValue(productList);

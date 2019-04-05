@@ -22,5 +22,6 @@
     <dimen name="card_title_text_size">16sp</dimen>
     <dimen name="card_subtitle_text_size">14sp</dimen>
     <dimen name="text_empty_category_list_size">24sp</dimen>
+    <dimen name="card_size_height">240dp</dimen>
 
 </resources>

@@ -12,6 +12,7 @@ public class Product {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private String name;
     private String productId;
     private String image;
     private String price;
@@ -21,8 +22,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String productId, String image, String price, String description, String categoryId) {
+    public Product(int id, String name, String productId, String image, String price, String description, String categoryId) {
         this.id = id;
+        this.name = name;
         this.productId = productId;
         this.image = image;
         this.price = price;
@@ -76,5 +78,13 @@ public class Product {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

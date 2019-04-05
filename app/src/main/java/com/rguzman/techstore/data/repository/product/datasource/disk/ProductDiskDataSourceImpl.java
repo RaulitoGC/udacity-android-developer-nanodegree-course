@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import androidx.lifecycle.LiveData;
+import timber.log.Timber;
 
 @Singleton
 public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
@@ -46,6 +47,9 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
 
   @Override
   public void saveFeatures(List<Feature> features) {
+    for (int i = 0; i < features.size(); i++) {
+      Timber.d(features.get(i).getProductId());
+    }
     if (features != null) {
       diskExecutor.execute(() -> appDatabase.featureDao().insert(features));
     }
