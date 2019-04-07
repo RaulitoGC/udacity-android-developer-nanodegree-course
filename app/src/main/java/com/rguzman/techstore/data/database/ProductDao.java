@@ -14,7 +14,7 @@ import androidx.room.Query;
 public interface ProductDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insert(List<Product> products);
+  void insert(Product products);
 
   @Query("SELECT * FROM Products WHERE productId = :productId LIMIT 1")
   Product getProductById(String productId);

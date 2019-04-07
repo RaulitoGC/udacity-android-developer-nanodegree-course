@@ -59,8 +59,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             product.setPrice(productResponse.getPrice());
 
             productList.add(product);
-
-            productDiskDataSource.saveProducts(productList);
+            productDiskDataSource.saveProduct(product);
             productDiskDataSource.saveFeatures(productResponse.getFeatures());
           }
           productLiveData.setValue(productList);

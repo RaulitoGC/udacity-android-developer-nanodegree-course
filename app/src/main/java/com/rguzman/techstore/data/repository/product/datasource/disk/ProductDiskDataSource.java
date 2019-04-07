@@ -11,7 +11,7 @@ public interface ProductDiskDataSource {
 
   LiveData<Product> loadProduct(String productId);
 
-  void saveProducts(List<Product> products);
+  void saveProduct(Product product);
 
   void saveFeatures(List<Feature> features);
 
