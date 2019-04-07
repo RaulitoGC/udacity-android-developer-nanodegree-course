@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_size_height"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/card_margin"
     android:foreground="?selectableItemBackground"
     app:cardElevation="@dimen/card_elevation">
@@ -15,9 +15,9 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_product"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/card_padding"
-            android:scaleType="fitXY"/>
+            android:layout_height="@dimen/card_image_size_height"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_product_price"

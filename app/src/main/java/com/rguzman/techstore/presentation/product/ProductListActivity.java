@@ -12,9 +12,12 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 public class ProductListActivity extends DaggerAppCompatActivity {
     public static final String EXTRA_CATEGORY_ID = "com.rguzman.techstore.extra.CATEGORY_ID";
+    private static final String EXTRA_CATEGORY_NAME = "com.rguzman.techstore.extra.CATEGORY_NAME";
 
-    public static Intent getCallingIntent(Context context, String categoryId) {
+
+    public static Intent getCallingIntent(Context context, String categoryId, String categoryName) {
         Intent intent = new Intent(context, ProductListActivity.class);
+        intent.putExtra(EXTRA_CATEGORY_NAME, categoryName);
         intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
         return intent;
     }
@@ -23,8 +26,10 @@ public class ProductListActivity extends DaggerAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent() != null && getIntent().hasExtra(EXTRA_CATEGORY_ID)) {
+        if (getIntent() != null && getIntent().hasExtra(EXTRA_CATEGORY_ID) && getIntent().hasExtra(EXTRA_CATEGORY_NAME)) {
             String categoryId = getIntent().getStringExtra(EXTRA_CATEGORY_ID);
+            String title = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
+            setTitle(title);
             ActivityUtils.addFragment(this, android.R.id.content, ProductListFragment.newInstance(categoryId));
         }
     }

@@ -75,8 +75,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public void bind(Product product) {
-      Glide.with(itemView)
+      Glide.with(productImg.getContext())
               .load(product.getImage())
+              .placeholder(R.drawable.placeholder)
+              .centerCrop()
               .into(productImg);
 
       txtProductTitle.setText(product.getName());

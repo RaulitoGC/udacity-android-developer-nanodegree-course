@@ -83,7 +83,7 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
 
     @Override
     public void onListItemClick(Category category) {
-        startActivity(ProductListActivity.getCallingIntent(context(), category.getCategoryId()));
+        startActivity(ProductListActivity.getCallingIntent(context(), category.getCategoryId(), category.getName()));
     }
 
     @Override
