@@ -29,7 +29,8 @@
 
         <activity android:name=".presentation.product.detail.ProductDetailActivity"
                   android:parentActivityName=".presentation.product.ProductListActivity"
-                  android:theme="@style/AppTheme.Dark"/>
+                  android:label=""
+                  android:theme="@style/AppTheme.Dark.Detail"/>
 
         <meta-data
             android:name="preloaded_fonts"

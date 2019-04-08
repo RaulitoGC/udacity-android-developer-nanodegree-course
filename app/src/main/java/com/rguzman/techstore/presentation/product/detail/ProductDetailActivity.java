@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -21,6 +23,7 @@ import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -34,6 +37,12 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     @BindView(R.id.product_image)
     AppCompatImageView productImg;
+
+    @BindView(R.id.txt_product_description)
+    AppCompatTextView txtProductDescription;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -60,12 +69,22 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
             this.productDetailViewModel.setView(this);
             this.productDetailViewModel.init(productId);
         }
+        initUi();
+    }
+
+    private void initUi() {
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
     }
 
     @Override
     public void loadProduct(Product product) {
+
         supportPostponeEnterTransition();
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle(product.getName().substring(0, 20));
+        txtProductDescription.setText(product.getDescription());
         Glide.with(this)
                 .load(product.getImage())
                 .centerCrop()
