@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import com.rguzman.techstore.data.database.AppDatabase;
 import com.rguzman.techstore.data.net.ApiService;
 import com.rguzman.techstore.data.net.serializer.ProductTypeAdapterSerializer;
+import com.rguzman.techstore.data.preferences.ProductPrefs;
+import com.rguzman.techstore.data.preferences.ProductPrefsImpl;
 import com.rguzman.techstore.data.preferences.UserPrefs;
 import com.rguzman.techstore.data.preferences.UserPrefsImpl;
 import com.rguzman.techstore.data.repository.category.CategoryRepositoryImpl;
@@ -163,5 +165,11 @@ public class ApplicationModule {
   @Singleton
   UserPrefs provideUserPrefs(UserPrefsImpl userPrefs) {
     return userPrefs;
+  }
+
+  @Provides
+  @Singleton
+  ProductPrefs provideProductPrefs(ProductPrefsImpl productPrefs) {
+    return productPrefs;
   }
 }

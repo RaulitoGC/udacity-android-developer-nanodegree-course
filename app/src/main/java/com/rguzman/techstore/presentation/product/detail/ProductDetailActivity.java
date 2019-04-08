@@ -1,5 +1,6 @@
 package com.rguzman.techstore.presentation.product.detail;
 
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.presentation.product.notification.NotifyWorker;
+import com.rguzman.techstore.presentation.product.widget.LastProductBoughtIntentService;
 
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +73,7 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
   ViewModelProvider.Factory viewModelFactory;
   private ProductDetailViewModel productDetailViewModel;
   private FeatureAdapter featureAdapter;
+  private Product product;
   private int amount;
 
   public static Intent getCallingIntent(Context context, String productId) {
@@ -115,7 +118,7 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
   @Override
   public void loadProduct(Product product) {
-
+    this.product = product;
     supportPostponeEnterTransition();
 
     Objects.requireNonNull(getSupportActionBar()).setTitle(product.getName().substring(0, 20));
@@ -184,6 +187,12 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
     }, 3000);
   }
 
+  private void updateWidget() {
+    if (product != null) {
+      startService(LastProductBoughtIntentService.getCallingIntent(context(), product));
+    }
+  }
+
   private void showSuccessDialog() {
     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     alertDialog.setTitle(getString(R.string.text_title_sucess_buy));
@@ -191,6 +200,7 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
             (dialog, which) -> {
               dialog.dismiss();
+              updateWidget();
               finishAfterTransition();
             });
     alertDialog.show();

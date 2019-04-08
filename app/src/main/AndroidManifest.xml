@@ -1,7 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.rguzman.techstore">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.rguzman.techstore">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".TechStoreApplication"
         android:allowBackup="true"
@@ -12,29 +15,44 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".presentation.login.LoginActivity"
-                  android:theme="@style/AppTheme.Dark"/>
-
-        <activity android:name=".presentation.category.CategoryListActivity"
-                  android:launchMode="singleTop">
+        <receiver android:name=".presentation.product.widget.ProductWidgetProvider">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/last_product_buy_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".presentation.login.LoginActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".presentation.category.CategoryListActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.product.ProductListActivity"
-                  android:launchMode="singleTop"
-                  android:parentActivityName=".presentation.category.CategoryListActivity"/>
+        <activity
+            android:name=".presentation.product.ProductListActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.category.CategoryListActivity" />
 
-        <activity android:name=".presentation.product.detail.ProductDetailActivity"
-                  android:parentActivityName=".presentation.product.ProductListActivity"
-                  android:label=""
-                  android:theme="@style/AppTheme.Dark.Detail"/>
+        <activity
+            android:name=".presentation.product.detail.ProductDetailActivity"
+            android:parentActivityName=".presentation.product.ProductListActivity"
+            android:theme="@style/AppTheme.Dark.Detail" />
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts"/>
+            android:resource="@array/preloaded_fonts" />
 
+        <service android:name=".presentation.product.widget.LastProductBoughtIntentService" />
     </application>
+
 </manifest>
