@@ -16,6 +16,16 @@
     <item name="android:textColorHint">@color/colorTextHint</item>
 
     <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+
+    <!--<item name="android:windowTranslucentStatus">true</item>-->
+    <item name="android:windowContentTransitions">true</item>
+    <!--<item name="android:colorControlHighlight">@color/colorAccent</item>-->
+    <!--<item name="android:windowSharedElementsUseOverlay">false</item>-->
+    <!--<item name="android:windowDisablePreview">true</item>-->
+
+    <!--<item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>-->
+    <!--<item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>-->
+
   </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">

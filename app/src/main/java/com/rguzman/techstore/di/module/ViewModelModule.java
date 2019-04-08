@@ -8,6 +8,7 @@ import com.rguzman.techstore.presentation.ViewModelFactory;
 import com.rguzman.techstore.presentation.category.CategoryListViewModel;
 import com.rguzman.techstore.presentation.login.LoginViewModel;
 import com.rguzman.techstore.presentation.product.ProductListViewModel;
+import com.rguzman.techstore.presentation.product.detail.ProductDetailViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -31,6 +32,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProductListViewModel.class)
     abstract ViewModel bindProductListViewModel(ProductListViewModel productListViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProductDetailViewModel.class)
+    abstract ViewModel bindProductDetailViewModel(ProductDetailViewModel productDetailViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);

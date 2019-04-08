@@ -1,6 +1,7 @@
 package com.rguzman.techstore.presentation.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Product;
+import com.rguzman.techstore.presentation.product.detail.ProductDetailActivity;
 
 import java.util.List;
 
@@ -159,7 +163,12 @@ public class ProductListFragment extends DaggerFragment implements ProductListVi
     }
 
     @Override
-    public void onListItemClick(Product product) {
+    public void onListItemClick(Product product, AppCompatImageView productImage) {
 
+        Intent intent = ProductDetailActivity.getCallingIntent(context(), product.getProductId());
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), productImage, getString(R.string.text_product_image_shared_element));
+        startActivity(intent, options.toBundle());
     }
 }

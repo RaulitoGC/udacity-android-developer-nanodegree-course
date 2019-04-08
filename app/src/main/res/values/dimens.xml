@@ -25,4 +25,6 @@
     <dimen name="card_size_height">240dp</dimen>
     <dimen name="card_image_size_height">160dp</dimen>
 
+    <dimen name="appbarlayout_elevation">4dp</dimen>
+
 </resources>
