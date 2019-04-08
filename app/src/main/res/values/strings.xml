@@ -29,4 +29,6 @@
     <string name="text_title_sucess_buy">Success</string>
     <string name="text_message_success_buy">Thank you for your purchase, come back soon!</string>
 
+    <string name="text_title_best_seller_product">Check our best seller product!</string>
+
 </resources>

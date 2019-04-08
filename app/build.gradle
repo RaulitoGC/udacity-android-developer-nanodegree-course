@@ -62,6 +62,8 @@ dependencies {
     annotationProcessor projectDependencies.dagger.compiler
     annotationProcessor projectDependencies.dagger.androidSupportCompiler
 
+    implementation projectDependencies.workManager.runtime
+
     implementation projectTestDependencies.espresso.idlingResource
 
     androidTestImplementation projectTestDependencies.espresso.core
