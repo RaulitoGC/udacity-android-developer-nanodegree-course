@@ -26,5 +26,7 @@
     <string name="button_text_plus_label">+</string>
 
     <string name="button_pay_label">Buy</string>
+    <string name="text_title_sucess_buy">Success</string>
+    <string name="text_message_success_buy">Thank you for your purchase, come back soon!</string>
 
 </resources>

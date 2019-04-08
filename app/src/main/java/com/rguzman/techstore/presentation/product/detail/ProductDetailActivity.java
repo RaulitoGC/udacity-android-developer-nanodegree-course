@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -52,6 +55,9 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     @BindView(R.id.txt_amount)
     AppCompatTextView txtAmount;
+
+    @BindView(R.id.progressContainer)
+    View progressBarContainer;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -157,5 +163,26 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     private void updateAmount(String amount) {
         this.txtAmount.setText(amount);
+    }
+
+    @OnClick(R.id.buy_button)
+    public void onBuyButtonClick() {
+        progressBarContainer.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(() -> {
+            progressBarContainer.setVisibility(View.GONE);
+            showSuccessDialog();
+        }, 3000);
+    }
+
+    private void showSuccessDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getString(R.string.text_title_sucess_buy));
+        alertDialog.setMessage(getString(R.string.text_message_success_buy));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    finishAfterTransition();
+                });
+        alertDialog.show();
     }
 }
