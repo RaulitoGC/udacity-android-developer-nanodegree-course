@@ -12,6 +12,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -29,6 +31,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class ProductDetailActivity extends DaggerAppCompatActivity implements ProductDetailView {
@@ -44,9 +47,17 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.txt_amount)
+    AppCompatTextView txtAmount;
+
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private ProductDetailViewModel productDetailViewModel;
+    private FeatureAdapter featureAdapter;
+    private int amount;
 
     public static Intent getCallingIntent(Context context, String productId) {
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -76,6 +87,16 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
+
+        final LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        this.recyclerView.setLayoutManager(linearLayout);
+        this.recyclerView.setHasFixedSize(true);
+
+        this.featureAdapter = new FeatureAdapter();
+        this.recyclerView.setAdapter(featureAdapter);
+
+        this.amount = 1;
+        updateAmount(String.valueOf(amount));
     }
 
     @Override
@@ -107,7 +128,7 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     @Override
     public void loadFeatures(List<Feature> features) {
-
+        featureAdapter.setList(features);
     }
 
     @Override
@@ -118,5 +139,23 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
     @Override
     public void showError(String message) {
         Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.amount_less_button)
+    public void onAmountLessButtonClick() {
+        if (amount != 1) {
+            this.amount--;
+        }
+        updateAmount(String.valueOf(amount));
+    }
+
+    @OnClick(R.id.amount_plus_button)
+    public void onAmountPlusButtonClick() {
+        this.amount++;
+        updateAmount(String.valueOf(amount));
+    }
+
+    private void updateAmount(String amount) {
+        this.txtAmount.setText(amount);
     }
 }

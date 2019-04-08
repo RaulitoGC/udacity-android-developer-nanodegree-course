@@ -83,7 +83,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     .into(productImg);
 
             txtProductTitle.setText(product.getName());
-            txtProductPrice.setText(product.getPrice());
+            String price = String.format(itemView.getResources().getString(R.string.text_product_price_format), product.getPrice());
+
+            txtProductPrice.setText(price);
             itemView.setOnClickListener(v -> listener.onListItemClick(product, productImg));
         }
     }

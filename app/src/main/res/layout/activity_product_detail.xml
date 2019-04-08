@@ -45,7 +45,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextAppearance="@style/Toolbar.TitleText"
                 android:clipToPadding="true"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
@@ -61,10 +60,120 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_product_description"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/atma_semibold"
+                android:text="@string/text_description_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/atma"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="14sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_separator_height"
+                android:layout_marginTop="@dimen/line_separator_margin_top"
+                android:layout_marginBottom="@dimen/line_separator_margin_bottom"
+                android:background="@color/colorDivider"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/atma_semibold"
+                android:text="@string/text_aditional_information_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_separator_height"
+                android:layout_marginTop="@dimen/line_separator_margin_top"
+                android:layout_marginBottom="@dimen/line_separator_margin_bottom"
+                android:background="@color/colorDivider"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_separator_margin_top"
+                android:layout_marginBottom="@dimen/line_separator_margin_bottom"
+                android:fontFamily="@font/atma_semibold"
+                android:text="@string/text_choose_amount_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_separator_margin_top"
+                android:layout_marginBottom="@dimen/line_separator_margin_bottom"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/amount_less_button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_amount_size_height"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_less_button"
+                    android:gravity="center"
+                    android:text="@string/button_text_less_label"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="@dimen/text_button_amount_size"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_text_amount"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_button_amount_size"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/amount_plus_button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_amount_size_height"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_plus_button"
+                    android:gravity="center"
+                    android:text="@string/button_text_plus_label"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="@dimen/text_button_amount_size"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_separator_margin_top"
+                android:layout_marginBottom="@dimen/line_separator_margin_bottom"
+                android:background="@drawable/background_pay_button"
+                android:gravity="center"
+                android:text="@string/button_pay_label"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_button_amount_size"/>
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

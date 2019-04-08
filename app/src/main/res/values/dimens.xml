@@ -28,4 +28,12 @@
     <dimen name="appbarlayout_elevation">4dp</dimen>
     <dimen name="image_detail_height">300dp</dimen>
 
+    <dimen name="line_separator_height">1dp</dimen>
+    <dimen name="line_separator_margin_top">4dp</dimen>
+    <dimen name="line_separator_margin_bottom">16dp</dimen>
+    <dimen name="text_feature_label_margin_end">16dp</dimen>
+    <dimen name="round_button_size">16dp</dimen>
+    <dimen name="text_button_amount_size">24sp</dimen>
+    <dimen name="button_amount_size_height">32dp</dimen>
+
 </resources>

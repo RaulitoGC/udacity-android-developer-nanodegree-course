@@ -28,6 +28,7 @@
             android:layout_marginTop="@dimen/card_title_margin_top"
             android:layout_marginEnd="@dimen/card_title_margin_end"
             android:ellipsize="end"
+            android:fontFamily="@font/atma_semibold"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/card_title_text_size"/>
 
@@ -40,6 +41,7 @@
             android:layout_marginEnd="@dimen/card_title_margin_end"
             android:layout_marginBottom="@dimen/card_title_margin_bottom"
             android:ellipsize="end"
+            android:fontFamily="@font/atma"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/card_title_text_size"/>
 

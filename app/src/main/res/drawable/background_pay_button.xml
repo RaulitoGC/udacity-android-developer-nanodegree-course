@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/colorAccent"/>
+    <corners android:bottomLeftRadius="@dimen/round_button_size"
+             android:bottomRightRadius="@dimen/round_button_size"
+             android:topLeftRadius="@dimen/round_button_size"
+             android:topRightRadius="@dimen/round_button_size"/>
+</shape>

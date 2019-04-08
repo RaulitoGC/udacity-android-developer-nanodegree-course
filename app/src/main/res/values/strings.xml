@@ -12,8 +12,19 @@
     <string name="message_exception_valid_password">Between 4 and 10 alphanumeric characters</string>
     <string name="message_exception_empty_category_list">There aren\'t categories </string>
 
+    <string name="text_product_price_format">S/ %1$s</string>
+
     <string name="text_product_image_shared_element">product_image</string>
 
     <string name="text_retry">Retry</string>
+    <string name="text_description_label">Description</string>
+    <string name="text_choose_amount_label"> Choose amount</string>
+    <string name="text_aditional_information_label">Aditional Information</string>
+    <string name="text_feature_label_format">%1$s : </string>
+
+    <string name="button_text_less_label">-</string>
+    <string name="button_text_plus_label">+</string>
+
+    <string name="button_pay_label">Buy</string>
 
 </resources>
