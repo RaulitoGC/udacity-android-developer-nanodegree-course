@@ -16,8 +16,13 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.User;
+import com.rguzman.techstore.presentation.analytics.Analytics;
 import com.rguzman.techstore.presentation.category.CategoryListActivity;
 
 import java.util.Objects;
@@ -47,12 +52,28 @@ public class LoginFragment extends DaggerFragment implements LoginView {
     ViewModelProvider.Factory viewModelFactory;
     private LoginViewModel loginViewModel;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(context());
+        MobileAds.initialize(context(), getString(R.string.add_mob_ID));
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
+
+
+        AdView mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+
         return view;
     }
 
@@ -86,8 +107,9 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     @Override
     public void loginSuccess(User user) {
+        Analytics.loginEvent(firebaseAnalytics, user);
         startActivity(CategoryListActivity.getCallingIntent(context()));
-        getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override

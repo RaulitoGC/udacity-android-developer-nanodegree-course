@@ -27,6 +27,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
@@ -64,6 +66,9 @@ dependencies {
 
     implementation projectDependencies.workManager.runtime
 
+    implementation projectDependencies.firebase.core
+    implementation projectDependencies.firebase.ads
+
     implementation projectTestDependencies.espresso.idlingResource
 
     androidTestImplementation projectTestDependencies.espresso.core
@@ -73,3 +78,5 @@ dependencies {
     androidTestImplementation projectTestDependencies.espresso.contrib
 
 }
+
+apply plugin: 'com.google.gms.google-services'

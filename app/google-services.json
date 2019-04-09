@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "959749982770",
+    "firebase_url": "https://techstore-bfd36.firebaseio.com",
+    "project_id": "techstore-bfd36",
+    "storage_bucket": "techstore-bfd36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959749982770:android:2df6e41986cb1f4c",
+        "android_client_info": {
+          "package_name": "com.rguzman.techstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeFyuIXH16qQGR3FkmFdu3WlAjmjqdisQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959749982770-vqtgalv43u0cog8scniurm21p9l47lnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
