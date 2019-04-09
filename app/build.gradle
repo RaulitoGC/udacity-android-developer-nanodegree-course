@@ -28,6 +28,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../dependencies/debug.keystore')
+            storePassword 'j9!b6!x9!'
+            keyAlias 'techstore'
+            keyPassword 'j9!b6!x9!'
+        }
+    }
+
 
 }
 
