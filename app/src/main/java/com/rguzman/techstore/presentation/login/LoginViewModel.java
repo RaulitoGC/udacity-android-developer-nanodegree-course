@@ -60,7 +60,7 @@ public class LoginViewModel extends ViewModel {
 
             @Override
             public void onError(Exception exception) {
-
+                view.hideLoading();
                 showError(exception);
             }
         });

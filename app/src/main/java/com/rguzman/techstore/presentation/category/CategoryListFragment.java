@@ -12,16 +12,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.test.espresso.IdlingResource;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.rguzman.techstore.R;
 import com.rguzman.techstore.domain.model.Category;
+import com.rguzman.techstore.presentation.idlingResource.SimpleIdlingResource;
 import com.rguzman.techstore.presentation.product.ProductListActivity;
 
 import java.util.List;
@@ -50,12 +53,15 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     private CategoryAdapter categoryAdapter;
     private CategoryListViewModel categoryListViewModel;
 
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.categoryListViewModel = ViewModelProviders.of(this, viewModelFactory).get(CategoryListViewModel.class);
         this.categoryListViewModel.setView(this);
-        this.categoryListViewModel.init();
+        this.categoryListViewModel.init(mIdlingResource);
     }
 
     @Nullable
@@ -149,5 +155,14 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     @Override
     public void hideLoading() {
         progress.setVisibility(View.GONE);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 }
