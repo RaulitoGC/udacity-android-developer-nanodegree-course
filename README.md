@@ -12,9 +12,9 @@ size in Android such as Tablet and Smartphone.
     <img src="captures/smartphone_list.png" alt="list" width="150px" hspace="10"/>  
     <img src="captures/ingredients.png" alt="ingredients" width="150px"hspace="10"/>
     <img src="captures/smartphone_video.png" alt="video recipe" width="150px" hspace="10"/>
-    <img src="captures/landscape.png" alt="video recipe" width="150px" hspace="10"/>
     <img src="captures/steps.png" alt="video recipe" width="150px"/>
 <img src="captures/widget.png" alt="video recipe" width="150px"/>
+<img src="captures/landscape.png" alt="video recipe" height="500px" hspace="10"/>
 </p>
 
 * Tablet
@@ -184,16 +184,16 @@ different screen size.
   _**res/layout/activity_recipe_detail.xml**_
 
 <div align="left">
- <img src="captures/boolean.png" alt="boolean"width="150px" hspace="10"/>
-<img src="captures/activity_recipe_detail.png" alt="layout"width="150px"/>
+ <img src="captures/boolean.png" alt="boolean"width="400px" hspace="10"/>
+<img src="captures/activity_recipe_detail.png" alt="layout"width="400px"/>
 </div>
 
 * Tablet resource _**res/values-sw600dp/boolean.xml**_ and
   _**res/layout-sw600dp/activity_recipe_detail.xml**_
   
   <div align="left">
-   <img src="captures/boolean-sw600dp.png" alt="boolean" width="150px" hspace="10"/>
-  <img src="captures/activity_recipe_detail-sw600dp.png" alt="layout"width="150px"/>
+   <img src="captures/boolean-sw600dp.png" alt="boolean" width="400px" hspace="10"/>
+  <img src="captures/activity_recipe_detail_sw600dp.png" alt="layout"width="400px"/>
   </div>
 
 Finally if the application runs in tablet it will take sw-600dp
