@@ -15,14 +15,12 @@ We have got just the right app for you.
 ### Screenshots
 
 <p align="center">
-    <img src="images/login.png" alt="login" width="120px" hspace="10"/>  
-    <img src="images/categories.png" alt="categories" width="120px"hspace="10"/>
-    <img src="images/products.png" alt="login" width="120px"/>   
-</p>
-<p align="center">
-    <img src="images/detail.png" alt="login" width="120px" hspace="10"/>
-    <img src="images/success_buy.png" alt="login" width="120px" hspace="10"/>
-    <img src="images/notification.png" alt="login" width="120px"/>   
+    <img src="images/login.png" alt="login" width="150px" hspace="10"/>  
+    <img src="images/categories.png" alt="categories" width="150px"hspace="10"/>
+    <img src="images/products.png" alt="login" width="150px" hspace="10"/>
+    <img src="images/detail.png" alt="login" width="150px" hspace="10"/>
+    <img src="images/success_buy.png" alt="login" width="150px" hspace="10"/>
+    <img src="images/notification.png" alt="login" width="150px"/>   
 </p>
 
 ## Features
