@@ -1,8 +1,8 @@
 # Udacity-Baking-App
 
-As part of series of projects from Udacity, Baking 
+As part of series of projects from Udacity course, Baking 
  is the project
-about how to use Exoplayer API and how to manage differente types of
+about how to use Exoplayer API and how to manage differents types of
 size in Android such as Tablet and Smartphone.
 
 ### Screenshots
@@ -41,7 +41,7 @@ size in Android such as Tablet and Smartphone.
 
 ### Dependencies
 
-As you can see this project has a lot of dependencies, in order to do it more clean I organize all
+As you can see this project has a lot of dependencies, in order to do it more clean, it organize all
 the dependencie in another file, it has all the dependencies and two final variables, 
 one for development and the another for testing.
 
@@ -176,7 +176,7 @@ one for development and the another for testing.
 ### Screen Size 
    
 In some cases the application needs to validate if it is running in
-tablet or Smartphone, in this application it validate with a single
+tablet or Smartphone, in this application the validation was developed with a single
 boolean, but don't forget that android can create resources for
 different screen size. 
 
@@ -194,12 +194,12 @@ different screen size.
   [](captures/activity_recipe_detail_sw600dp.png)
 
 Finally if the application runs in tablet it will take sw-600dp
-resources and if is Smartphone it takes the default. 
+resources and if is Smartphone it will take the default. 
 
 ```
 boolean isTablet = getResources().getBoolean(R.bool.isTable);
         if (isTablet) {
-            // do something fot tablet
+            // do something for tablet
         } else {
             // do something for Smartphone
         }
