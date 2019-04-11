@@ -17,10 +17,12 @@ We have got just the right app for you.
 <p align="center">
     <img src="images/login.png" alt="login" width="150px" hspace="10"/>  
     <img src="images/categories.png" alt="categories" width="150px"hspace="10"/>
-    <img src="images/products.png" alt="login" width="150px" hspace="10"/>
-    <img src="images/detail.png" alt="login" width="150px" hspace="10"/>
-    <img src="images/success_buy.png" alt="login" width="150px" hspace="10"/>
-    <img src="images/notification.png" alt="login" width="150px"/>   
+    <img src="images/products.png" alt="products" width="150px" hspace="10"/>
+    <img src="images/detail.png" alt="product detail" width="150px" hspace="10"/>
+    <img src="images/success_buy.png" alt="alert" width="150px" hspace="10"/>
+    <img src="images/notification.png" alt="android notification" width="150px" hspace="10"/>
+    <img src="images/widget.png" alt="android widget" width="150px" hspace="10"/>
+    <img src="images/share.png" alt="share" width="150px"/>
 </p>
 
 ## Features
