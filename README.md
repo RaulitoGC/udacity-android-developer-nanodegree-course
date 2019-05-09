@@ -92,8 +92,8 @@ one for development and the another for testing.
                  app:repeat_toggle_modes="one"
                  app:rewind_increment="10000" />
      
-         </FrameLayout>
-        ```
+     </FrameLayout>
+      ```
 * Since Baking application shows videos, it should be pause when enters
   in background and resume when come back to foreground.
   
