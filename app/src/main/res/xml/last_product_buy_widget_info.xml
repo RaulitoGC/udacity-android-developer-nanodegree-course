@@ -4,6 +4,6 @@
     android:initialLayout="@layout/last_product_buy_widget"
     android:minHeight="@dimen/min_height_widget"
     android:minWidth="@dimen/min_width_widget"
-    android:previewImage="@drawable/ic_android"
+    android:previewImage="@drawable/logo"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"/>
