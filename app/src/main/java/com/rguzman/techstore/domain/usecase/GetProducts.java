@@ -19,9 +19,9 @@ public class GetProducts extends UseCase<GetProducts.Parameters, List<Product>> 
     }
 
     @Override
-    public void execute(boolean forceUpdate, Parameters params, Callback<List<Product>> callback) {
+    public void execute(boolean forceUpdate, Parameters params, UseCaseCallback<List<Product>> callback) {
         this.setForceCache(forceUpdate);
-        this.productRepository.loadProducts(isForceCache(), params.token, params.categoryId, new Callback<List<Product>>() {
+        this.productRepository.loadProducts(isForceCache(), params.token, params.categoryId, new UseCaseCallback<List<Product>>() {
             @Override
             public void onNetworkResponse(LiveData<List<Product>> liveData) {
                 callback.onNetworkResponse(liveData);

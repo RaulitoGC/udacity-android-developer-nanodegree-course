@@ -11,4 +11,6 @@ public interface CategoryDiskDataSource {
     void saveCategories(List<Category> categories);
 
     LiveData<List<Category>> loadCategories();
+
+    void cleanCategories();
 }

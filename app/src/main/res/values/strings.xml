@@ -35,6 +35,7 @@
 
     <string name="add_mob_ID">ca-app-pub-3940256099942544/6300978111</string>
     <string name="menu_share_title">Share</string>
+    <string name="menu_log_out_title">Share</string>
     <string name="text_new_product_is_here_label">New product Here!</string>
 
 </resources>

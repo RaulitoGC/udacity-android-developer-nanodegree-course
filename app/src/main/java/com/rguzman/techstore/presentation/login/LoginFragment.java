@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -92,6 +93,7 @@ public class LoginFragment extends DaggerFragment implements LoginView {
         String email = Objects.requireNonNull(emailInput.getText()).toString();
         String password = Objects.requireNonNull(passwordInput.getText()).toString();
         loginViewModel.login(email, password);
+        
     }
 
     @Override
@@ -114,12 +116,14 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     @Override
     public void showMessageEmailInvalid() {
+        hideLoading();
         loginButton.setEnabled(true);
         emailInput.setError(getString(R.string.message_exception_valid_email));
     }
 
     @Override
     public void showMessagePasswordError() {
+        hideLoading();
         loginButton.setEnabled(true);
         passwordInput.setError(getString(R.string.message_exception_valid_password));
     }

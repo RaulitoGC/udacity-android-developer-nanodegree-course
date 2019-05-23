@@ -27,4 +27,6 @@ public interface CategoryListView {
     void showLoading();
 
     void hideLoading();
+
+    void logout();
 }

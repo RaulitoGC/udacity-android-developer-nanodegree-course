@@ -17,13 +17,8 @@ public class GetProduct extends UseCase<String, Product> {
   }
 
   @Override
-  public void execute(boolean forceCache, String params, Callback<Product> callback) {
-
-  }
-
-  @Override
-  public void execute(String productId, Callback<Product> callback) {
-    this.productRepository.loadProduct(productId, new Callback<Product>() {
+  public void execute(String productId, UseCaseCallback<Product> callback) {
+    this.productRepository.loadProduct(productId, new UseCaseCallback<Product>() {
       @Override
       public void onNetworkResponse(LiveData<Product> liveData) {
         callback.onNetworkResponse(liveData);
