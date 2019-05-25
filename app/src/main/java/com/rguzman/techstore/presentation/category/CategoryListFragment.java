@@ -125,8 +125,6 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-    Timber.d("item ->" + id);
-    Timber.d("log out item ->" + R.id.action_log_out);
     if (id == R.id.action_log_out) {
       categoryListViewModel.signOut();
       return true;

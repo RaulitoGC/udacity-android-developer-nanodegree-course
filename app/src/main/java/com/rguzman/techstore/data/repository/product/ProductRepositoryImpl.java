@@ -26,13 +26,15 @@ public class ProductRepositoryImpl implements ProductRepository {
   private final ProductNetworkDataSource productNetworkDataSource;
 
   @Inject
-  public ProductRepositoryImpl(ProductDiskDataSource productDiskDataSource, ProductNetworkDataSource productNetworkDataSource) {
+  public ProductRepositoryImpl(ProductDiskDataSource productDiskDataSource,
+                               ProductNetworkDataSource productNetworkDataSource) {
     this.productDiskDataSource = productDiskDataSource;
     this.productNetworkDataSource = productNetworkDataSource;
   }
 
   @Override
-  public void loadProducts(boolean forceCache, String token, String categoryId, UseCaseCallback<List<Product>> callback) {
+  public void loadProducts(boolean forceCache, String token, String categoryId,
+                           UseCaseCallback<List<Product>> callback) {
     if (forceCache) {
       callback.onDiskResponse(productDiskDataSource.loadProducts(categoryId));
     }

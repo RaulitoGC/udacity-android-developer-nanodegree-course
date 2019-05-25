@@ -11,9 +11,15 @@ import java.util.List;
 
 public interface ProductRepository {
 
-  void loadProducts(boolean forceCache, String token, String categoryId, UseCaseCallback<List<Product>> callback);
+  void loadProducts(boolean forceCache, String token, String categoryId,
+                    UseCaseCallback<List<Product>> callback);
 
   void loadProduct(String productId, UseCaseCallback<Product> callback);
 
   void loadFeatures(String productId, UseCaseCallback<List<Feature>> callback);
 }
+
+
+
+
+

@@ -42,10 +42,10 @@ public class ProductListViewModel extends ViewModel {
       productListLiveData.observeForever(productListObserver);
       return;
     }
-    initializeMovies(categoryId);
+    initializeProducts(categoryId);
   }
 
-  private void initializeMovies(String categoryId) {
+  private void initializeProducts(String categoryId) {
     view.showLoading();
     loadProducts(true, categoryId);
   }

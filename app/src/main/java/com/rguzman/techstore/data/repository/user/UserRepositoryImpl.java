@@ -20,7 +20,8 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserDiskDataSource userDiskDataSource;
 
     @Inject
-    public UserRepositoryImpl(UserNetworkDataSource userNetworkDataSource, UserDiskDataSource userDiskDataSource) {
+    public UserRepositoryImpl(UserNetworkDataSource userNetworkDataSource,
+                              UserDiskDataSource userDiskDataSource) {
         this.userNetworkDataSource = userNetworkDataSource;
         this.userDiskDataSource = userDiskDataSource;
     }
