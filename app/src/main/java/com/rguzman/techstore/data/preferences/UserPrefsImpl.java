@@ -6,6 +6,8 @@ import com.rguzman.techstore.domain.model.User;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class UserPrefsImpl implements UserPrefs {
 
   private final SharedPreferences preferences;
@@ -46,5 +48,10 @@ public class UserPrefsImpl implements UserPrefs {
     user.setGithub(github);
     user.setExpires(expires);
     return user;
+  }
+
+  @Override
+  public void clean() {
+    preferences.edit().clear().apply();
   }
 }

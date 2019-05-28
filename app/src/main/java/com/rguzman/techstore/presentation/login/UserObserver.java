@@ -6,11 +6,18 @@ import com.rguzman.techstore.domain.model.User;
 
 public class UserObserver implements Observer<User> {
 
+    interface Listener {
+        void onChanged(User user);
+    }
+
+    private Listener listener;
+
+    public UserObserver(Listener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onChanged(User user) {
-//        view.hideLoading();
-//        view.loginSuccess(user);
-//        userLiveData.removeObserver(this);
-
+        listener.onChanged(user);
     }
 }

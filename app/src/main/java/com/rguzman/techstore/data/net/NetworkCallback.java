@@ -1,10 +1,10 @@
 package com.rguzman.techstore.data.net;
 
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public interface NetworkCallback<T> {
 
-    void onResponse(LiveData<T> liveData);
+    void onResponse(MutableLiveData<T> liveData);
 
     void onError(Exception exception);
 }

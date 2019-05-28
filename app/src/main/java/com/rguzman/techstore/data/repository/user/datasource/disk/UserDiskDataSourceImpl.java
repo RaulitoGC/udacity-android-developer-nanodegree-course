@@ -5,6 +5,8 @@ import com.rguzman.techstore.domain.model.User;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class UserDiskDataSourceImpl implements UserDiskDataSource {
 
     private final UserPrefs userPrefs;
@@ -17,5 +19,10 @@ public class UserDiskDataSourceImpl implements UserDiskDataSource {
     @Override
     public void saveUser(User user) {
         userPrefs.saveUser(user);
+    }
+
+    @Override
+    public void logout() {
+        userPrefs.clean();
     }
 }

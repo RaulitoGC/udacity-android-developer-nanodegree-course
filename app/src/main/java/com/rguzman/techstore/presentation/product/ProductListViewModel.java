@@ -7,12 +7,14 @@ import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.preferences.UserPrefs;
 import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.domain.usecase.GetProducts;
+import com.rguzman.techstore.domain.usecase.UseCaseCallback;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
@@ -41,10 +43,10 @@ public class ProductListViewModel extends ViewModel {
       productListLiveData.observeForever(productListObserver);
       return;
     }
-    initializeMovies(categoryId);
+    initializeProducts(categoryId);
   }
 
-  private void initializeMovies(String categoryId) {
+  private void initializeProducts(String categoryId) {
     view.showLoading();
     loadProducts(true, categoryId);
   }
@@ -54,16 +56,15 @@ public class ProductListViewModel extends ViewModel {
       this.view.showRefreshLoading();
     }
     this.getProducts.execute(forceCache, GetProducts.Parameters.getProductParameters(userPrefs.getUser().getToken(), categoryId),
-            new GetProducts.Callback<List<Product>>() {
-
+            new UseCaseCallback<List<Product>>(){
               @Override
-              public void onNetworkResponse(LiveData<List<Product>> liveData) {
+              public void onNetworkResponse(MutableLiveData<List<Product>> liveData) {
                 productListLiveData = liveData;
                 productListLiveData.observeForever(productListObserver);
               }
 
               @Override
-              public void onDiskResponse(LiveData<List<Product>> liveData) {
+              public void onDiskResponse(MutableLiveData<List<Product>> liveData) {
                 productListLiveData = liveData;
                 productListLiveData.observeForever(productListObserver);
               }

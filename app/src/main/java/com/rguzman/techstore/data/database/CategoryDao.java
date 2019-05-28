@@ -1,6 +1,7 @@
 package com.rguzman.techstore.data.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -21,4 +22,7 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM Categories")
     LiveData<List<Category>> loadCategories();
+
+    @Query("DELETE FROM Categories")
+    void deleteCategories();
 }

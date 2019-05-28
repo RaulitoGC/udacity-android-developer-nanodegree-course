@@ -1,6 +1,7 @@
 package com.rguzman.techstore.data.repository.category.datasource.disk;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.rguzman.techstore.domain.model.Category;
 
@@ -10,5 +11,7 @@ public interface CategoryDiskDataSource {
 
     void saveCategories(List<Category> categories);
 
-    LiveData<List<Category>> loadCategories();
+    MutableLiveData<List<Category>> loadCategories();
+
+    void cleanCategories();
 }

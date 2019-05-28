@@ -1,10 +1,13 @@
 package com.rguzman.techstore.data.repository.product.datasource.disk;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.rguzman.techstore.data.database.AppDatabase;
+import com.rguzman.techstore.data.repository.product.datasource.ProductRepository;
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
+import com.rguzman.techstore.domain.usecase.UseCaseCallback;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -24,8 +27,9 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
         this.diskExecutor = diskExecutor;
     }
 
+
     @Override
-    public LiveData<Product> loadProduct(String productId) {
+    public MutableLiveData<Product> loadProduct(String productId) {
         return this.appDatabase.productDao().loadProduct(productId);
     }
 
@@ -50,12 +54,12 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
     }
 
     @Override
-    public LiveData<List<Product>> loadProducts(String categoryId) {
+    public MutableLiveData<List<Product>> loadProducts(String categoryId) {
         return this.appDatabase.productDao().loadProducts(categoryId);
     }
 
     @Override
-    public LiveData<List<Feature>> loadFeatures(String productId) {
+    public MutableLiveData<List<Feature>> loadFeatures(String productId) {
         return this.appDatabase.featureDao().loadFeatures(productId);
     }
 }
