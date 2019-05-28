@@ -23,7 +23,7 @@ public class Logout extends UseCase<Void, Void> {
   public void execute(UseCaseCallback<Void> callback) {
     this.userRepository.logout(new UseCaseCallbackImpl<Void>() {
       @Override
-      public void onDiskResponse(MutableLiveData<Void> liveData) {
+      public void onDiskResponse(LiveData<Void> liveData) {
         categoryRepository.cleanCategories(callback);
       }
     });

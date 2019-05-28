@@ -60,7 +60,7 @@ public class ProductDetailViewModel extends ViewModel {
             new UseCaseCallbackImpl<Product>() {
 
               @Override
-              public void onDiskResponse(MutableLiveData<Product> liveData) {
+              public void onDiskResponse(LiveData<Product> liveData) {
                 productLiveData = liveData;
                 productLiveData.observeForever(productObserver);
               }
@@ -78,7 +78,7 @@ public class ProductDetailViewModel extends ViewModel {
             new UseCaseCallbackImpl<List<Feature>>() {
 
               @Override
-              public void onDiskResponse(MutableLiveData<List<Feature>> liveData) {
+              public void onDiskResponse(LiveData<List<Feature>> liveData) {
                 featureListLiveData = liveData;
                 featureListLiveData.observeForever(featureListObserver);
               }

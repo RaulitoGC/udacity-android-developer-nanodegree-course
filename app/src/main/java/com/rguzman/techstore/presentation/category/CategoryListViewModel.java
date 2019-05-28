@@ -89,13 +89,13 @@ public class CategoryListViewModel extends ViewModel {
         this.getCategories.execute(forceCache, userPrefs.getUser().getToken(), new UseCaseCallback<List<Category>>() {
 
             @Override
-            public void onNetworkResponse(MutableLiveData<List<Category>> liveData) {
+            public void onNetworkResponse(LiveData<List<Category>> liveData) {
                 categoryListLiveData = liveData;
                 categoryListLiveData.observeForever(categoryListObserver);
             }
 
             @Override
-            public void onDiskResponse(MutableLiveData<List<Category>> liveData) {
+            public void onDiskResponse(LiveData<List<Category>> liveData) {
                 categoryListLiveData = liveData;
                 categoryListLiveData.observeForever(categoryListObserver);
             }
@@ -110,8 +110,8 @@ public class CategoryListViewModel extends ViewModel {
     public void signOut(){
         this.logout.execute(new UseCaseCallbackImpl<Void>(){
             @Override
-            public void onDiskResponse(MutableLiveData<Void> liveData) {
-                Timber.d("ON DISK RESPONSE");
+            public void onDiskResponse(LiveData<Void> liveData) {
+
                 view.logout();
             }
         });

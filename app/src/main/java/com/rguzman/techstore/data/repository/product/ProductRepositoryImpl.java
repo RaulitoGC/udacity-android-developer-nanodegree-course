@@ -41,7 +41,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     this.productNetworkDataSource.loadProducts(token, categoryId, new NetworkCallback<List<ProductResponse>>() {
       @Override
-      public void onResponse(MutableLiveData<List<ProductResponse>> liveData) {
+      public void onResponse(LiveData<List<ProductResponse>> liveData) {
 
         final MutableLiveData<List<Product>> productLiveData = new MutableLiveData<>();
 

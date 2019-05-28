@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void login(String email, String password, UseCaseCallback<User> callback) {
         this.userNetworkDataSource.login(email, password, new NetworkCallback<User>() {
             @Override
-            public void onResponse(MutableLiveData<User> liveData) {
+            public void onResponse(LiveData<User> liveData) {
                 userDiskDataSource.saveUser(liveData.getValue());
                 callback.onNetworkResponse(liveData);
             }

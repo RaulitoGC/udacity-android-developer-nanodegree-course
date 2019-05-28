@@ -29,7 +29,7 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
 
 
     @Override
-    public MutableLiveData<Product> loadProduct(String productId) {
+    public LiveData<Product> loadProduct(String productId) {
         return this.appDatabase.productDao().loadProduct(productId);
     }
 
@@ -54,12 +54,12 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
     }
 
     @Override
-    public MutableLiveData<List<Product>> loadProducts(String categoryId) {
+    public LiveData<List<Product>> loadProducts(String categoryId) {
         return this.appDatabase.productDao().loadProducts(categoryId);
     }
 
     @Override
-    public MutableLiveData<List<Feature>> loadFeatures(String productId) {
+    public LiveData<List<Feature>> loadFeatures(String productId) {
         return this.appDatabase.featureDao().loadFeatures(productId);
     }
 }

@@ -21,7 +21,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rguzman.techstore.R;
-import com.rguzman.techstore.domain.model.User;
 import com.rguzman.techstore.presentation.analytics.Analytics;
 import com.rguzman.techstore.presentation.category.CategoryListActivity;
 
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
-public class LoginFragment extends DaggerFragment implements UserObserver.Listener {
+public class LoginFragment extends DaggerFragment {
 
     @BindView(R.id.input_email)
     AppCompatEditText emailInput;
@@ -53,7 +52,6 @@ public class LoginFragment extends DaggerFragment implements UserObserver.Listen
     private LoginViewModel loginViewModel;
 
     private FirebaseAnalytics firebaseAnalytics;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +79,11 @@ public class LoginFragment extends DaggerFragment implements UserObserver.Listen
         super.onActivityCreated(savedInstanceState);
         this.loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
         this.loginViewModel.getStatus().observe(this, this::handleStatus);
-        this.loginViewModel.getUser().observe(this, new UserObserver(this));
+        this.loginViewModel.getUser().observe(this, user -> {
+            Analytics.loginEvent(firebaseAnalytics, user);
+            startActivity(CategoryListActivity.getCallingIntent(getContext()));
+            Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
     }
 
     @OnClick(R.id.btn_login)
@@ -143,11 +145,9 @@ public class LoginFragment extends DaggerFragment implements UserObserver.Listen
         passwordInput.setError(null);
     }
 
-
     private void showLoading() {
         progressBarContainer.setVisibility(View.VISIBLE);
     }
-
 
     private void hideLoading() {
         progressBarContainer.setVisibility(View.GONE);
@@ -156,12 +156,5 @@ public class LoginFragment extends DaggerFragment implements UserObserver.Listen
     private void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    @Override
-    public void onChanged(User user) {
-        Analytics.loginEvent(firebaseAnalytics, user);
-        startActivity(CategoryListActivity.getCallingIntent(getContext()));
-        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

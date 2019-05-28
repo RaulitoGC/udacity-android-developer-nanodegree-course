@@ -58,13 +58,13 @@ public class ProductListViewModel extends ViewModel {
     this.getProducts.execute(forceCache, GetProducts.Parameters.getProductParameters(userPrefs.getUser().getToken(), categoryId),
             new UseCaseCallback<List<Product>>(){
               @Override
-              public void onNetworkResponse(MutableLiveData<List<Product>> liveData) {
+              public void onNetworkResponse(LiveData<List<Product>> liveData) {
                 productListLiveData = liveData;
                 productListLiveData.observeForever(productListObserver);
               }
 
               @Override
-              public void onDiskResponse(MutableLiveData<List<Product>> liveData) {
+              public void onDiskResponse(LiveData<List<Product>> liveData) {
                 productListLiveData = liveData;
                 productListLiveData.observeForever(productListObserver);
               }

@@ -1,7 +1,6 @@
 package com.rguzman.techstore.data.repository.category;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.rguzman.techstore.data.net.NetworkCallback;
 import com.rguzman.techstore.data.repository.category.datasource.CategoryRepository;
@@ -18,40 +17,40 @@ import javax.inject.Singleton;
 @Singleton
 public class CategoryRepositoryImpl implements CategoryRepository {
 
-  private final CategoryDiskDataSource categoryDiskDataSource;
-  private final CategoryNetworkDataSource categoryNetworkDataSource;
+    private final CategoryDiskDataSource categoryDiskDataSource;
+    private final CategoryNetworkDataSource categoryNetworkDataSource;
 
-  @Inject
-  public CategoryRepositoryImpl(CategoryDiskDataSource categoryDiskDataSource, CategoryNetworkDataSource categoryNetworkDataSource) {
-    this.categoryDiskDataSource = categoryDiskDataSource;
-    this.categoryNetworkDataSource = categoryNetworkDataSource;
-  }
-
-  @Override
-  public void loadCategories(boolean forceUpdate, String token, UseCaseCallback<List<Category>> callback) {
-    if (forceUpdate) {
-      callback.onDiskResponse(categoryDiskDataSource.loadCategories());
+    @Inject
+    public CategoryRepositoryImpl(CategoryDiskDataSource categoryDiskDataSource, CategoryNetworkDataSource categoryNetworkDataSource) {
+        this.categoryDiskDataSource = categoryDiskDataSource;
+        this.categoryNetworkDataSource = categoryNetworkDataSource;
     }
 
-    this.categoryNetworkDataSource.loadCategories(token, new NetworkCallback<List<Category>>() {
-      @Override
-      public void onResponse(MutableLiveData<List<Category>> liveData) {
-        callback.onNetworkResponse(liveData);
-        List<Category> list = liveData.getValue();
-        categoryDiskDataSource.saveCategories(list);
-      }
+    @Override
+    public void loadCategories(boolean forceUpdate, String token, UseCaseCallback<List<Category>> callback) {
+        if (forceUpdate) {
+            callback.onDiskResponse(categoryDiskDataSource.loadCategories());
+        }
 
-      @Override
-      public void onError(Exception exception) {
-        callback.onError(exception);
-      }
-    });
-  }
+        this.categoryNetworkDataSource.loadCategories(token, new NetworkCallback<List<Category>>() {
+            @Override
+            public void onResponse(LiveData<List<Category>> liveData) {
+                callback.onNetworkResponse(liveData);
+                List<Category> list = liveData.getValue();
+                categoryDiskDataSource.saveCategories(list);
+            }
 
-  @Override
-  public void cleanCategories(UseCaseCallback<Void> callback) {
-    this.categoryDiskDataSource.cleanCategories();
-    callback.onDiskResponse(null);
-  }
+            @Override
+            public void onError(Exception exception) {
+                callback.onError(exception);
+            }
+        });
+    }
+
+    @Override
+    public void cleanCategories(UseCaseCallback<Void> callback) {
+        this.categoryDiskDataSource.cleanCategories();
+        callback.onDiskResponse(null);
+    }
 
 }

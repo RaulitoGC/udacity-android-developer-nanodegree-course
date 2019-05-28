@@ -10,13 +10,13 @@ import androidx.lifecycle.MutableLiveData;
 
 public interface ProductDiskDataSource {
 
-  MutableLiveData<Product> loadProduct(String productId);
+  LiveData<Product> loadProduct(String productId);
 
   void saveProduct(Product product);
 
   void saveFeatures(List<Feature> features);
 
-  MutableLiveData<List<Product>> loadProducts(String categoryId);
+  LiveData<List<Product>> loadProducts(String categoryId);
 
-  MutableLiveData<List<Feature>> loadFeatures(String productId);
+  LiveData<List<Feature>> loadFeatures(String productId);
 }

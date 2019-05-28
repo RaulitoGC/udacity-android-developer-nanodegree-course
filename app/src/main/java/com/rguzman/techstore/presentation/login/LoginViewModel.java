@@ -16,14 +16,16 @@ import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<User> userLiveData;
-    private SingleLiveEvent<LoginStatus> loginStatus;
+    private final MutableLiveData<User> userLiveData;
+    private final SingleLiveEvent<LoginStatus> loginStatus;
 
     private final Login login;
 
     @Inject
-    public LoginViewModel(Login login) {
+    public LoginViewModel(Login login, MutableLiveData<User> userLiveData, SingleLiveEvent<LoginStatus> loginStatus) {
         this.login = login;
+        this.userLiveData = userLiveData;
+        this.loginStatus = loginStatus;
     }
 
     public LiveData<LoginStatus> getStatus() {
@@ -35,21 +37,17 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String email, String password) {
-        //this.view.showLoading();
         this.loginStatus.setValue(LoginStatus.SHOW_LOADING);
         if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            //this.view.showMessageEmailInvalid();
             this.loginStatus.setValue(LoginStatus.INVALID_EMAIL);
             return;
         }
 
         if (TextUtils.isEmpty(password) || password.length() < 4 || password.length() > 10) {
-            //this.view.showMessagePasswordError();
             this.loginStatus.setValue(LoginStatus.INVALID_PASSWORD);
             return;
         }
 
-        //this.view.setValidInputs();
         this.loginStatus.setValue(LoginStatus.VALID_INPUTS);
         this.login.execute(Login.Parameters.loginParameters(email, password), new UseCaseCallbackImpl<User>() {
             @Override
@@ -59,7 +57,6 @@ public class LoginViewModel extends ViewModel {
 
             @Override
             public void onError(Exception exception) {
-                //view.hideLoading();
                 loginStatus.setValue(LoginStatus.HIDE_LOADING);
                 showError(exception);
             }
@@ -67,13 +64,10 @@ public class LoginViewModel extends ViewModel {
     }
 
     private void showError(Exception exception) {
-        //this.view.hideLoading();
         if (exception instanceof NetworkConnectionException) {
             this.loginStatus.setValue(LoginStatus.NETWORK_CONNECTION);
-//            message = view.context().getString(R.string.message_exception_network_connection);
         } else {
             this.loginStatus.setValue(LoginStatus.GENERIC_ERROR);
-//            message = view.context().getString(R.string.message_exception_generic);
         }
     }
 }

@@ -21,7 +21,7 @@ public class Login extends UseCase<Login.Parameters, User> {
   public void execute(boolean forceUpdate, Parameters params, UseCaseCallback<User> callback) {
     this.userRepository.login(params.email, params.password, new UseCaseCallbackImpl<User>() {
       @Override
-      public void onNetworkResponse(MutableLiveData<User> liveData) {
+      public void onNetworkResponse(LiveData<User> liveData) {
         callback.onNetworkResponse(liveData);
       }
 
