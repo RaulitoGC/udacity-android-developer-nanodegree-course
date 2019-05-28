@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rguzman.techstore.R;
-import com.rguzman.techstore.domain.model.User;
 import com.rguzman.techstore.presentation.analytics.Analytics;
 import com.rguzman.techstore.presentation.category.CategoryListActivity;
 
@@ -35,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
-public class LoginFragment extends DaggerFragment implements LoginView {
+public class LoginFragment extends DaggerFragment {
 
     @BindView(R.id.input_email)
     AppCompatEditText emailInput;
@@ -55,12 +54,11 @@ public class LoginFragment extends DaggerFragment implements LoginView {
 
     private FirebaseAnalytics firebaseAnalytics;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.firebaseAnalytics = FirebaseAnalytics.getInstance(context());
-        MobileAds.initialize(context(), getString(R.string.add_mob_ID));
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(Objects.requireNonNull(getContext()));
+        MobileAds.initialize(getContext(), getString(R.string.add_mob_ID));
     }
 
     @Nullable
@@ -81,12 +79,17 @@ public class LoginFragment extends DaggerFragment implements LoginView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
-        //this.loginViewModel.init();
+        this.loginViewModel.getStatus().observe(this, this::handleStatus);
+        this.loginViewModel.getUser().observe(this, user -> {
+            Analytics.loginEvent(firebaseAnalytics, user);
+            startActivity(CategoryListActivity.getCallingIntent(getContext()));
+            Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
     }
 
     @OnClick(R.id.btn_login)
     public void onLoginButtonClick() {
-        hideKeyboardFrom(context(), loginButton);
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), loginButton);
         loginButton.setEnabled(false);
         String email = Objects.requireNonNull(emailInput.getText()).toString();
         String password = Objects.requireNonNull(passwordInput.getText()).toString();
@@ -94,51 +97,59 @@ public class LoginFragment extends DaggerFragment implements LoginView {
         
     }
 
-    @Override
-    public Context context() {
-        return getContext();
+    private void handleStatus(LoginStatus userStatus) {
+        switch (userStatus) {
+            case GENERIC_ERROR:
+                showError(getString(R.string.message_exception_generic));
+                break;
+            case NETWORK_CONNECTION:
+                showError(getString(R.string.message_exception_network_connection));
+                break;
+            case HIDE_LOADING:
+                hideLoading();
+                break;
+            case SHOW_LOADING:
+                showLoading();
+                break;
+            case VALID_INPUTS:
+                setValidInputs();
+                break;
+            case INVALID_EMAIL:
+                showMessageEmailInvalid();
+                break;
+            case INVALID_PASSWORD:
+                showMessagePasswordError();
+                break;
+        }
     }
 
-    @Override
     public void showError(String message) {
         loginButton.setEnabled(true);
-        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
+    private void showMessageEmailInvalid() {
 
-    @Override
-    public void loginSuccess(User user) {
-        Analytics.loginEvent(firebaseAnalytics, user);
-        startActivity(CategoryListActivity.getCallingIntent(context()));
-        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    @Override
-    public void showMessageEmailInvalid() {
         hideLoading();
         loginButton.setEnabled(true);
         emailInput.setError(getString(R.string.message_exception_valid_email));
     }
 
-    @Override
-    public void showMessagePasswordError() {
+    private void showMessagePasswordError() {
         hideLoading();
         loginButton.setEnabled(true);
         passwordInput.setError(getString(R.string.message_exception_valid_password));
     }
 
-    @Override
-    public void setValidInputs() {
+    private void setValidInputs() {
         emailInput.setError(null);
         passwordInput.setError(null);
     }
 
-    @Override
-    public void showLoading() {
+    private void showLoading() {
         progressBarContainer.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void hideLoading() {
+    private void hideLoading() {
         progressBarContainer.setVisibility(View.GONE);
     }
 

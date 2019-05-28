@@ -21,8 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 public class CategoryListViewModel extends ViewModel {
 
     private LiveData<List<Category>> categoryListLiveData;
@@ -106,11 +104,10 @@ public class CategoryListViewModel extends ViewModel {
         });
     }
 
-    public void signOut(){
-        this.logout.execute(new UseCaseCallbackImpl<Void>(){
+    public void signOut() {
+        this.logout.execute(new UseCaseCallbackImpl<Void>() {
             @Override
             public void onDiskResponse(LiveData<Void> liveData) {
-                Timber.d("ON DISK RESPONSE");
                 view.logout();
             }
         });
