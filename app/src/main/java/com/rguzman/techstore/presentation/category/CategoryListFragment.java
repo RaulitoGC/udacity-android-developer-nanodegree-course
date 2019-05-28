@@ -31,16 +31,17 @@ import com.rguzman.techstore.presentation.idlingResource.SimpleIdlingResource;
 import com.rguzman.techstore.presentation.login.LoginActivity;
 import com.rguzman.techstore.presentation.product.ProductListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
-import timber.log.Timber;
 
-public class CategoryListFragment extends DaggerFragment implements CategoryListView, CategoryAdapter.OnListItemClickListener {
+public class CategoryListFragment extends DaggerFragment implements CategoryAdapter.OnListItemClickListener {
 
   private static final int GRID_NUM_COLUMNS = 2;
 
@@ -65,8 +66,23 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     this.categoryListViewModel = ViewModelProviders.of(this, viewModelFactory).get(CategoryListViewModel.class);
-    this.categoryListViewModel.setView(this);
-    this.categoryListViewModel.init(mIdlingResource);
+    this.categoryListViewModel.getCategoryListStatus().observe(this, this::handleStatus);
+    this.categoryListViewModel.getCategoryList().observe(this, categories -> {
+      if (isEmptyList()) {
+        loadListWithAnimation(categories);
+      } else {
+        loadList(categories);
+      }
+
+      if (this.mIdlingResource != null) {
+        this.mIdlingResource.setIdleState(true);
+      }
+    });
+
+    if (this.mIdlingResource != null) {
+      this.mIdlingResource.setIdleState(false);
+    }
+    this.categoryListViewModel.initializeMovies();
   }
 
   @Nullable
@@ -87,26 +103,52 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     this.recyclerView.setLayoutManager(gridLayoutManager);
     this.recyclerView.setHasFixedSize(true);
 
-    this.categoryAdapter = new CategoryAdapter(this);
+    this.categoryAdapter = new CategoryAdapter(this, new ArrayList<>());
     this.recyclerView.setAdapter(categoryAdapter);
 
-    this.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context(), R.color.colorAccent));
+    this.swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorAccent));
     this.swipeRefreshLayout.setOnRefreshListener(() -> categoryListViewModel.loadCategories(false));
   }
 
   @Override
   public void onListItemClick(Category category) {
-    startActivity(ProductListActivity.getCallingIntent(context(), category.getCategoryId(), category.getName()));
+    startActivity(ProductListActivity.getCallingIntent(getContext(), category.getCategoryId(), category.getName()));
   }
 
-  @Override
-  public void loadList(List<Category> categories) {
+  private void handleStatus(CategoryListStatus categoryListStatus) {
+    switch (categoryListStatus) {
+      case GENERIC_ERROR:
+        showError(getString(R.string.message_exception_generic));
+        break;
+      case NETWORK_CONNECTION_ERROR:
+        showError(getString(R.string.message_exception_network_connection));
+        break;
+      case EMPTY_LIST:
+        showEmptyList();
+      case HIDE_LOADING:
+        hideLoading();
+        break;
+      case SHOW_LOADING:
+        showLoading();
+        break;
+      case SHOW_REFRESH_LOADING:
+        showRefreshLoading();
+        break;
+      case HIDE_REFRESH_LOADING:
+        hideRefreshLoading();
+        break;
+      case LOG_OUT:
+        logout();
+        break;
+    }
+  }
+
+  private void loadList(List<Category> categories) {
     this.categoryAdapter.setList(categories);
     this.swipeRefreshLayout.setEnabled(true);
   }
 
-  @Override
-  public void loadListWithAnimation(List<Category> categories) {
+  private void loadListWithAnimation(List<Category> categories) {
     final Context context = recyclerView.getContext();
     final LayoutAnimationController controller =
             AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
@@ -132,57 +174,42 @@ public class CategoryListFragment extends DaggerFragment implements CategoryList
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public boolean isEmptyList() {
-    return this.categoryAdapter.getItemCount() == 0;
+  private boolean isEmptyList() {
+    return categoryAdapter.getItemCount() == 0;
   }
 
-  @Override
-  public Context context() {
-    return getContext();
-  }
-
-  @Override
   public void showError(String message) {
-    Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
   }
 
-  @Override
-  public void showEmptyList(String message) {
+  private void showEmptyList() {
     this.swipeRefreshLayout.setEnabled(false);
     this.categoryAdapter.clearList();
     Snackbar snackbar = Snackbar
-            .make(rootLayout, message, Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.text_retry), v -> {
-              categoryListViewModel.loadCategories(true);
-            });
+            .make(rootLayout, getString(R.string.message_exception_empty_category_list), Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.text_retry), v -> categoryListViewModel.loadCategories(true));
     snackbar.show();
   }
 
-  @Override
-  public void showRefreshLoading() {
+  private void showRefreshLoading() {
     this.swipeRefreshLayout.setRefreshing(true);
   }
 
-  @Override
-  public void hideRefreshLoading() {
+  private void hideRefreshLoading() {
     this.swipeRefreshLayout.setRefreshing(false);
   }
 
-  @Override
-  public void showLoading() {
+  private void showLoading() {
     progress.setVisibility(View.VISIBLE);
   }
 
-  @Override
-  public void hideLoading() {
+  private void hideLoading() {
     progress.setVisibility(View.GONE);
   }
 
-  @Override
   public void logout() {
     if (getActivity() != null) {
-      startActivity(LoginActivity.getCallingIntent(context()));
+      startActivity(LoginActivity.getCallingIntent(getContext()));
       getActivity().finish();
     }
   }

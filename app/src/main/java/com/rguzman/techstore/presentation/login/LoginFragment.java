@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,125 +35,124 @@ import dagger.android.support.DaggerFragment;
 
 public class LoginFragment extends DaggerFragment {
 
-    @BindView(R.id.input_email)
-    AppCompatEditText emailInput;
+  @BindView(R.id.input_email)
+  AppCompatEditText emailInput;
 
-    @BindView(R.id.input_password)
-    AppCompatEditText passwordInput;
+  @BindView(R.id.input_password)
+  AppCompatEditText passwordInput;
 
-    @BindView(R.id.btn_login)
-    AppCompatButton loginButton;
+  @BindView(R.id.btn_login)
+  AppCompatButton loginButton;
 
-    @BindView(R.id.progressContainer)
-    View progressBarContainer;
+  @BindView(R.id.progressContainer)
+  View progressBarContainer;
 
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-    private LoginViewModel loginViewModel;
+  @Inject
+  ViewModelProvider.Factory viewModelFactory;
+  private LoginViewModel loginViewModel;
 
-    private FirebaseAnalytics firebaseAnalytics;
+  private FirebaseAnalytics firebaseAnalytics;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.firebaseAnalytics = FirebaseAnalytics.getInstance(Objects.requireNonNull(getContext()));
-        MobileAds.initialize(getContext(), getString(R.string.add_mob_ID));
-    }
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    this.firebaseAnalytics = FirebaseAnalytics.getInstance(Objects.requireNonNull(getContext()));
+    MobileAds.initialize(getContext(), getString(R.string.add_mob_ID));
+  }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ButterKnife.bind(this, view);
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_login, container, false);
+    ButterKnife.bind(this, view);
 
-        AdView mAdView = view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdView.loadAd(adRequest);
+    AdView mAdView = view.findViewById(R.id.adView);
+    AdRequest adRequest = new AdRequest.Builder()
+            .build();
+    mAdView.loadAd(adRequest);
 
-        return view;
-    }
+    return view;
+  }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
-        this.loginViewModel.getStatus().observe(this, this::handleStatus);
-        this.loginViewModel.getUser().observe(this, user -> {
-            Analytics.loginEvent(firebaseAnalytics, user);
-            startActivity(CategoryListActivity.getCallingIntent(getContext()));
-            Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
-    }
+  @Override
+  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    this.loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
+    this.loginViewModel.getStatus().observe(this, this::handleStatus);
+    this.loginViewModel.getUser().observe(this, user -> {
+      Analytics.loginEvent(firebaseAnalytics, user);
+      startActivity(CategoryListActivity.getCallingIntent(getContext()));
+      Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    });
+  }
 
-    @OnClick(R.id.btn_login)
-    public void onLoginButtonClick() {
-        hideKeyboardFrom(Objects.requireNonNull(getContext()), loginButton);
-        loginButton.setEnabled(false);
-        String email = Objects.requireNonNull(emailInput.getText()).toString();
-        String password = Objects.requireNonNull(passwordInput.getText()).toString();
-        loginViewModel.login(email, password);
-        
-    }
+  @OnClick(R.id.btn_login)
+  public void onLoginButtonClick() {
+    hideKeyboardFrom(Objects.requireNonNull(getContext()), loginButton);
+    loginButton.setEnabled(false);
+    String email = Objects.requireNonNull(emailInput.getText()).toString();
+    String password = Objects.requireNonNull(passwordInput.getText()).toString();
+    loginViewModel.login(email, password);
+  }
 
-    private void handleStatus(LoginStatus userStatus) {
-        switch (userStatus) {
-            case GENERIC_ERROR:
-                showError(getString(R.string.message_exception_generic));
-                break;
-            case NETWORK_CONNECTION:
-                showError(getString(R.string.message_exception_network_connection));
-                break;
-            case HIDE_LOADING:
-                hideLoading();
-                break;
-            case SHOW_LOADING:
-                showLoading();
-                break;
-            case VALID_INPUTS:
-                setValidInputs();
-                break;
-            case INVALID_EMAIL:
-                showMessageEmailInvalid();
-                break;
-            case INVALID_PASSWORD:
-                showMessagePasswordError();
-                break;
-        }
-    }
-
-    public void showError(String message) {
-        loginButton.setEnabled(true);
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-    private void showMessageEmailInvalid() {
-
+  private void handleStatus(LoginStatus userStatus) {
+    switch (userStatus) {
+      case GENERIC_ERROR:
+        showError(getString(R.string.message_exception_generic));
+        break;
+      case NETWORK_CONNECTION_ERROR:
+        showError(getString(R.string.message_exception_network_connection));
+        break;
+      case HIDE_LOADING:
         hideLoading();
-        loginButton.setEnabled(true);
-        emailInput.setError(getString(R.string.message_exception_valid_email));
+        break;
+      case SHOW_LOADING:
+        showLoading();
+        break;
+      case VALID_INPUTS:
+        setValidInputs();
+        break;
+      case INVALID_EMAIL:
+        showMessageEmailInvalid();
+        break;
+      case INVALID_PASSWORD:
+        showMessagePasswordError();
+        break;
     }
+  }
 
-    private void showMessagePasswordError() {
-        hideLoading();
-        loginButton.setEnabled(true);
-        passwordInput.setError(getString(R.string.message_exception_valid_password));
-    }
+  private void showError(String message) {
+    loginButton.setEnabled(true);
+    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+  }
 
-    private void setValidInputs() {
-        emailInput.setError(null);
-        passwordInput.setError(null);
-    }
+  private void showMessageEmailInvalid() {
+    hideLoading();
+    loginButton.setEnabled(true);
+    emailInput.setError(getString(R.string.message_exception_valid_email));
+  }
 
-    private void showLoading() {
-        progressBarContainer.setVisibility(View.VISIBLE);
-    }
+  private void showMessagePasswordError() {
+    hideLoading();
+    loginButton.setEnabled(true);
+    passwordInput.setError(getString(R.string.message_exception_valid_password));
+  }
 
-    private void hideLoading() {
-        progressBarContainer.setVisibility(View.GONE);
-    }
+  private void setValidInputs() {
+    emailInput.setError(null);
+    passwordInput.setError(null);
+  }
 
-    private void hideKeyboardFrom(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+  private void showLoading() {
+    progressBarContainer.setVisibility(View.VISIBLE);
+  }
+
+  private void hideLoading() {
+    progressBarContainer.setVisibility(View.GONE);
+  }
+
+  private void hideKeyboardFrom(Context context, View view) {
+    InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+  }
 }

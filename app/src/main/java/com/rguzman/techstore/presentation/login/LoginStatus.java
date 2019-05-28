@@ -1,7 +1,7 @@
 package com.rguzman.techstore.presentation.login;
 
 public enum LoginStatus {
-    NETWORK_CONNECTION,
+    NETWORK_CONNECTION_ERROR,
     GENERIC_ERROR,
     INVALID_EMAIL,
     INVALID_PASSWORD,

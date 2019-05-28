@@ -67,7 +67,7 @@ public class LoginViewModel extends ViewModel {
 
     private void showError(Exception exception) {
         if (exception instanceof NetworkConnectionException) {
-            this.loginStatus.setValue(LoginStatus.NETWORK_CONNECTION);
+            this.loginStatus.setValue(LoginStatus.NETWORK_CONNECTION_ERROR);
         } else if (exception instanceof GenericException) {
             this.loginStatus.setValue(LoginStatus.GENERIC_ERROR);
         }

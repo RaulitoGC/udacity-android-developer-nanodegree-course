@@ -4,19 +4,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.rguzman.techstore.R;
-import com.rguzman.techstore.domain.model.Category;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.rguzman.techstore.R;
+import com.rguzman.techstore.domain.model.Category;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
@@ -25,12 +26,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
   }
 
   private OnListItemClickListener listener;
-  private List<Category> list = new ArrayList<>();
+  private List<Category> list;
 
-  public CategoryAdapter(OnListItemClickListener listener) {
+  public CategoryAdapter(OnListItemClickListener listener, List<Category> list) {
     this.listener = listener;
+    this.list = list;
   }
-
 
   @NonNull
   @Override
