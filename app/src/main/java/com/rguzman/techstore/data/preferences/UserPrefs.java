@@ -16,4 +16,6 @@ public interface UserPrefs {
   void saveUser(User user);
 
   User getUser();
+
+  void clean();
 }

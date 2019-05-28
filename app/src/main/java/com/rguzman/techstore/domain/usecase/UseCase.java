@@ -1,41 +1,34 @@
 package com.rguzman.techstore.domain.usecase;
 
-import androidx.lifecycle.LiveData;
-
 public abstract class UseCase<P, R> {
-    private boolean forceCache;
+  private boolean forceCache;
 
-    public abstract void execute(boolean forceCache, P params, Callback<R> callback);
+  public void execute(boolean forceCache, P params, UseCaseCallback<R> callback) {
 
-    public void execute(P params, Callback<R> callback) {
-        this.execute(false, params, callback);
-    }
+  }
 
-    public void execute(Callback<R> callback) {
-        this.execute(false, null, callback);
-    }
+  public void execute(P params, UseCaseCallback<R> callback) {
+    this.execute(false, params, callback);
+  }
 
-    public void execute(P params) {
-        this.execute(false, params, null);
-    }
+  public void execute(UseCaseCallback<R> callback) {
+    this.execute(false, null, callback);
+  }
 
-    public void execute(boolean forceCache, Callback<R> callback) {
-        this.execute(forceCache, null, callback);
-    }
+  public void execute(P params) {
+    this.execute(false, params, null);
+  }
 
-    public boolean isForceCache() {
-        return forceCache;
-    }
+  public void execute(boolean forceCache, UseCaseCallback<R> callback) {
+    this.execute(forceCache, null, callback);
+  }
 
-    public void setForceCache(boolean forceCache) {
-        this.forceCache = forceCache;
-    }
+  public boolean isForceCache() {
+    return forceCache;
+  }
 
-    public interface Callback<R> {
-        void onNetworkResponse(LiveData<R> liveData);
+  public void setForceCache(boolean forceCache) {
+    this.forceCache = forceCache;
+  }
 
-        void onDiskResponse(LiveData<R> liveData);
-
-        void onError(Exception exception);
-    }
 }

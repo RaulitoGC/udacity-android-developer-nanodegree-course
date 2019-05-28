@@ -8,6 +8,7 @@ import com.rguzman.techstore.data.repository.product.datasource.network.ProductN
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.domain.usecase.UseCase;
+import com.rguzman.techstore.domain.usecase.UseCaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +26,15 @@ public class ProductRepositoryImpl implements ProductRepository {
   private final ProductNetworkDataSource productNetworkDataSource;
 
   @Inject
-  public ProductRepositoryImpl(ProductDiskDataSource productDiskDataSource, ProductNetworkDataSource productNetworkDataSource) {
+  public ProductRepositoryImpl(ProductDiskDataSource productDiskDataSource,
+                               ProductNetworkDataSource productNetworkDataSource) {
     this.productDiskDataSource = productDiskDataSource;
     this.productNetworkDataSource = productNetworkDataSource;
   }
 
   @Override
-  public void loadProducts(boolean forceCache, String token, String categoryId, UseCase.Callback<List<Product>> callback) {
+  public void loadProducts(boolean forceCache, String token, String categoryId,
+                           UseCaseCallback<List<Product>> callback) {
     if (forceCache) {
       callback.onDiskResponse(productDiskDataSource.loadProducts(categoryId));
     }
@@ -76,12 +79,12 @@ public class ProductRepositoryImpl implements ProductRepository {
   }
 
   @Override
-  public void loadProduct(String productId, UseCase.Callback<Product> callback) {
+  public void loadProduct(String productId, UseCaseCallback<Product> callback) {
     callback.onDiskResponse(productDiskDataSource.loadProduct(productId));
   }
 
   @Override
-  public void loadFeatures(String productId, UseCase.Callback<List<Feature>> callback) {
+  public void loadFeatures(String productId,UseCaseCallback<List<Feature>> callback) {
     callback.onDiskResponse(productDiskDataSource.loadFeatures(productId));
   }
 }

@@ -3,8 +3,10 @@ package com.rguzman.techstore.data.repository.product.datasource.disk;
 import androidx.lifecycle.LiveData;
 
 import com.rguzman.techstore.data.database.AppDatabase;
+import com.rguzman.techstore.data.repository.product.datasource.ProductRepository;
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
+import com.rguzman.techstore.domain.usecase.UseCaseCallback;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -23,6 +25,7 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
         this.appDatabase = appDatabase;
         this.diskExecutor = diskExecutor;
     }
+
 
     @Override
     public LiveData<Product> loadProduct(String productId) {

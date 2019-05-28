@@ -13,7 +13,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "PORT_NUMBER", "8081")
+        //resValue("string", "PORT_NUMBER", "8081")
     }
 
     signingConfigs {

@@ -19,8 +19,8 @@ public class GetFeatures extends UseCase<String, List<Feature>> {
   }
 
   @Override
-  public void execute(boolean forceCache, String productId, Callback<List<Feature>> callback) {
-    this.productRepository.loadFeatures(productId, new Callback<List<Feature>>() {
+  public void execute(boolean forceCache, String productId, UseCaseCallback<List<Feature>> callback) {
+    this.productRepository.loadFeatures(productId, new UseCaseCallback<List<Feature>>() {
       @Override
       public void onNetworkResponse(LiveData<List<Feature>> liveData) {
         callback.onNetworkResponse(liveData);

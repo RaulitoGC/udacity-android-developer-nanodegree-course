@@ -19,9 +19,9 @@ public class GetCategories extends UseCase<String, List<Category>> {
     }
 
     @Override
-    public void execute(boolean forceUpdate, String token, Callback<List<Category>> callback) {
+    public void execute(boolean forceUpdate, String token, UseCaseCallback<List<Category>> callback) {
         this.setForceCache(forceUpdate);
-        this.categoryRepository.loadCategories(isForceCache(), token, new Callback<List<Category>>() {
+        this.categoryRepository.loadCategories(isForceCache(), token, new UseCaseCallback<List<Category>>() {
             @Override
             public void onNetworkResponse(LiveData<List<Category>> liveData) {
                 callback.onNetworkResponse(liveData);

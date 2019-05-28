@@ -12,11 +12,16 @@ import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.preferences.UserPrefs;
 import com.rguzman.techstore.domain.model.Category;
 import com.rguzman.techstore.domain.usecase.GetCategories;
+import com.rguzman.techstore.domain.usecase.Logout;
+import com.rguzman.techstore.domain.usecase.UseCaseCallback;
+import com.rguzman.techstore.domain.usecase.UseCaseCallbackImpl;
 import com.rguzman.techstore.presentation.idlingResource.SimpleIdlingResource;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class CategoryListViewModel extends ViewModel {
 
@@ -24,13 +29,15 @@ public class CategoryListViewModel extends ViewModel {
     private CategoryListObserver categoryListObserver;
 
     private final GetCategories getCategories;
+    private final Logout logout;
     private CategoryListView view;
     @Inject
     UserPrefs userPrefs;
 
     @Inject
-    public CategoryListViewModel(GetCategories getCategories) {
+    public CategoryListViewModel(GetCategories getCategories, Logout logout) {
         this.getCategories = getCategories;
+        this.logout = logout;
     }
 
     public void setView(CategoryListView view) {
@@ -78,7 +85,7 @@ public class CategoryListViewModel extends ViewModel {
         if (!forceCache) {
             this.view.showRefreshLoading();
         }
-        this.getCategories.execute(forceCache, userPrefs.getUser().getToken(), new GetCategories.Callback<List<Category>>() {
+        this.getCategories.execute(forceCache, userPrefs.getUser().getToken(), new UseCaseCallback<List<Category>>() {
 
             @Override
             public void onNetworkResponse(LiveData<List<Category>> liveData) {
@@ -95,6 +102,16 @@ public class CategoryListViewModel extends ViewModel {
             @Override
             public void onError(Exception exception) {
                 showError(exception);
+            }
+        });
+    }
+
+    public void signOut(){
+        this.logout.execute(new UseCaseCallbackImpl<Void>(){
+            @Override
+            public void onDiskResponse(LiveData<Void> liveData) {
+                Timber.d("ON DISK RESPONSE");
+                view.logout();
             }
         });
     }
