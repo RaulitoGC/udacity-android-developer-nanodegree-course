@@ -11,31 +11,33 @@ import com.rguzman.techstore.data.exception.GenericException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.domain.model.User;
 import com.rguzman.techstore.domain.usecase.Login;
+import com.rguzman.techstore.presentation.SingleLiveEvent;
 
 import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
 
     private LiveData<User> userLiveData;
+    private SingleLiveEvent<LoginStatus> loginStatus;
     private UserObserver userObserver;
 
     private final Login login;
-    private LoginView view;
 
     @Inject
     public LoginViewModel(Login login) {
         this.login = login;
     }
 
-    public void setView(LoginView view) {
-        this.view = view;
+    public void init(UserObserver userObserver,SingleLiveEvent<LoginStatus> loginStatus) {
+        this.loginStatus = loginStatus;
+        this.userObserver = userObserver;
+        if (this.userLiveData != null) {
+            userLiveData.observeForever(this.userObserver);
+        }
     }
 
-    public void init() {
-        this.userObserver = new UserObserver();
-        if (this.userLiveData != null) {
-            userLiveData.observeForever(userObserver);
-        }
+    public LiveData<LoginStatus> getStatus(){
+        return loginStatus;
     }
 
     public void login(String email, String password) {
@@ -52,17 +54,7 @@ public class LoginViewModel extends ViewModel {
 
         this.view.setValidInputs();
         this.login.execute(Login.Parameters.loginParameters(email, password), new LoginCallback() {
-            @Override
-            public void onNetworkResponse(LiveData<User> liveData) {
-                userLiveData = liveData;
-                userLiveData.observeForever(userObserver);
-            }
 
-            @Override
-            public void onError(Exception exception) {
-                view.hideLoading();
-                showError(exception);
-            }
         });
     }
 
@@ -76,34 +68,5 @@ public class LoginViewModel extends ViewModel {
         }
 
         view.showError(message);
-    }
-
-    private final class UserObserver implements Observer<User> {
-
-        @Override
-        public void onChanged(User user) {
-            view.hideLoading();
-            view.loginSuccess(user);
-            userLiveData.removeObserver(this);
-        }
-    }
-
-    private class LoginCallback implements Login.Callback<User> {
-
-
-        @Override
-        public void onNetworkResponse(LiveData<User> liveData) {
-
-        }
-
-        @Override
-        public void onDiskResponse(LiveData<User> liveData) {
-
-        }
-
-        @Override
-        public void onError(Exception exception) {
-
-        }
     }
 }

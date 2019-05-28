@@ -68,7 +68,6 @@ public class LoginFragment extends DaggerFragment implements LoginView {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
 
-
         AdView mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
@@ -81,8 +80,7 @@ public class LoginFragment extends DaggerFragment implements LoginView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
-        this.loginViewModel.setView(this);
-        this.loginViewModel.init();
+        //this.loginViewModel.init();
     }
 
     @OnClick(R.id.btn_login)
