@@ -1,6 +1,9 @@
 package com.rguzman.techstore.presentation.product;
 
-import com.rguzman.techstore.R;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import com.rguzman.techstore.data.exception.EmptyListException;
 import com.rguzman.techstore.data.exception.GenericException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
@@ -8,105 +11,81 @@ import com.rguzman.techstore.data.preferences.UserPrefs;
 import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.domain.usecase.GetProducts;
 import com.rguzman.techstore.domain.usecase.UseCaseCallback;
+import com.rguzman.techstore.presentation.SingleLiveEvent;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-
 public class ProductListViewModel extends ViewModel {
 
-  private LiveData<List<Product>> productListLiveData;
-  private ProductListObserver productListObserver;
+    private MutableLiveData<List<Product>> productListLiveData;
+    private SingleLiveEvent<ProductListState> productListState;
 
-  private final GetProducts getProducts;
-  private ProductListView view;
-  @Inject
-  UserPrefs userPrefs;
+    private final GetProducts getProducts;
 
-  @Inject
-  public ProductListViewModel(GetProducts getProducts) {
-    this.getProducts = getProducts;
-  }
+    @Inject
+    UserPrefs userPrefs;
 
-  public void setView(ProductListView view) {
-    this.view = view;
-  }
-
-  public void init(String categoryId) {
-    this.productListObserver = new ProductListObserver();
-    if (this.productListLiveData != null) {
-      productListLiveData.observeForever(productListObserver);
-      return;
-    }
-    initializeProducts(categoryId);
-  }
-
-  private void initializeProducts(String categoryId) {
-    view.showLoading();
-    loadProducts(true, categoryId);
-  }
-
-  public void loadProducts(boolean forceCache, String categoryId) {
-    if (!forceCache) {
-      this.view.showRefreshLoading();
-    }
-    this.getProducts.execute(forceCache, GetProducts.Parameters.getProductParameters(userPrefs.getUser().getToken(), categoryId),
-            new UseCaseCallback<List<Product>>(){
-              @Override
-              public void onNetworkResponse(LiveData<List<Product>> liveData) {
-                productListLiveData = liveData;
-                productListLiveData.observeForever(productListObserver);
-              }
-
-              @Override
-              public void onDiskResponse(LiveData<List<Product>> liveData) {
-                productListLiveData = liveData;
-                productListLiveData.observeForever(productListObserver);
-              }
-
-              @Override
-              public void onError(Exception exception) {
-                showError(exception);
-              }
-            });
-  }
-
-  private void showError(Exception exception) {
-    String message = exception.getMessage();
-
-    if (exception instanceof EmptyListException) {
-      message = view.context().getString(R.string.message_exception_empty_category_list);
-      view.showEmptyList(message);
-      return;
+    @Inject
+    public ProductListViewModel(GetProducts getProducts, MutableLiveData<List<Product>> productListLiveData, SingleLiveEvent<ProductListState> productListState) {
+        this.getProducts = getProducts;
+        this.productListLiveData = productListLiveData;
+        this.productListState = productListState;
     }
 
-    if (exception instanceof NetworkConnectionException) {
-      message = view.context().getString(R.string.message_exception_network_connection);
-    } else if (exception instanceof GenericException) {
-      message = view.context().getString(R.string.message_exception_generic);
+    public MutableLiveData<List<Product>> getProductList() {
+        return productListLiveData;
     }
 
-    view.showError(message);
-  }
-
-  private final class ProductListObserver implements Observer<List<Product>> {
-
-    @Override
-    public void onChanged(List<Product> products) {
-      view.hideLoading();
-      view.hideRefreshLoading();
-      if (view.isEmptyList()) {
-        view.loadListWithAnimation(products);
-      } else {
-        view.loadList(products);
-      }
-      productListLiveData.removeObserver(this);
+    public SingleLiveEvent<ProductListState> getProductListState() {
+        return productListState;
     }
-  }
+
+    public void initializeProducts(String categoryId) {
+        this.productListState.setValue(ProductListState.SHOW_LOADING);
+        this.loadProducts(true, categoryId);
+    }
+
+    public void loadProducts(boolean forceCache, String categoryId) {
+        if (!forceCache) {
+            this.productListState.setValue(ProductListState.SHOW_REFRESH_LOADING);
+        }
+        this.getProducts.execute(forceCache, GetProducts.Parameters.getProductParameters(userPrefs.getUser().getToken(), categoryId),
+                new UseCaseCallback<List<Product>>() {
+                    @Override
+                    public void onNetworkResponse(LiveData<List<Product>> liveData) {
+                        if (liveData.getValue() != null) {
+                            productListLiveData.setValue(liveData.getValue());
+                        }
+                    }
+
+                    @Override
+                    public void onDiskResponse(LiveData<List<Product>> liveData) {
+                        if (liveData.getValue() != null) {
+                            productListLiveData.setValue(liveData.getValue());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception exception) {
+                        showError(exception);
+                    }
+                });
+    }
+
+    private void showError(Exception exception) {
+
+        if (exception instanceof EmptyListException) {
+            this.productListState.setValue(ProductListState.EMPTY_LIST);
+            return;
+        }
+
+        if (exception instanceof NetworkConnectionException) {
+            this.productListState.setValue(ProductListState.NETWORK_CONNECTION_ERROR);
+        } else if (exception instanceof GenericException) {
+            this.productListState.setValue(ProductListState.GENERIC_ERROR);
+        }
+    }
 
 }

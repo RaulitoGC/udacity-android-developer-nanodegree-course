@@ -36,10 +36,12 @@ import com.rguzman.techstore.data.repository.user.datasource.disk.UserDiskDataSo
 import com.rguzman.techstore.data.repository.user.datasource.network.UserNetworkDataSource;
 import com.rguzman.techstore.data.repository.user.datasource.network.UserNetworkDataSourceImpl;
 import com.rguzman.techstore.domain.model.Category;
+import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.domain.model.User;
 import com.rguzman.techstore.presentation.SingleLiveEvent;
 import com.rguzman.techstore.presentation.category.CategoryListStatus;
 import com.rguzman.techstore.presentation.login.LoginStatus;
+import com.rguzman.techstore.presentation.product.ProductListState;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -198,6 +200,16 @@ public class ApplicationModule {
 
     @Provides
     SingleLiveEvent<CategoryListStatus> provideCategoryListStatus() {
+        return new SingleLiveEvent<>();
+    }
+
+    @Provides
+    MutableLiveData<List<Product>> provideProductListLiveData() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    SingleLiveEvent<ProductListState> provideProductListStatus() {
         return new SingleLiveEvent<>();
     }
 

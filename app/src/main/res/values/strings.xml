@@ -11,6 +11,7 @@
     <string name="message_exception_valid_email">Enter a valid email address</string>
     <string name="message_exception_valid_password">Between 4 and 10 alphanumeric characters</string>
     <string name="message_exception_empty_category_list">There aren\'t categories </string>
+    <string name="message_exception_empty_product_list">There aren\'t products </string>
 
     <string name="text_product_price_format">S/ %1$s</string>
 
