@@ -1,11 +1,9 @@
 package com.rguzman.techstore.domain.usecase;
 
-import androidx.lifecycle.LiveData;
-
 public interface UseCaseCallback<R> {
-  void onNetworkResponse(LiveData<R> liveData);
+    void onNetworkResponse(R data);
 
-  void onDiskResponse(LiveData<R> liveData);
+    void onDiskResponse(R data);
 
-  void onError(Exception exception);
+    void onError(Exception exception);
 }

@@ -6,7 +6,6 @@ public enum ProductListState {
     SHOW_LOADING,
     HIDE_LOADING,
     EMPTY_LIST,
-    LOG_OUT,
     NETWORK_CONNECTION_ERROR,
     GENERIC_ERROR
 }

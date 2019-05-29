@@ -17,6 +17,6 @@ public interface FeatureDao {
     void insert(List<Feature> features);
 
     @Query("SELECT * FROM Features WHERE productId = :productId")
-    LiveData<List<Feature>> loadFeatures(String productId);
+    List<Feature> loadFeatures(String productId);
 
 }

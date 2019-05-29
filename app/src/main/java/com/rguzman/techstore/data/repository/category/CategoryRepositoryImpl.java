@@ -1,7 +1,6 @@
 package com.rguzman.techstore.data.repository.category;
 
-import androidx.lifecycle.LiveData;
-
+import com.rguzman.techstore.data.database.DataBaseCallback;
 import com.rguzman.techstore.data.net.NetworkCallback;
 import com.rguzman.techstore.data.repository.category.datasource.CategoryRepository;
 import com.rguzman.techstore.data.repository.category.datasource.disk.CategoryDiskDataSource;
@@ -29,15 +28,25 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public void loadCategories(boolean forceUpdate, String token, UseCaseCallback<List<Category>> callback) {
         if (forceUpdate) {
-            callback.onDiskResponse(categoryDiskDataSource.loadCategories());
+            categoryDiskDataSource.loadCategories(new DataBaseCallback<List<Category>>() {
+                @Override
+                public void onResponse(List<Category> data) {
+                    callback.onDiskResponse(data);
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    callback.onError(exception);
+                }
+            });
+
         }
 
         this.categoryNetworkDataSource.loadCategories(token, new NetworkCallback<List<Category>>() {
             @Override
-            public void onResponse(LiveData<List<Category>> liveData) {
-                callback.onNetworkResponse(liveData);
-                List<Category> list = liveData.getValue();
-                categoryDiskDataSource.saveCategories(list);
+            public void onResponse(List<Category> data) {
+                callback.onNetworkResponse(data);
+                categoryDiskDataSource.saveCategories(data);
             }
 
             @Override

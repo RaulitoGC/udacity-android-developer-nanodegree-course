@@ -45,8 +45,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
+import timber.log.Timber;
 
-public class ProductDetailActivity extends DaggerAppCompatActivity implements ProductDetailView {
+public class ProductDetailActivity extends DaggerAppCompatActivity {
 
     public static final String EXTRA_PRODUCT_ID = "com.rguzman.techstore.extra.PRODUCT_ID";
     public static final String NOTIFICATION_WORK_MANAGER_TAG = "Work_Manager";
@@ -73,7 +74,6 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-    private ProductDetailViewModel productDetailViewModel;
     private FeatureAdapter featureAdapter;
     private Product product;
     private int amount;
@@ -95,10 +95,13 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
         if (getIntent() != null && getIntent().hasExtra(EXTRA_PRODUCT_ID)) {
             String productId = getIntent().getStringExtra(EXTRA_PRODUCT_ID);
 
-            this.productDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductDetailViewModel.class);
-            this.productDetailViewModel.setView(this);
-            this.productDetailViewModel.init(productId);
+            final ProductDetailViewModel productDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductDetailViewModel.class);
+            productDetailViewModel.getProductDetailState().observe(this, this::handleStatus);
+            productDetailViewModel.getProductLiveData().observe(this, this::loadProduct);
+            productDetailViewModel.getFeatureListLiveData().observe(this, this::loadFeatures);
+            productDetailViewModel.init(productId);
         }
+
         initUi();
     }
 
@@ -116,6 +119,19 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
         this.amount = 1;
         updateAmount(String.valueOf(amount));
+
+        Timber.d(" init UI");
+    }
+
+    private void handleStatus(ProductDetailState productDetailState) {
+        switch (productDetailState) {
+            case GENERIC_ERROR:
+                showError(getString(R.string.message_exception_generic));
+                break;
+            case NETWORK_CONNECTION_ERROR:
+                showError(getString(R.string.message_exception_network_connection));
+                break;
+        }
     }
 
     @Override
@@ -128,7 +144,6 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_share && product != null) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
@@ -139,8 +154,8 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void loadProduct(Product product) {
+
+    private void loadProduct(Product product) {
         this.product = product;
         supportPostponeEnterTransition();
 
@@ -168,19 +183,12 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
         scheduleNotification(product.getProductId(), product.getName());
     }
 
-    @Override
-    public void loadFeatures(List<Feature> features) {
+    private void loadFeatures(List<Feature> features) {
         featureAdapter.setList(features);
     }
 
-    @Override
-    public Context context() {
-        return this;
-    }
-
-    @Override
-    public void showError(String message) {
-        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+    private void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.amount_less_button)
@@ -212,7 +220,7 @@ public class ProductDetailActivity extends DaggerAppCompatActivity implements Pr
 
     private void updateWidget() {
         if (product != null) {
-            startService(LastProductBoughtIntentService.getCallingIntent(context(), product));
+            startService(LastProductBoughtIntentService.getCallingIntent(this, product));
         }
     }
 

@@ -2,8 +2,6 @@ package com.rguzman.techstore.data.repository.user.datasource.network;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.rguzman.techstore.data.exception.GenericException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.net.ApiService;
@@ -40,9 +38,7 @@ public class UserNetworkDataSourceImpl implements UserNetworkDataSource {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        final MutableLiveData<User> liveData = new MutableLiveData<>();
-                        liveData.setValue(response.body());
-                        callback.onResponse(liveData);
+                        callback.onResponse(response.body());
                     } else {
                         callback.onError(new GenericException());
                     }

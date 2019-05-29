@@ -20,7 +20,7 @@ public interface CategoryDao {
     Category getMovieById(int categoryId);
 
     @Query("SELECT * FROM Categories")
-    LiveData<List<Category>> loadCategories();
+    List<Category> loadCategories();
 
     @Query("DELETE FROM Categories")
     void deleteCategories();

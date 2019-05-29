@@ -53,8 +53,8 @@ public class LoginViewModel extends ViewModel {
         this.loginStatus.setValue(LoginStatus.VALID_INPUTS);
         this.login.execute(Login.Parameters.loginParameters(email, password), new UseCaseCallbackImpl<User>() {
             @Override
-            public void onNetworkResponse(LiveData<User> liveData) {
-                userLiveData.setValue(liveData.getValue());
+            public void onNetworkResponse(User data) {
+                userLiveData.setValue(data);
             }
 
             @Override

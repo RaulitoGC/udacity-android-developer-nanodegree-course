@@ -1,20 +1,21 @@
 package com.rguzman.techstore.domain.usecase;
 
-import androidx.lifecycle.LiveData;
-
 import com.rguzman.techstore.data.repository.product.datasource.ProductRepository;
 import com.rguzman.techstore.domain.model.Product;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class GetProducts extends UseCase<GetProducts.Parameters, List<Product>> {
 
     private final ProductRepository productRepository;
 
     @Inject
-    public GetProducts(ProductRepository productRepository) {
+    public GetProducts(ProductRepository productRepository, @Named("uiExecutor") Executor uiExecutor) {
+        super(uiExecutor);
         this.productRepository = productRepository;
     }
 
@@ -23,13 +24,13 @@ public class GetProducts extends UseCase<GetProducts.Parameters, List<Product>> 
         this.setForceCache(forceUpdate);
         this.productRepository.loadProducts(isForceCache(), params.token, params.categoryId, new UseCaseCallback<List<Product>>() {
             @Override
-            public void onNetworkResponse(LiveData<List<Product>> liveData) {
-                callback.onNetworkResponse(liveData);
+            public void onNetworkResponse(List<Product> data) {
+                callback.onNetworkResponse(data);
             }
 
             @Override
-            public void onDiskResponse(LiveData<List<Product>> liveData) {
-                callback.onDiskResponse(liveData);
+            public void onDiskResponse(List<Product> data) {
+                uiExecutor.execute(() -> callback.onDiskResponse(data));
             }
 
             @Override

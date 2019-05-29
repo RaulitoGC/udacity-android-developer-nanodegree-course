@@ -36,18 +36,22 @@ import com.rguzman.techstore.data.repository.user.datasource.disk.UserDiskDataSo
 import com.rguzman.techstore.data.repository.user.datasource.network.UserNetworkDataSource;
 import com.rguzman.techstore.data.repository.user.datasource.network.UserNetworkDataSourceImpl;
 import com.rguzman.techstore.domain.model.Category;
+import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
 import com.rguzman.techstore.domain.model.User;
+import com.rguzman.techstore.domain.usecase.UiThreadExecutor;
 import com.rguzman.techstore.presentation.SingleLiveEvent;
 import com.rguzman.techstore.presentation.category.CategoryListStatus;
 import com.rguzman.techstore.presentation.login.LoginStatus;
 import com.rguzman.techstore.presentation.product.ProductListState;
+import com.rguzman.techstore.presentation.product.detail.ProductDetailState;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -74,8 +78,15 @@ public class ApplicationModule {
     }
 
     @Provides
+    @Named("workExecutor")
     Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
+    }
+
+    @Provides
+    @Named("uiExecutor")
+    Executor provideUiExecutor() {
+        return new UiThreadExecutor();
     }
 
     @Provides
@@ -210,6 +221,21 @@ public class ApplicationModule {
 
     @Provides
     SingleLiveEvent<ProductListState> provideProductListStatus() {
+        return new SingleLiveEvent<>();
+    }
+
+    @Provides
+    MutableLiveData<Product> provideProductLiveData() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    MutableLiveData<List<Feature>> provideFeatureListLiveData() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    SingleLiveEvent<ProductDetailState> provideProductDetailStatus() {
         return new SingleLiveEvent<>();
     }
 

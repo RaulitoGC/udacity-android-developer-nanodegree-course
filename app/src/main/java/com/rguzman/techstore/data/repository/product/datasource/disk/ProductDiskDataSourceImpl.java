@@ -1,18 +1,16 @@
 package com.rguzman.techstore.data.repository.product.datasource.disk;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.rguzman.techstore.data.database.AppDatabase;
-import com.rguzman.techstore.data.repository.product.datasource.ProductRepository;
+import com.rguzman.techstore.data.database.DataBaseCallback;
+import com.rguzman.techstore.data.exception.GenericException;
 import com.rguzman.techstore.domain.model.Feature;
 import com.rguzman.techstore.domain.model.Product;
-import com.rguzman.techstore.domain.usecase.UseCaseCallback;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
@@ -22,15 +20,21 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
     private final Executor diskExecutor;
 
     @Inject
-    public ProductDiskDataSourceImpl(AppDatabase appDatabase, Executor diskExecutor) {
+    public ProductDiskDataSourceImpl(AppDatabase appDatabase, @Named("workExecutor") Executor diskExecutor) {
         this.appDatabase = appDatabase;
         this.diskExecutor = diskExecutor;
     }
 
-
     @Override
-    public LiveData<Product> loadProduct(String productId) {
-        return this.appDatabase.productDao().loadProduct(productId);
+    public void loadProduct(String productId, DataBaseCallback<Product> callback) {
+        diskExecutor.execute(() -> {
+            Product product = this.appDatabase.productDao().getProductById(productId);
+            if (product != null) {
+                callback.onResponse(product);
+            } else {
+                callback.onError(new GenericException());
+            }
+        });
     }
 
     @Override
@@ -54,12 +58,27 @@ public class ProductDiskDataSourceImpl implements ProductDiskDataSource {
     }
 
     @Override
-    public LiveData<List<Product>> loadProducts(String categoryId) {
-        return this.appDatabase.productDao().loadProducts(categoryId);
+    public void loadProducts(String categoryId, DataBaseCallback<List<Product>> callback) {
+        diskExecutor.execute(() -> {
+            List<Product> list = appDatabase.productDao().loadProducts(categoryId);
+            if (list != null) {
+                callback.onResponse(list);
+            } else {
+                callback.onError(new GenericException());
+            }
+        });
     }
 
     @Override
-    public LiveData<List<Feature>> loadFeatures(String productId) {
-        return this.appDatabase.featureDao().loadFeatures(productId);
+    public void loadFeatures(String productId, DataBaseCallback<List<Feature>> callback) {
+        diskExecutor.execute(() -> {
+            List<Feature> list = appDatabase.featureDao().loadFeatures(productId);
+            if (list != null) {
+                callback.onResponse(list);
+            } else {
+                callback.onError(new GenericException());
+            }
+        });
+
     }
 }

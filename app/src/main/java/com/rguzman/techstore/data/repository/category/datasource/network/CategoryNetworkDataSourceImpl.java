@@ -2,8 +2,6 @@ package com.rguzman.techstore.data.repository.category.datasource.network;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.rguzman.techstore.data.exception.EmptyListException;
 import com.rguzman.techstore.data.exception.NetworkConnectionException;
 import com.rguzman.techstore.data.net.ApiService;
@@ -11,7 +9,6 @@ import com.rguzman.techstore.data.net.NetworkCallback;
 import com.rguzman.techstore.domain.model.Category;
 import com.rguzman.techstore.presentation.utils.NetworkUtils;
 
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,9 +41,7 @@ public class CategoryNetworkDataSourceImpl implements CategoryNetworkDataSource 
                 @Override
                 public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        final MutableLiveData<List<Category>> liveData = new MutableLiveData<>();
-                        liveData.setValue(response.body());
-                        callback.onResponse(liveData);
+                        callback.onResponse(response.body());
                     } else {
                         callback.onError(new EmptyListException());
                     }

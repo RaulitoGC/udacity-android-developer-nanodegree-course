@@ -14,14 +14,11 @@ import java.util.List;
 public interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Product products);
+    void insert(Product product);
 
     @Query("SELECT * FROM Products WHERE productId = :productId LIMIT 1")
     Product getProductById(String productId);
 
-    @Query("SELECT * FROM Products WHERE productId = :productId LIMIT 1")
-    LiveData<Product> loadProduct(String productId);
-
     @Query("SELECT * FROM Products WHERE categoryId = :categoryId")
-    LiveData<List<Product>> loadProducts(String categoryId);
+    List<Product> loadProducts(String categoryId);
 }

@@ -1,6 +1,5 @@
 package com.rguzman.techstore.presentation.product;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -54,17 +53,13 @@ public class ProductListViewModel extends ViewModel {
         this.getProducts.execute(forceCache, GetProducts.Parameters.getProductParameters(userPrefs.getUser().getToken(), categoryId),
                 new UseCaseCallback<List<Product>>() {
                     @Override
-                    public void onNetworkResponse(LiveData<List<Product>> liveData) {
-                        if (liveData.getValue() != null) {
-                            productListLiveData.setValue(liveData.getValue());
-                        }
+                    public void onNetworkResponse(List<Product> data) {
+                        productListLiveData.setValue(data);
                     }
 
                     @Override
-                    public void onDiskResponse(LiveData<List<Product>> liveData) {
-                        if (liveData.getValue() != null) {
-                            productListLiveData.setValue(liveData.getValue());
-                        }
+                    public void onDiskResponse(List<Product> data) {
+                        productListLiveData.setValue(data);
                     }
 
                     @Override

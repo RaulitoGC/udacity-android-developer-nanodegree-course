@@ -1,20 +1,21 @@
 package com.rguzman.techstore.domain.usecase;
 
-import androidx.lifecycle.LiveData;
-
 import com.rguzman.techstore.data.repository.category.datasource.CategoryRepository;
 import com.rguzman.techstore.domain.model.Category;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class GetCategories extends UseCase<String, List<Category>> {
 
     private final CategoryRepository categoryRepository;
 
     @Inject
-    public GetCategories(CategoryRepository categoryRepository) {
+    public GetCategories(CategoryRepository categoryRepository, @Named("uiExecutor") Executor uiExecutor) {
+        super(uiExecutor);
         this.categoryRepository = categoryRepository;
     }
 
@@ -23,13 +24,13 @@ public class GetCategories extends UseCase<String, List<Category>> {
         this.setForceCache(forceUpdate);
         this.categoryRepository.loadCategories(isForceCache(), token, new UseCaseCallback<List<Category>>() {
             @Override
-            public void onNetworkResponse(LiveData<List<Category>> liveData) {
-                callback.onNetworkResponse(liveData);
+            public void onNetworkResponse(List<Category> data) {
+                callback.onNetworkResponse(data);
             }
 
             @Override
-            public void onDiskResponse(LiveData<List<Category>> liveData) {
-                callback.onDiskResponse(liveData);
+            public void onDiskResponse(List<Category> data) {
+                uiExecutor.execute(() -> callback.onDiskResponse(data));
             }
 
             @Override

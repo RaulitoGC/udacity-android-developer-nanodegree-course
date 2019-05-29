@@ -43,9 +43,7 @@ public class ProductNetworkDataSourceImpl implements ProductNetworkDataSource {
         @Override
         public void onResponse(Call<List<ProductResponse>> call, Response<List<ProductResponse>> response) {
           if (response.isSuccessful() && response.body() != null) {
-            final MutableLiveData<List<ProductResponse>> liveData = new MutableLiveData<>();
-            liveData.setValue(response.body());
-            callback.onResponse(liveData);
+            callback.onResponse(response.body());
           } else {
             callback.onError(new EmptyListException());
           }
