@@ -82,7 +82,7 @@ public class CategoryListFragment extends DaggerFragment implements CategoryAdap
     if (this.mIdlingResource != null) {
       this.mIdlingResource.setIdleState(false);
     }
-    this.categoryListViewModel.initializeMovies();
+    this.categoryListViewModel.initializeCategories();
   }
 
   @Nullable

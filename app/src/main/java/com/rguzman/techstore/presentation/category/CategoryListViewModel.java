@@ -45,7 +45,7 @@ public class CategoryListViewModel extends ViewModel {
         return categoryListStatus;
     }
 
-    public void initializeMovies() {
+    public void initializeCategories() {
         this.categoryListStatus.setValue(CategoryListStatus.SHOW_LOADING);
         loadCategories(true);
     }
