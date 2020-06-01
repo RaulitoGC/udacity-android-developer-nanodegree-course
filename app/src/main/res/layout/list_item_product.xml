@@ -1,0 +1,50 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/card_margin"
+    android:foreground="?selectableItemBackground"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_product"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_image_size_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"
+            android:transitionName="@string/text_product_image_shared_element"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_title_margin_start"
+            android:layout_marginTop="@dimen/card_title_margin_top"
+            android:layout_marginEnd="@dimen/card_title_margin_end"
+            android:ellipsize="end"
+            android:fontFamily="@font/atma_semibold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/card_title_text_size"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_product_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_title_margin_start"
+            android:layout_marginTop="@dimen/card_title_margin_top"
+            android:layout_marginEnd="@dimen/card_title_margin_end"
+            android:layout_marginBottom="@dimen/card_title_margin_bottom"
+            android:ellipsize="end"
+            android:fontFamily="@font/atma"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/card_title_text_size"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

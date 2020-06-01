@@ -1,0 +1,41 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
+
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
+
+    <style name="AppTheme.Dark.Detail" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowDisablePreview">true</item>
+
+    </style>
+
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+</resources>

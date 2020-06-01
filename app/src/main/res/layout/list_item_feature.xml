@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_product_detail_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/atma_medium"
+        android:text="@string/text_aditional_information_label"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginEnd="@dimen/text_feature_label_margin_end"
+        android:textSize="16sp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_product_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asdsadadadas"
+        android:fontFamily="@font/atma"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="14sp"/>
+
+
+</LinearLayout>

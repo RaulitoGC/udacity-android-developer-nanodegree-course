@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion androidCompileSdk
+    buildToolsVersion androidBuildTools
+
+    defaultConfig {
+        minSdkVersion androidMinSdk
+        targetSdkVersion androidTargetSdk
+        applicationId "com.rguzman.techstore"
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //resValue("string", "PORT_NUMBER", "8081")
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../dependencies/release.keystore')
+            storePassword 'j9!b6!x9!'
+            keyAlias 'techstore'
+            keyPassword 'j9!b6!x9!'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+
+
+}
+
+dependencies {
+
+    implementation projectDependencies.android.material
+    implementation projectDependencies.android.constraintLayout
+
+    implementation projectDependencies.lifecycle.runtime
+    implementation projectDependencies.lifecycle.extensions
+    implementation projectDependencies.lifecycle.java8
+
+    annotationProcessor projectDependencies.lifecycle.compiler
+
+    implementation projectDependencies.debug.timber
+    implementation projectDependencies.debug.db
+
+    implementation projectDependencies.glide.runtime
+    annotationProcessor projectDependencies.glide.compiler
+
+    implementation projectDependencies.butterknife.runtime
+    annotationProcessor projectDependencies.butterknife.compiler
+
+    implementation projectDependencies.retrofit.runtime
+    implementation projectDependencies.retrofit.gson
+    implementation projectDependencies.okhttp.runtime
+
+    implementation projectDependencies.room.runtime
+    annotationProcessor projectDependencies.room.compiler
+
+    implementation projectDependencies.dagger.runtime
+    implementation projectDependencies.dagger.android
+    implementation projectDependencies.dagger.androidSupport
+    annotationProcessor projectDependencies.dagger.compiler
+    annotationProcessor projectDependencies.dagger.androidSupportCompiler
+
+    implementation projectDependencies.workManager.runtime
+
+    implementation projectDependencies.firebase.core
+    implementation projectDependencies.firebase.ads
+
+    implementation projectTestDependencies.espresso.idlingResource
+
+    androidTestImplementation projectTestDependencies.espresso.core
+    androidTestImplementation projectTestDependencies.atsl.annotationSupport
+    androidTestImplementation projectTestDependencies.atsl.runner
+    androidTestImplementation projectTestDependencies.atsl.rules
+    androidTestImplementation projectTestDependencies.espresso.contrib
+
+}
+
+apply plugin: 'com.google.gms.google-services'
