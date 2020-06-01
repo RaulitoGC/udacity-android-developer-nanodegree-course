@@ -1,0 +1,61 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "28.0.3"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+
+    //Libraries
+    androidConstraintLayoutVersion = '1.1.0'
+    androidSupportVersion = '28.0.0'
+    glideVersion = '4.8.0'
+    butterKnifeVersion = '8.8.1'
+    retrofitVersion = '2.5.0'
+    daggerVersion = '2.17'
+    okHttpVersion = '3.12.1'
+    timberVersion = '4.7.1'
+    roomVersion = '1.1.1'
+    lifecycleVersion = '1.1.1'
+    debugDbVersion = '1.0.4'
+    exoPlayerVersion = '2.6.1'
+
+    // Test
+    espressoVersion = '3.0.2'
+    testRunnerVersion = '1.0.2'
+    testRulesVersion = '1.0.2'
+
+    projectDependencies = [
+            androidConstraintLayout: "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion",
+            androidDesign          : "com.android.support:design:$androidSupportVersion",
+            glide                  : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler          : "com.github.bumptech.glide:compiler:$glideVersion",
+            daggerAndroid          : "com.google.dagger:dagger-android:$daggerVersion",
+            daggerAndroidSupport   : "com.google.dagger:dagger-android-support:$daggerVersion",
+            daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:$daggerVersion",
+            daggerCompiler         : "com.google.dagger:dagger-compiler:$daggerVersion",
+            timber                 : "com.jakewharton.timber:timber:$timberVersion",
+            retrofit               : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            gsonConverter          : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            loggingInterceptor     : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            butterKnife            : "com.jakewharton:butterknife:$butterKnifeVersion",
+            butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:$butterKnifeVersion",
+            room                   : "android.arch.persistence.room:runtime:$roomVersion",
+            roomCompiler           : "android.arch.persistence.room:compiler:$roomVersion",
+            lifeCycleExtension     : "android.arch.lifecycle:extensions:$lifecycleVersion",
+            viewModel              : "android.arch.lifecycle:viewmodel:$lifecycleVersion",
+            liveData               : "android.arch.lifecycle:livedata:$lifecycleVersion",
+            lifecycleCompiler      : "android.arch.lifecycle:compiler:$lifecycleVersion",
+            androidDebugDb         : "com.amitshekhar.android:debug-db:$debugDbVersion",
+            exoPlayer              : "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
+
+    ]
+
+    projectTestDependencies = [
+            androidSupportAnnotation    : "com.android.support:support-annotations:$androidSupportVersion",
+            espresso                    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            runner                      : "com.android.support.test:rules:$testRulesVersion",
+            ruler                       : "com.android.support.test:runner:$testRunnerVersion",
+            espressoContrib             : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            espressoIdlingResource      : "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    ]
+}
