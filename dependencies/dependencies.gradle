@@ -1,0 +1,50 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "28.0.3"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+
+    //Libraries
+    androidConstraintLayoutVersion = '1.1.0'
+    androidSupportVersion = '28.0.0'
+    butterKnifeVersion = '8.8.1'
+    playServicesAdsVersion = '17.1.3'
+    googleApiClientVersion = '1.28.0'
+    googleHttpClienAndroidVersion = '1.23.0'
+    findBugsVersion = '3.0.2'
+    guavaVersion = '23.5-android'
+    endpointFrameworkVersion = '2.0.9'
+    javaxInjectVersion = '1'
+    servletApiVersion = '2.5'
+
+    // Test
+    espressoVersion = '3.0.2'
+    testRunnerVersion = '1.0.2'
+    testRulesVersion = '1.0.2'
+
+    projectDependencies = [
+            androidDesign         : "com.android.support:design:$androidSupportVersion",
+            butterKnife           : "com.jakewharton:butterknife:$butterKnifeVersion",
+            butterKnifeCompiler   : "com.jakewharton:butterknife-compiler:$butterKnifeVersion",
+            playServicesAds       : "com.google.android.gms:play-services-ads:$playServicesAdsVersion",
+            googleApiClient       : "com.google.api-client:google-api-client:$googleApiClientVersion",
+            googleHttpClienAndroid: "com.google.http-client:google-http-client-android:$googleHttpClienAndroidVersion",
+            findBugs              : "com.google.code.findbugs:jsr305:$findBugsVersion",
+            guava                 : "com.google.guava:guava:$guavaVersion",
+            endpointFramework     : "com.google.endpoints:endpoints-framework:$endpointFrameworkVersion",
+            javaxInject           : "javax.inject:javax.inject:$javaxInjectVersion",
+            servletApi            : "javax.servlet:servlet-api:$servletApiVersion"
+
+
+    ]
+
+    projectTestDependencies = [
+            androidSupportAnnotation: "com.android.support:support-annotations:$androidSupportVersion",
+            espresso                : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            runner                  : "com.android.support.test:rules:$testRulesVersion",
+            ruler                   : "com.android.support.test:runner:$testRunnerVersion",
+            espressoContrib         : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            espressoIdlingResource  : "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    ]
+}

@@ -1,0 +1,1 @@
+include ':joke-android-app', ':google-cloud-endpoints', ':joke-display', ':joke-provider'
