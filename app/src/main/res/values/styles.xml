@@ -1,0 +1,53 @@
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+  <style name="AppThemeDarkActionBar" parent="BaseThemeDarkActionBar"/>
+  <style name="AppThemeNoActionBar" parent="BaseThemeNoActionBar"/>
+
+  <style name="BaseThemeDarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/indigo_500</item>
+    <item name="colorPrimaryDark">@color/indigo_700</item>
+    <item name="colorAccent">@color/teal_500</item>
+    <item name="colorControlHighlight">@color/teal_200</item>
+    <item name="selectableItemBackground">@drawable/accent_selectable_item_background</item>
+    <item name="android:selectableItemBackground">@drawable/accent_selectable_item_background</item>
+  </style>
+
+  <style name="BaseThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/indigo_500</item>
+    <item name="colorPrimaryDark">@color/indigo_700</item>
+    <item name="colorAccent">@color/teal_500</item>
+    <item name="colorControlHighlight">@color/teal_200</item>
+    <item name="selectableItemBackground">@drawable/accent_selectable_item_background</item>
+    <item name="android:selectableItemBackground">@drawable/accent_selectable_item_background</item>
+  </style>
+
+  <style name="FabStyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:src">@drawable/ic_share</item>
+    <item name="borderWidth">0dp</item>
+    <item name="elevation">6dp</item>
+    <item name="pressedTranslationZ">12dp</item>
+    <item name="rippleColor">@android:color/white</item>
+    <item  name="android:layout_marginEnd">12dp</item>
+    <item name="android:layout_marginBottom">12dp</item>
+  </style>
+
+</resources>
