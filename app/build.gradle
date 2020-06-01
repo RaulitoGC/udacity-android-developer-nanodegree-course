@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+def movieDbPropsFile = project.rootProject.file('key.properties')
+def movieDbProps = new Properties()
+if (movieDbPropsFile.exists()) {
+    movieDbProps.load(movieDbPropsFile.newDataInputStream())
+}
+
+android {
+
+    compileSdkVersion rootProject.androidCompileSdkVersion
+    buildToolsVersion rootProject.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.androidMinSdkVersion
+        targetSdkVersion rootProject.androidTargetSdkVersion
+        applicationId "com.rguzman.popularmovie"
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", 'MOVIE_API_KEY', movieDbProps['movieApikey']
+        resValue("string", "PORT_NUMBER", "8081")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    def projectDependencies = rootProject.ext.projectDependencies
+
+    implementation projectDependencies.androidDesign
+    implementation projectDependencies.androidConstraintLayout
+
+    implementation projectDependencies.lifeCycleExtension
+    implementation projectDependencies.viewModel
+    implementation projectDependencies.liveData
+
+    annotationProcessor projectDependencies.lifecycleCompiler
+
+    implementation projectDependencies.room
+    annotationProcessor projectDependencies.roomCompiler
+
+    implementation projectDependencies.timber
+
+    implementation projectDependencies.retrofit
+    implementation projectDependencies.gsonConverter
+    implementation projectDependencies.loggingInterceptor
+
+    implementation projectDependencies.daggerAndroid
+    implementation projectDependencies.daggerAndroidSupport
+    annotationProcessor projectDependencies.daggerAndroidProcessor
+    annotationProcessor projectDependencies.daggerCompiler
+
+    implementation projectDependencies.butterKnife
+    annotationProcessor projectDependencies.butterKnifeCompiler
+
+    implementation projectDependencies.glide
+    annotationProcessor projectDependencies.glideCompiler
+
+    debugImplementation projectDependencies.androidDebugDb
+}

@@ -1,0 +1,21 @@
+<resources>
+  <string name="app_name">Udacity-popular-movie-2</string>
+  <!-- menu -->
+  <string name="action_most_popular">Most Popular</string>
+  <string name="action_highest_rated">Highest Rated</string>
+  <string name="action_favorites">Favorties</string>
+
+  <!-- Titles -->
+  <string name="text_movies_list">Pop Movies</string>
+  <string name="text_movie_detail">MovieDetail</string>
+
+  <!-- Exception message -->
+  <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+  <string name="message_exception_generic">Sorry, something went wrong.</string>
+  <string name="message_exception_empty_list">There isn\'t %1$s movies </string>
+
+  <!-- detail -->
+  <string name="text_trailer">Trailers</string>
+  <string name="text_reviews">Reviews</string>
+
+</resources>
