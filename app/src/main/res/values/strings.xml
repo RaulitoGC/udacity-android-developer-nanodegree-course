@@ -1,0 +1,16 @@
+<resources>
+  <string name="app_name">PopularMovie</string>
+
+  <!-- menu -->
+  <string name="action_most_popular">Most Popular</string>
+  <string name="action_highest_rated">Highest Rated</string>
+
+  <!-- Titles -->
+  <string name="text_pop_movies">Pop Movies</string>
+  <string name="text_movie_detail">MovieDetail</string>
+
+  <!-- Exception message -->
+  <string name="message_exception_network_connection">There isn\'t  internet connection</string>
+
+
+</resources>

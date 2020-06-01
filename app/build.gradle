@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+
+def movieDbPropsFile = project.rootProject.file('key.properties')
+def movieDbProps = new Properties()
+if (movieDbPropsFile.exists()) {
+    movieDbProps.load(movieDbPropsFile.newDataInputStream())
+}
+
+android {
+
+    compileSdkVersion rootProject.androidCompileSdkVersion
+    buildToolsVersion rootProject.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.androidMinSdkVersion
+        targetSdkVersion rootProject.androidTargetSdkVersion
+        applicationId "com.rguzmanc.popularmovie"
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", 'MOVIE_API_KEY', movieDbProps['movieApikey']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    def projectDependencies = rootProject.ext.projectDependencies
+
+    implementation projectDependencies.androidDesign
+    implementation projectDependencies.androidConstraintLayout
+    implementation projectDependencies.picasso
+}
